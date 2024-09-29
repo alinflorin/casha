@@ -137,6 +137,9 @@ public:
 #endif
 
     std::string command((char*)(value + start), len - start);
+    if (!command.empty() && command[0] == '0') {
+        command.erase(0, 1); // Remove the leading '0'
+    }
     std::string response = handleCommand(command);
     std::string finalResponse = sendResponse(command, response + "\r>");
     Device::getInstance().send(finalResponse.c_str());
