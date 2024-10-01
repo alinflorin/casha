@@ -6,9 +6,9 @@ PODS:
   - EXJSONUtils (0.13.1)
   - EXManifests (0.14.3):
     - ExpoModulesCore
-  - Expo (51.0.32):
+  - Expo (51.0.35):
     - ExpoModulesCore
-  - expo-dev-client (4.0.26):
+  - expo-dev-client (4.0.27):
     - EXManifests
     - expo-dev-launcher
     - expo-dev-menu
@@ -252,7 +252,7 @@ PODS:
     - ExpoModulesCore
   - ExpoWebBrowser (13.0.3):
     - ExpoModulesCore
-  - EXSplashScreen (0.27.5):
+  - EXSplashScreen (0.27.6):
     - DoubleConversion
     - ExpoModulesCore
     - glog
@@ -1753,8 +1753,8 @@ SPEC CHECKSUMS:
   EXConstants: 409690fbfd5afea964e5e9d6c4eb2c2b59222c59
   EXJSONUtils: 30c17fd9cc364d722c0946a550dfbf1be92ef6a4
   EXManifests: c1fab4c3237675e7b0299ea8df0bcb14baca4f42
-  Expo: 33132a667698a3259a4e6c0af1b4936388e5fa33
-  expo-dev-client: 4f9100af6be210a360aa67f42649881251aa362a
+  Expo: 76d7e2a8badda285c79ae69d01b6a40b3ec75e5c
+  expo-dev-client: 85deba11af998ea86e62093b17fce56aa2c6f26b
   expo-dev-launcher: c8e85bf244a2492448c88adbc3585ca13572f7b9
   expo-dev-menu: 0db38ce92be7228dadb588f7069e037fd9d165d8
   expo-dev-menu-interface: be32c09f1e03833050f0ee290dcc86b3ad0e73e4
@@ -1766,7 +1766,7 @@ SPEC CHECKSUMS:
   ExpoModulesCore: f30a203ff1863bab3dd9f4421e7fc1564797f18a
   ExpoSystemUI: d4f065a016cae6721b324eb659cdee4d4cf0cb26
   ExpoWebBrowser: 7595ccac6938eb65b076385fd23d035db9ecdc8e
-  EXSplashScreen: fbf0ec78e9cee911df188bf17b4fe51d15a84b87
+  EXSplashScreen: 17a656c08a0095be15b620c52e61dfdb665863d2
   EXUpdatesInterface: 996527fd7d1a5d271eb523258d603f8f92038f24
   FBLazyVector: ac12dc084d1c8ec4cc4d7b3cf1b0ebda6dab85af
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
