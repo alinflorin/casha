@@ -37,8 +37,8 @@ export default function RootLayout() {
   // notifications init
   const [notificationsInit, setNotificationsInit] = useState(false);
   useEffect(() => {
-    notificationsService.init();
-    setNotificationsInit(true);
+      notificationsService.init();
+      setNotificationsInit(true);
   }, [setNotificationsInit]);
 
   // i18n init
@@ -61,6 +61,7 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
+      notificationsService.askPermission().then();
     }
   }, [loaded]);
 

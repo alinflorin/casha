@@ -1,5 +1,5 @@
 import * as Notifications from 'expo-notifications';
-import { Platform } from 'react-native';
+import * as Device from 'expo-device';
 
 class NotificationsService {
   init() {
@@ -12,11 +12,16 @@ class NotificationsService {
     });
   }
 
-  async show(title: string, message: string) {
-    if (Platform.OS === 'web') {
-      alert(title + ": " + message);
-      return '';
+  async askPermission() {
+    if (Device.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      if (existingStatus !== 'granted') {
+        await Notifications.requestPermissionsAsync();
+      }
     }
+  }
+
+  async show(title: string, message: string) {
     return await Notifications.scheduleNotificationAsync({
       content: {
         title: title,
