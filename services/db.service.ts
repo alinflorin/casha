@@ -15,6 +15,7 @@ class DbService {
     `;
     await db.execAsync(seedSql);
     await db.closeAsync();
+    console.log('DB Init OK');
   }
 }
 
