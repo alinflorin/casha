@@ -1,10 +1,20 @@
+import { ThemedSafeAreaView } from "@/components/ThemedSafeAreaView";
 import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
+import { StyleSheet } from "react-native";
 
 export default function TabTwoScreen() {
   return (
-    <ThemedView>
-      <ThemedText type="title">Explore</ThemedText>
-    </ThemedView>
+      <ThemedSafeAreaView style={styles.titleContainer}>
+        <ThemedText type="title">Explore</ThemedText>
+        <ThemedText type="title">Explore</ThemedText>
+        <ThemedText type="title">Explore</ThemedText>
+        <ThemedText type="title">Explore</ThemedText>
+      </ThemedSafeAreaView>
   );
 }
+const styles = StyleSheet.create({
+  titleContainer: {
+    gap: 8,
+    flex: 1
+  },
+});
