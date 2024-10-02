@@ -28,7 +28,7 @@ export default function RootLayout() {
   const [databaseInit, setDatabaseInit] = useState(false);
   useEffect(() => {
     (async () => {
-      await dbService.initDatabaseTablesAndSeed();
+      await dbService.init();
       setDatabaseInit(true);
     })();
   }, [setDatabaseInit]);
