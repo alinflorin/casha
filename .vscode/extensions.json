@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "mikestead.dotenv",
+    "editorconfig.editorconfig",
+    "dsznajder.es7-react-js-snippets",
+    "dbaeumer.vscode-eslint",
+    "expo.vscode-expo-tools",
+    "ecmel.vscode-html-css",
+    "esbenp.prettier-vscode",
+    "msjsdiag.vscode-react-native",
+    "markosth09.color-picker",
+    "vscode-icons-team.vscode-icons"
+  ]
+}
