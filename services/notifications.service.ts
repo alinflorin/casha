@@ -1,5 +1,4 @@
-import * as Notifications from 'expo-notifications';
-import * as Device from 'expo-device';
+import * as Notifications from "expo-notifications";
 
 class NotificationsService {
   init() {
@@ -13,11 +12,10 @@ class NotificationsService {
   }
 
   async askPermission() {
-    if (Device.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      if (existingStatus !== 'granted') {
-        await Notifications.requestPermissionsAsync();
-      }
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    if (existingStatus !== "granted") {
+      await Notifications.requestPermissionsAsync();
     }
   }
 
