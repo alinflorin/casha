@@ -1,4 +1,5 @@
 import * as Notifications from 'expo-notifications';
+import { Platform } from 'react-native';
 
 class NotificationsService {
   init() {
@@ -12,6 +13,10 @@ class NotificationsService {
   }
 
   async show(title: string, message: string) {
+    if (Platform.OS === 'web') {
+      alert(title + ": " + message);
+      return '';
+    }
     return await Notifications.scheduleNotificationAsync({
       content: {
         title: title,
