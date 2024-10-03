@@ -1,14 +1,18 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState } from 'react';
-import 'react-native-reanimated';
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect, useState } from "react";
+import "react-native-reanimated";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-import dbService from '@/services/db.service';
-import notificationsService from '@/services/notifications.service';
-import i18nService from '@/services/i18n.service';
+import { useColorScheme } from "@/hooks/useColorScheme";
+import dbService from "@/services/db.service";
+import notificationsService from "@/services/notifications.service";
+import i18nService from "@/services/i18n.service";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -21,7 +25,7 @@ export default function RootLayout() {
 
   // load fonts
   const [fontsLoaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
   // database init
@@ -33,12 +37,11 @@ export default function RootLayout() {
     })();
   }, [setDatabaseInit]);
 
-
   // notifications init
   const [notificationsInit, setNotificationsInit] = useState(false);
   useEffect(() => {
-      notificationsService.init();
-      setNotificationsInit(true);
+    notificationsService.init();
+    setNotificationsInit(true);
   }, [setNotificationsInit]);
 
   // i18n init
@@ -60,7 +63,6 @@ export default function RootLayout() {
     }
   }, [fontsLoaded, databaseInit, notificationsInit, i18nInit, setLoaded]);
 
-
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
@@ -73,7 +75,7 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />

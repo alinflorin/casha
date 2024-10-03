@@ -1,6 +1,6 @@
-import { SettingEntity } from '@/entities/setting.entity';
-import Constants from 'expo-constants';
-import * as SQLite from 'expo-sqlite';
+import { SettingEntity } from "@/entities/setting.entity";
+import Constants from "expo-constants";
+import * as SQLite from "expo-sqlite";
 
 const databaseName = Constants.expoConfig!.extra!.databaseName;
 
@@ -16,23 +16,33 @@ class DbService {
     `;
     await db.execAsync(seedSql);
     await db.closeAsync();
-    console.log('DB Init OK');
+    console.log("DB Init OK");
   }
 
   async getSetting(key: string) {
     const db = await SQLite.openDatabaseAsync(databaseName);
-    const result = await db.getFirstAsync<SettingEntity>(`SELECT * FROM settings WHERE key=?`, key);
+    const result = await db.getFirstAsync<SettingEntity>(
+      `SELECT * FROM settings WHERE key=?`,
+      key,
+    );
     await db.closeAsync();
     return result;
   }
 
   async setSetting(key: string, value: string) {
     const db = await SQLite.openDatabaseAsync(databaseName);
-    const result = await db.getFirstAsync<SettingEntity>(`SELECT * FROM settings WHERE key=?`, key);
+    const result = await db.getFirstAsync<SettingEntity>(
+      `SELECT * FROM settings WHERE key=?`,
+      key,
+    );
     if (result) {
-      await db.runAsync('UPDATE settings SET value=? WHERE key=?', value, key);
+      await db.runAsync("UPDATE settings SET value=? WHERE key=?", value, key);
     } else {
-      await db.runAsync(`INSERT INTO settings(key, value) VALUES (?,?)`, key, value);
+      await db.runAsync(
+        `INSERT INTO settings(key, value) VALUES (?,?)`,
+        key,
+        value,
+      );
     }
     await db.closeAsync();
   }

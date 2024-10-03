@@ -6,16 +6,19 @@ import { useCallback } from "react";
 import { Button, StyleSheet } from "react-native";
 
 export default function HomeScreen() {
-
   const testNotifications = useCallback(async () => {
-    await notificationsService.show('test', 'testttttt');
+    await notificationsService.show("test", "testttttt");
   }, []);
 
   return (
     <ThemedSafeAreaView style={styles.titleContainer}>
       <ThemedText type="title">Welcome home!</ThemedText>
       <Button onPress={testNotifications} title="Test Notifications" />
-      <HelloWave /><HelloWave /><HelloWave /><HelloWave /><HelloWave />
+      <HelloWave />
+      <HelloWave />
+      <HelloWave />
+      <HelloWave />
+      <HelloWave />
     </ThemedSafeAreaView>
   );
 }

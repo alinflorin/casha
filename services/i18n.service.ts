@@ -10,15 +10,14 @@ const resources = {
   "en-US": { translation: translationEn },
 };
 
-
 class I18nService {
   async init() {
-    let savedLanguage = (await dbService.getSetting('language'))?.value;
+    let savedLanguage = (await dbService.getSetting("language"))?.value;
 
     if (!savedLanguage) {
       savedLanguage = Localization.getLocales()[0].languageTag;
     }
-  
+
     i18n.use(initReactI18next).init({
       compatibilityJSON: "v3",
       resources,
