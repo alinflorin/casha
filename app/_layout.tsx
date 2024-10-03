@@ -44,11 +44,14 @@ export default function RootLayout() {
   // i18n init
   const [i18nInit, setI18nInit] = useState(false);
   useEffect(() => {
+    if (!databaseInit) {
+      return;
+    }
     (async () => {
       await i18nService.init();
       setI18nInit(true);
     })();
-  }, [setI18nInit]);
+  }, [setI18nInit, databaseInit]);
 
   // is everything loaded?
   useEffect(() => {
