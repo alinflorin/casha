@@ -8,12 +8,11 @@ class DbService {
   async init() {
     const db = await SQLite.openDatabaseAsync(databaseName);
     const initSql = `
-    CREATE TABLE IF NOT EXISTS settings (key TEXT NOT NULL PRIMARY KEY, value TEXT);
-
+    CREATE TABLE IF NOT EXISTS settings (key TEXT NOT NULL PRIMARY KEY, value TEXT)
     `;
     await db.execAsync(initSql);
     const seedSql = `
-    SELECT 1;
+    SELECT 1
     `;
     await db.execAsync(seedSql);
     await db.closeAsync();
