@@ -8,8 +8,7 @@
     "ios": "expo run:ios",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "pod-install": "pod-install",
-    "pretty": "prettier --write ."
+    "pod-install": "pod-install"
   },
   "jest": {
     "preset": "jest-expo"
