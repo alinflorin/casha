@@ -23,15 +23,9 @@
       },
       "package": "com.huna2.casha"
     },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
     "platforms": [
       "android",
-      "ios",
-      "web"
+      "ios"
     ],
     "plugins": [
       "expo-router",
