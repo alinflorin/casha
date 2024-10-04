@@ -1,13 +1,15 @@
 import { HelloWave } from "@/components/HelloWave";
 import { ThemedSafeAreaView } from "@/components/ThemedSafeAreaView";
 import { ThemedText } from "@/components/ThemedText";
-import notificationsService from "@/services/notifications.service";
+import useNotifications from "@/hooks/useNotifications";
 import { useCallback } from "react";
 import { Button, StyleSheet } from "react-native";
 
 export default function HomeScreen() {
+  const { show } = useNotifications();
+
   const testNotifications = useCallback(async () => {
-    await notificationsService.show("test", "testttttt");
+    await show("test", "testttttt");
   }, []);
 
   return (

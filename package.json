@@ -6,6 +6,8 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
+    "android-device": "expo run:android --device",
+    "ios-device": "expo run:ios --device",
     "test": "jest --watchAll",
     "lint": "expo lint",
     "pod-install": "pod-install"
