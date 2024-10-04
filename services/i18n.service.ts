@@ -3,7 +3,6 @@ import { initReactI18next } from "react-i18next";
 import * as Localization from "expo-localization";
 import translationEn from "../assets/locales/en-US/translation.json";
 import translationRo from "../assets/locales/ro-RO/translation.json";
-import dbService from "./db.service";
 
 const resources = {
   "ro-RO": { translation: translationRo },
@@ -11,9 +10,7 @@ const resources = {
 };
 
 class I18nService {
-  async init() {
-    let savedLanguage = (await dbService.getSetting("language"))?.value;
-
+  async init(savedLanguage: string | undefined) {
     if (!savedLanguage) {
       savedLanguage = Localization.getLocales()[0].languageTag;
     }

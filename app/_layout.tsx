@@ -51,7 +51,8 @@ export default function RootLayout() {
       return;
     }
     (async () => {
-      await i18nService.init();
+      const preferredLanguage = (await dbService.getSetting("language"))?.value;
+      await i18nService.init(preferredLanguage);
       setI18nInit(true);
     })();
   }, [setI18nInit, databaseInit]);
