@@ -29,7 +29,7 @@ export default function RootLayout() {
 
   // load fonts
   const [fontsLoaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf")
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
   // DB and i18n
