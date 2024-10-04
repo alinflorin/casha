@@ -6,13 +6,17 @@ import {
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "react-native-reanimated";
-
 import { useColorScheme } from "@/hooks/useColorScheme";
-import dbService from "@/services/db.service";
-import notificationsService from "@/services/notifications.service";
-import i18nService from "@/services/i18n.service";
+import {
+  askNotificationsPermission,
+  initNotifications,
+} from "@/config/init-notifications";
+import { initI18N } from "@/config/init-i18n";
+import { SQLiteDatabase, SQLiteProvider } from "expo-sqlite";
+import Constants from "expo-constants";
+import { dbInternal } from "@/hooks/useDb";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -28,46 +32,38 @@ export default function RootLayout() {
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
-  // database init
-  const [databaseInit, setDatabaseInit] = useState(false);
-  useEffect(() => {
-    (async () => {
-      await dbService.init();
-      setDatabaseInit(true);
-    })();
-  }, [setDatabaseInit]);
+  // DB and i18n
+  const [dbInit, setDbInit] = useState(false);
+  const [i18nInit, setI18nInit] = useState(false);
+
+  const onInitDb = useCallback(async (db: SQLiteDatabase) => {
+    const dbSvc = dbInternal(db);
+    await dbSvc.initDb();
+    setDbInit(true);
+
+    const preferredLanguage = await dbSvc.getSetting("language");
+    initI18N(preferredLanguage);
+    setI18nInit(true);
+  }, []);
 
   // notifications init
   const [notificationsInit, setNotificationsInit] = useState(false);
   useEffect(() => {
-    notificationsService.init();
+    initNotifications();
     setNotificationsInit(true);
   }, [setNotificationsInit]);
 
-  // i18n init
-  const [i18nInit, setI18nInit] = useState(false);
-  useEffect(() => {
-    if (!databaseInit) {
-      return;
-    }
-    (async () => {
-      const preferredLanguage = (await dbService.getSetting("language"))?.value;
-      await i18nService.init(preferredLanguage);
-      setI18nInit(true);
-    })();
-  }, [setI18nInit, databaseInit]);
-
   // is everything loaded?
   useEffect(() => {
-    if (fontsLoaded && databaseInit && notificationsInit && i18nInit) {
+    if (fontsLoaded && notificationsInit && i18nInit && dbInit) {
       setLoaded(true);
     }
-  }, [fontsLoaded, databaseInit, notificationsInit, i18nInit, setLoaded]);
+  }, [fontsLoaded, notificationsInit, i18nInit, dbInit, setLoaded]);
 
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
-      notificationsService.askPermission().then();
+      askNotificationsPermission().then();
     }
   }, [loaded]);
 
@@ -77,10 +73,15 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+      <SQLiteProvider
+        databaseName={Constants.expoConfig!.extra!.databaseName}
+        onInit={onInitDb}
+      >
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </SQLiteProvider>
     </ThemeProvider>
   );
 }
