@@ -1,7 +1,7 @@
 import {
   DarkTheme,
   DefaultTheme,
-  ThemeProvider,
+  ThemeProvider
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -15,7 +15,7 @@ import { dbInternal } from "@/hooks/useDb";
 import { initI18N } from "@/hooks/useTranslate";
 import {
   askNotificationsPermission,
-  initNotifications,
+  initNotifications
 } from "@/hooks/useNotifications";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -29,7 +29,7 @@ export default function RootLayout() {
 
   // load fonts
   const [fontsLoaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf")
   });
 
   // DB and i18n
@@ -72,16 +72,16 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <SQLiteProvider
-        databaseName={Constants.expoConfig!.extra!.databaseName}
-        onInit={onInitDb}
-      >
+    <SQLiteProvider
+      databaseName={Constants.expoConfig!.extra!.databaseName}
+      onInit={onInitDb}
+    >
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>
-      </SQLiteProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </SQLiteProvider>
   );
 }
