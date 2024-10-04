@@ -2,7 +2,6 @@ import { SettingEntity } from "@/entities/setting.entity";
 import { SQLiteDatabase, useSQLiteContext } from "expo-sqlite";
 import { useMemo } from "react";
 
-
 export const dbInternal = (db: SQLiteDatabase) => {
   const initDb = async () => {
     const initSql = `
@@ -42,10 +41,6 @@ export const dbInternal = (db: SQLiteDatabase) => {
 
   return { initDb, setSetting, getSetting };
 };
-
-
-
-
 
 export const useDb = () => {
   const db = useSQLiteContext();
