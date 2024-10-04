@@ -29,7 +29,7 @@ export default function RootLayout() {
 
   // load fonts
   const [fontsLoaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf")
   });
 
   // DB and i18n
@@ -67,21 +67,21 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
-  if (!loaded) {
-    return null;
-  }
-
   return (
     <SQLiteProvider
       databaseName={Constants.expoConfig!.extra!.databaseName}
       onInit={onInitDb}
     >
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </ThemeProvider>
+      {loaded && (
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </ThemeProvider>
+      )}
     </SQLiteProvider>
   );
 }
