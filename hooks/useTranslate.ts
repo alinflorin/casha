@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import * as Localization from "expo-localization";
@@ -24,3 +25,11 @@ export const initI18N = async (savedLanguage: string | undefined) => {
     },
   });
 };
+
+export const useTranslate = () => {
+  const { t } = useTranslation();
+
+  return { t };
+};
+
+export default useTranslate;

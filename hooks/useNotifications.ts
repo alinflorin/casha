@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import * as Notifications from "expo-notifications";
 
 export const initNotifications = () => {
@@ -16,3 +17,19 @@ export const askNotificationsPermission = async () => {
     await Notifications.requestPermissionsAsync();
   }
 };
+
+export const useNotifications = () => {
+  const show = useCallback(async (title: string, message: string) => {
+    return await Notifications.scheduleNotificationAsync({
+      content: {
+        title: title,
+        body: message,
+      },
+      trigger: null,
+    });
+  }, []);
+
+  return { show };
+};
+
+export default useNotifications;

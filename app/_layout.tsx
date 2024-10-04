@@ -9,14 +9,14 @@ import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
 import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import {
-  askNotificationsPermission,
-  initNotifications,
-} from "@/config/init-notifications";
-import { initI18N } from "@/config/init-i18n";
 import { SQLiteDatabase, SQLiteProvider } from "expo-sqlite";
 import Constants from "expo-constants";
 import { dbInternal } from "@/hooks/useDb";
+import { initI18N } from "@/hooks/useTranslate";
+import {
+  askNotificationsPermission,
+  initNotifications,
+} from "@/hooks/useNotifications";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
