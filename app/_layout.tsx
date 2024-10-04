@@ -37,7 +37,6 @@ export default function RootLayout() {
   const [i18nInit, setI18nInit] = useState(false);
 
   const onInitDb = useCallback(async (db: SQLiteDatabase) => {
-    console.log("sadad");
     const dbSvc = dbInternal(db);
     await dbSvc.initDb();
     setDbInit(true);
