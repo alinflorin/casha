@@ -6,8 +6,8 @@ export const initNotifications = () => {
     handleNotification: async () => ({
       shouldShowAlert: true,
       shouldPlaySound: true,
-      shouldSetBadge: true,
-    }),
+      shouldSetBadge: true
+    })
   });
 };
 
@@ -23,9 +23,9 @@ export const useNotifications = () => {
     return await Notifications.scheduleNotificationAsync({
       content: {
         title: title,
-        body: message,
+        body: message
       },
-      trigger: null,
+      trigger: null
     });
   }, []);
 

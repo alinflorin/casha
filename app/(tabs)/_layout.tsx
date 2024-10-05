@@ -12,7 +12,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        headerShown: false,
+        headerShown: false
       }}
     >
       <Tabs.Screen
@@ -24,7 +24,7 @@ export default function TabLayout() {
               name={focused ? "home" : "home-outline"}
               color={color}
             />
-          ),
+          )
         }}
       />
       <Tabs.Screen
@@ -36,7 +36,7 @@ export default function TabLayout() {
               name={focused ? "code-slash" : "code-slash-outline"}
               color={color}
             />
-          ),
+          )
         }}
       />
     </Tabs>

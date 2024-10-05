@@ -27,6 +27,6 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   titleContainer: {
     gap: 8,
-    flex: 1,
-  },
+    flex: 1
+  }
 });

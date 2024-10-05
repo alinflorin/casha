@@ -7,7 +7,7 @@ import translationRo from "../assets/locales/ro-RO/translation.json";
 
 const resources = {
   "ro-RO": { translation: translationRo },
-  "en-US": { translation: translationEn },
+  "en-US": { translation: translationEn }
 };
 
 export const initI18N = async (savedLanguage: string | undefined) => {
@@ -21,8 +21,8 @@ export const initI18N = async (savedLanguage: string | undefined) => {
     lng: savedLanguage,
     fallbackLng: "en-US",
     interpolation: {
-      escapeValue: false,
-    },
+      escapeValue: false
+    }
   });
 };
 
