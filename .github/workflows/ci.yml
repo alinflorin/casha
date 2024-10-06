@@ -34,14 +34,10 @@ jobs:
         if: matrix.os == 'android'
         uses: actions/setup-java@v4.4.0
         with:
-          java-version: 21
-          distribution: microsoft
+          java-version: 22
+          distribution: adopt
           cache: gradle
           cache-dependency-path: android/build.gradle
-
-      # - name: Setup Android SDK Tools
-      #   if: matrix.os == 'android'
-      #   uses: android-actions/setup-android@v3.2.1
 
       - name: Install Android dependencies
         working-directory: android
