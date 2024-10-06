@@ -39,9 +39,9 @@ jobs:
           cache: gradle
           cache-dependency-path: android/build.gradle
 
-      - name: Setup Android SDK Tools
-        if: matrix.os == 'android'
-        uses: android-actions/setup-android@v3.2.1
+      # - name: Setup Android SDK Tools
+      #   if: matrix.os == 'android'
+      #   uses: android-actions/setup-android@v3.2.1
 
       - name: Install Android dependencies
         working-directory: android
