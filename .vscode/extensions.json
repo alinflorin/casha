@@ -1,7 +1,6 @@
 {
   "recommendations": [
     "mikestead.dotenv",
-    "editorconfig.editorconfig",
     "dsznajder.es7-react-js-snippets",
     "dbaeumer.vscode-eslint",
     "expo.vscode-expo-tools",
