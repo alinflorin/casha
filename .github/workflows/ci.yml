@@ -26,3 +26,18 @@ jobs:
           node-version: 20.x
           cache: npm
           cache-dependency-path: package-lock.json
+
+      - name: Setup Java JDK
+        if: ${{ matrix.os == "android" }}
+        uses: actions/setup-java@v4.4.0
+        with:
+          java-version: 21
+          cache: gradle
+          cache-dependency-path: android/build.gradle
+
+      - name: Setup Android SDK Tools
+        if: ${{ matrix.os == "android" }}
+        uses: android-actions/setup-android@v3.2.1
+          
+      - name: NPM Install
+        run: npm install
