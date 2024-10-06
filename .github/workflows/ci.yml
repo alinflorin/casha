@@ -42,5 +42,5 @@ jobs:
       - name: Install Android dependencies
         working-directory: android
         if: matrix.os == 'android'
-        run: ./gradlew --no-daemon installRelease
+        run: ./gradlew installRelease
   
