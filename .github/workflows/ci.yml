@@ -3,7 +3,16 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ios, android]
+        builderOs: [macos-latest, ubuntu-latest]
+        include:
+          - os: ios
+            builderOs: macos-latest
+          - os: android
+            builderOs: ubuntu-latest
+    runs-on: ${{ matrix.builderOs }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.0
