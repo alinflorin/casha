@@ -27,6 +27,9 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
 
+      - name: NPM Install
+        run: npm install
+
       - name: Setup Java JDK
         if: matrix.os == 'android'
         uses: actions/setup-java@v4.4.0
@@ -39,6 +42,9 @@ jobs:
       - name: Setup Android SDK Tools
         if: matrix.os == 'android'
         uses: android-actions/setup-android@v3.2.1
-          
-      - name: NPM Install
-        run: npm install
+
+      - name: Install Android dependencies
+        working-directory: android
+        if: matrix.os == 'android'
+        run: ./gradlew --no-daemon install
+  
