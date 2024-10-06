@@ -9,7 +9,7 @@ jobs:
         builderOs: [macos-latest, ubuntu-latest]
         exclude:
           - os: ios
-            builderOs: android-latest
+            builderOs: ubuntu-latest
           - os: android
             builderOs: macos-latest
     runs-on: ${{ matrix.builderOs }}
