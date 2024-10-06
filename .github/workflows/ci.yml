@@ -5,17 +5,8 @@ on:
     branches: 
       - main
 jobs:
-  build:
-    strategy:
-      matrix:
-        os: [ios, android]
-        builderOs: [macos-latest, ubuntu-latest]
-        exclude:
-          - os: ios
-            builderOs: ubuntu-latest
-          - os: android
-            builderOs: macos-latest
-    runs-on: ${{ matrix.builderOs }}
+  build_android:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.2.0
@@ -31,7 +22,6 @@ jobs:
         run: npm install
 
       - name: Setup Java JDK
-        if: matrix.os == 'android'
         uses: actions/setup-java@v4.4.0
         with:
           java-version: 22
@@ -39,8 +29,12 @@ jobs:
           cache: gradle
           cache-dependency-path: android/build.gradle
 
-      - name: Install Android dependencies
+      - name: Build APK
         working-directory: android
-        if: matrix.os == 'android'
-        run: ./gradlew installRelease
+        run: ./gradlew assembleRelease
   
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk
+          path: android/app/build/outputs/apk/release/app-release.apk
