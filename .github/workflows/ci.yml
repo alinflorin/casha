@@ -7,11 +7,11 @@ jobs:
       matrix:
         os: [ios, android]
         builderOs: [macos-latest, ubuntu-latest]
-        include:
+        exclude:
           - os: ios
-            builderOs: macos-latest
+            builderOs: android-latest
           - os: android
-            builderOs: ubuntu-latest
+            builderOs: macos-latest
     runs-on: ${{ matrix.builderOs }}
     steps:
       - name: Checkout code
