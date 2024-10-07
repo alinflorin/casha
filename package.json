@@ -8,14 +8,24 @@
     "ios": "expo run:ios",
     "android-device": "expo run:android --device",
     "ios-device": "expo run:ios --device",
-    "test": "jest --watchAll",
+    "test:dev": "jest -o --watch --coverage=false --passWithNoTests",
+    "test": "jest --passWithNoTests",
     "lint": "expo lint",
     "pod-install": "pod-install",
     "android-build": "react-native build-android --mode=release",
     "ios-build": "react-native build-ios --mode=Release"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx,js,jsx}",
+      "!**/coverage/**",
+      "!**/node_modules/**",
+      "!**/babel.config.js",
+      "!**/expo-env.d.ts",
+      "!**/.expo/**"
+    ]
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.4",
