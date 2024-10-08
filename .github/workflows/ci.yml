@@ -50,7 +50,7 @@ jobs:
           path: android/app/build/outputs/apk/release/app-release.apk
 
   build_ios:
-    runs-on: macos-latest
+    runs-on: macos-14
     steps:
       - name: Install the Apple certificate and provisioning profile
         env:
