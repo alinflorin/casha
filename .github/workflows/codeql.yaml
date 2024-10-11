@@ -163,7 +163,17 @@ jobs:
         -archivePath $RUNNER_TEMP/casha.xcarchive \
         clean archive
 
-    - name: Perform CodeQL Analysis
+    - name: Perform CodeQL Analysis - Swift
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:swift"
+  
+    - name: Perform CodeQL Analysis - C
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:c-cpp"
+
+    - name: Perform CodeQL Analysis - Ruby
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:ruby"
