@@ -9,3 +9,11 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+  - package-ecosystem: "gradle" # See documentation for possible values
+    directory: "/android" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "swift" # See documentation for possible values
+    directory: "/ios" # Location of package manifests
+    schedule:
+      interval: "weekly"
