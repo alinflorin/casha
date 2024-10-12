@@ -3,10 +3,16 @@ on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
+    paths-ignore: 
+      - 'landing/**'
+      - '.vscode/**'
   merge_group:
     branches: ["main"]
   pull_request:
     branches: [ "main" ]
+    paths-ignore: 
+      - 'landing/**'
+      - '.vscode/**'
 
 jobs:
   build_android:
