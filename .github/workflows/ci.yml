@@ -130,7 +130,7 @@ jobs:
           -configuration Debug \
           -destination generic/platform=iOS \
           -archivePath $RUNNER_TEMP/casha.xcarchive \
-          clean archive
+          archive
 
       - name: Export IPA
         env:

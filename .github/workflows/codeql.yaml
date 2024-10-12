@@ -82,8 +82,8 @@ jobs:
       with:
         category: "/language:javascript-typescript"
 
-  analyze_ios:
-    name: Analyze iOS
+  analyze_swift:
+    name: Analyze Swift
     runs-on: macos-latest
     permissions:
       security-events: write
@@ -100,6 +100,100 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: swift
+        build-mode: manual
+
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v4.0.4
+      with:
+        node-version: 20.x
+        cache: npm
+        cache-dependency-path: package-lock.json
+
+    - name: NPM Install
+      run: npm install
+
+    - uses: actions/cache@v4
+      name: Cache CocoaPods
+      with:
+        path: ios/Pods
+        key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-pods-
+
+    - name: Install CocoaPods dependencies
+      working-directory: ios
+      run: pod install
+
+    - name: Perform CodeQL Analysis - Swift
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:swift"
+
+  analyze_ruby:
+    name: Analyze Ruby
+    runs-on: macos-latest
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ruby
+        build-mode: manual
+
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v4.0.4
+      with:
+        node-version: 20.x
+        cache: npm
+        cache-dependency-path: package-lock.json
+
+    - name: NPM Install
+      run: npm install
+
+    - uses: actions/cache@v4
+      name: Cache CocoaPods
+      with:
+        path: ios/Pods
+        key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-pods-
+
+    - name: Install CocoaPods dependencies
+      working-directory: ios
+      run: pod install
+
+    - name: Perform CodeQL Analysis - Ruby
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:ruby"
+
+  analyze_c:
+    name: Analyze C
+    runs-on: macos-latest
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: c-cpp
         build-mode: manual
 
     - name: Setup Node.js environment
@@ -161,19 +255,9 @@ jobs:
         -configuration Debug \
         -destination generic/platform=iOS \
         -archivePath $RUNNER_TEMP/casha.xcarchive \
-        clean archive
+        archive
 
-    - name: Perform CodeQL Analysis - Swift
-      uses: github/codeql-action/analyze@v3
-      with:
-        category: "/language:swift"
-  
     - name: Perform CodeQL Analysis - C
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:c-cpp"
-
-    - name: Perform CodeQL Analysis - Ruby
-      uses: github/codeql-action/analyze@v3
-      with:
-        category: "/language:ruby"
