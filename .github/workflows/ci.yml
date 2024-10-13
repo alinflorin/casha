@@ -4,15 +4,13 @@ on:
   push:
     branches: [ "main" ]
     paths-ignore: 
-      - 'landing/**'
-      - '.vscode/**'
+      - 'src/landing/**'
   merge_group:
     branches: ["main"]
   pull_request:
     branches: [ "main" ]
     paths-ignore: 
-      - 'landing/**'
-      - '.vscode/**'
+      - 'src/landing/**'
 
 jobs:
   build_android:
@@ -26,19 +24,21 @@ jobs:
         with:
           node-version: 20.x
           cache: npm
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: src/casha/package-lock.json
 
       - name: NPM Install
+        working-directory: src/casha
         run: npm install
 
       - name: Run unit tests
+        working-directory: src/casha
         run: npm run test
 
       - name: Upload Coverage
         uses: actions/upload-artifact@v4
         with:
           name: android-coverage
-          path: coverage
+          path: src/casha/coverage
 
       - name: Setup Java JDK
         uses: actions/setup-java@v4.4.0
@@ -46,17 +46,17 @@ jobs:
           java-version: 22
           distribution: adopt
           cache: gradle
-          cache-dependency-path: android/build.gradle
+          cache-dependency-path: src/casha/android/build.gradle
 
       - name: Build APK
-        working-directory: android
+        working-directory: src/casha/android
         run: ./gradlew assembleRelease
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: apk
-          path: android/app/build/outputs/apk/release/app-release.apk
+          path: src/casha/android/app/build/outputs/apk/release/app-release.apk
 
   build_ios:
     runs-on: macos-latest
@@ -101,34 +101,36 @@ jobs:
         with:
           node-version: 20.x
           cache: npm
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: src/casha/package-lock.json
 
       - uses: actions/cache@v4
         name: Cache CocoaPods
         with:
-          path: ios/Pods
-          key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+          path: src/casha/ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('src/casha/ios/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pods-
 
       - name: NPM Install
+        working-directory: src/casha
         run: npm install
 
       - name: Install CocoaPods dependencies
-        working-directory: ios
+        working-directory: src/casha/ios
         run: pod install
 
       - name: Run unit tests
+        working-directory: src/casha
         run: npm run test
 
       - name: Upload Coverage
         uses: actions/upload-artifact@v4
         with:
           name: ios-coverage
-          path: coverage
+          path: src/casha/coverage
 
       - name: Build archive
-        working-directory: ios
+        working-directory: src/casha/ios
         run: |
           xcodebuild -workspace casha.xcworkspace \
           -scheme "casha" \

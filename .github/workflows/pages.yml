@@ -6,7 +6,7 @@ on:
   push:
     branches: ["main"]
     paths:
-      - 'landing/**'
+      - 'src/landing/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -39,7 +39,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: './landing'
+          path: './src/casha/landing'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

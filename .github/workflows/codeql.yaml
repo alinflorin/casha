@@ -31,9 +31,10 @@ jobs:
       with:
         node-version: 20.x
         cache: npm
-        cache-dependency-path: package-lock.json
+        cache-dependency-path: src/casha/package-lock.json
 
     - name: NPM Install
+      working-directory: src/casha
       run: npm install
 
     - name: Setup Java JDK
@@ -42,10 +43,10 @@ jobs:
         java-version: 22
         distribution: adopt
         cache: gradle
-        cache-dependency-path: android/build.gradle
+        cache-dependency-path: src/casha/android/build.gradle
 
     - name: Build APK
-      working-directory: android
+      working-directory: src/casha/android
       run: ./gradlew assembleRelease
       
     - name: Perform CodeQL Analysis
@@ -104,9 +105,10 @@ jobs:
       with:
         node-version: 20.x
         cache: npm
-        cache-dependency-path: package-lock.json
+        cache-dependency-path: src/casha/package-lock.json
 
     - name: NPM Install
+      working-directory: src/casha
       run: npm install
 
     - name: Install the Apple certificate and provisioning profile
@@ -140,17 +142,17 @@ jobs:
     - uses: actions/cache@v4
       name: Cache CocoaPods
       with:
-        path: ios/Pods
-        key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+        path: src/casha/ios/Pods
+        key: ${{ runner.os }}-pods-${{ hashFiles('src/casha/ios/Podfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-pods-
 
     - name: Install CocoaPods dependencies
-      working-directory: ios
+      working-directory: src/casha/ios
       run: pod install
 
     - name: Build archive
-      working-directory: ios
+      working-directory: src/casha/ios
       run: |
         xcodebuild -workspace casha.xcworkspace \
         -scheme "casha" \
@@ -190,21 +192,22 @@ jobs:
       with:
         node-version: 20.x
         cache: npm
-        cache-dependency-path: package-lock.json
+        cache-dependency-path: src/casha/package-lock.json
 
     - name: NPM Install
+      working-directory: src/casha
       run: npm install
 
     - uses: actions/cache@v4
       name: Cache CocoaPods
       with:
-        path: ios/Pods
-        key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+        path: src/casha/ios/Pods
+        key: ${{ runner.os }}-pods-${{ hashFiles('src/casha/ios/Podfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-pods-
 
     - name: Install CocoaPods dependencies
-      working-directory: ios
+      working-directory: src/casha/ios
       run: pod install
 
     - name: Perform CodeQL Analysis - Ruby
@@ -237,9 +240,10 @@ jobs:
       with:
         node-version: 20.x
         cache: npm
-        cache-dependency-path: package-lock.json
+        cache-dependency-path: src/casha/package-lock.json
 
     - name: NPM Install
+      working-directory: src/casha
       run: npm install
 
     - name: Install the Apple certificate and provisioning profile
@@ -273,17 +277,17 @@ jobs:
     - uses: actions/cache@v4
       name: Cache CocoaPods
       with:
-        path: ios/Pods
-        key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+        path: src/casha/ios/Pods
+        key: ${{ runner.os }}-pods-${{ hashFiles('/src/casha/ios/Podfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-pods-
 
     - name: Install CocoaPods dependencies
-      working-directory: ios
+      working-directory: src/casha/ios
       run: pod install
 
     - name: Build archive
-      working-directory: ios
+      working-directory: src/casha/ios
       run: |
         xcodebuild -workspace casha.xcworkspace \
         -scheme "casha" \
