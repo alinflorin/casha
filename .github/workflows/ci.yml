@@ -3,14 +3,14 @@ on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
-    paths-ignore: 
-      - 'src/landing/**'
+    paths: 
+      - 'src/casha/**'
   merge_group:
     branches: ["main"]
   pull_request:
     branches: [ "main" ]
-    paths-ignore: 
-      - 'src/landing/**'
+    paths: 
+      - 'src/casha/**'
 
 jobs:
   build_android:
