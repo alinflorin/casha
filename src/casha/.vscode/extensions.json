@@ -8,6 +8,7 @@
     "esbenp.prettier-vscode",
     "msjsdiag.vscode-react-native",
     "markosth09.color-picker",
-    "vscode-icons-team.vscode-icons"
+    "vscode-icons-team.vscode-icons",
+    "lokalise.i18n-ally"
   ]
 }
