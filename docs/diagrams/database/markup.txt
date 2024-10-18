@@ -1,0 +1,25 @@
+
+cars {
+	vin text(64) pk increments unique
+	display_name text
+	make text(255)
+	model text(255)
+	year integer
+	km integer null
+	obd_adapter_data text null
+}
+
+service_items {
+	id integer pk increments unique
+	name text
+	service_interval_months integer null
+	service_interval_km integer null
+}
+
+active_service_items {
+	vin text(64) pk > cars.vin
+	service_item_id integer pk > service_items.id
+	service_interval_months integer null
+	service_interval_km integer null
+}
+

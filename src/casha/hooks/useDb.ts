@@ -2,15 +2,17 @@ import { SettingEntity } from "@/entities/setting.entity";
 import { SQLiteDatabase, useSQLiteContext } from "expo-sqlite";
 import { useMemo } from "react";
 
+const initSql = `
+
+`;
+
+const seedSql = `
+
+`;
+
 export const dbInternal = (db: SQLiteDatabase) => {
   const initDb = async () => {
-    const initSql = `
-    CREATE TABLE IF NOT EXISTS settings (key TEXT NOT NULL PRIMARY KEY, value TEXT)
-    `;
     await db.execAsync(initSql);
-    const seedSql = `
-    SELECT 1
-    `;
     await db.execAsync(seedSql);
   };
 
