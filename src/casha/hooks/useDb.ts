@@ -3,11 +3,11 @@ import { SQLiteDatabase, useSQLiteContext } from "expo-sqlite";
 import { useMemo } from "react";
 
 const initSql = `
-
+SELECT 1;
 `;
 
 const seedSql = `
-
+SELECT 1;
 `;
 
 export const dbInternal = (db: SQLiteDatabase) => {
