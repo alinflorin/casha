@@ -23,3 +23,8 @@ active_service_items {
 	service_interval_km integer null
 }
 
+settings {
+	key text(120) pk unique
+	value text
+}
+

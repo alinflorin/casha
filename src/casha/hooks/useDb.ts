@@ -26,6 +26,10 @@ CREATE TABLE IF NOT EXISTS active_service_items (
 FOREIGN KEY(vin) REFERENCES cars(vin),
 FOREIGN KEY(service_item_id) REFERENCES service_items(id)
 );
+CREATE TABLE IF NOT EXISTS settings (
+	key TEXT NOT NULL UNIQUE,
+	value TEXT NOT NULL
+);
 `;
 
 const seedSql = `
