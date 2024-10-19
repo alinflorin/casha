@@ -1,6 +1,7 @@
 
 cars {
-	vin text(64) pk increments unique
+	id integer pk increments unique
+	vin text unique
 	display_name text
 	make text(255)
 	model text(255)
@@ -11,14 +12,8 @@ cars {
 
 service_items {
 	id integer pk increments unique
-	name text
-	service_interval_months integer null
-	service_interval_km integer null
-}
-
-active_service_items {
-	vin text(64) pk > cars.vin
-	service_item_id integer pk > service_items.id
+	car_id integer *> cars.id
+	name integer unique
 	service_interval_months integer null
 	service_interval_km integer null
 }
@@ -26,5 +21,30 @@ active_service_items {
 settings {
 	key text(120) pk unique
 	value text
+}
+
+shops {
+	id integer pk increments unique
+	name text unique
+}
+
+service_visits {
+	id integer pk increments unique
+	car_id integer *> cars.id
+	shop_id integer *> shops.id
+	visit_date datetime
+}
+
+service_visits_service_items {
+	id integer pk increments unique
+	service_visit_id integer *> service_visits.id
+	service_item_id integer *> service_items.id
+}
+
+common_service_items {
+	id integer pk increments unique
+	name text unique
+	service_interval_months integer null
+	service_interval_km integer null
 }
 
