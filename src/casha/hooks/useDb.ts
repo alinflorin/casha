@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS service_visits (
 	car_id INTEGER NOT NULL,
 	shop_id INTEGER NOT NULL,
 	visit_date REAL NOT NULL,
+	total_spent INTEGER NOT NULL DEFAULT '0',
 FOREIGN KEY(car_id) REFERENCES cars(id),
 FOREIGN KEY(shop_id) REFERENCES shops(id)
 );

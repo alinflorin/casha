@@ -33,6 +33,7 @@ service_visits {
 	car_id integer *> cars.id
 	shop_id integer *> shops.id
 	visit_date datetime
+	total_spent integer def(0)
 }
 
 service_visits_service_items {
