@@ -8,6 +8,7 @@ cars {
 	year integer
 	km integer null
 	obd_adapter_data text null
+	uses_imperial integer def(0)
 }
 
 service_items {

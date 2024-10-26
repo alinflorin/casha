@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS cars (
 	model TEXT NOT NULL,
 	year INTEGER NOT NULL,
 	km INTEGER,
-	obd_adapter_data TEXT
+	obd_adapter_data TEXT,
+  uses_imperial INTEGER NOT NULL DEFAULT '0'
 );
 CREATE TABLE IF NOT EXISTS service_items (
 	id integer primary key NOT NULL UNIQUE,
