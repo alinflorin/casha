@@ -14,8 +14,7 @@
     "pod-install": "pod-install",
     "android-build": "react-native build-android --mode=release",
     "ios-build": "react-native build-ios --mode=Release",
-    "prebuild": "expo prebuild",
-    "postinstall": "expo prebuild"
+    "prebuild": "expo prebuild"
   },
   "jest": {
     "preset": "jest-expo",
