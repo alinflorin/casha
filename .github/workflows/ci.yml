@@ -30,6 +30,10 @@ jobs:
         working-directory: src/casha
         run: npm install
 
+      - name: Expo prebuild
+        working-directory: src/casha
+        run: npm run expo prebuild -- --no-install --platform android
+
       - name: Run unit tests
         working-directory: src/casha
         run: npm run test
@@ -103,18 +107,22 @@ jobs:
           cache: npm
           cache-dependency-path: src/casha/package-lock.json
 
-      - uses: actions/cache@v4
-        name: Cache CocoaPods
-        with:
-          path: src/casha/ios/Pods
-          key: ${{ runner.os }}-pods-${{ hashFiles('src/casha/ios/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-
-
       - name: NPM Install
         working-directory: src/casha
         run: npm install
 
+      - name: Expo prebuild
+        working-directory: src/casha
+        run: npm run expo prebuild -- --no-install --platform ios
+
+      - uses: actions/cache@v4
+        name: Cache CocoaPods
+        with:
+          path: src/casha/ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('/src/casha/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+            
       - name: Install CocoaPods dependencies
         working-directory: src/casha/ios
         run: pod install
