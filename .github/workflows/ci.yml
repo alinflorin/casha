@@ -146,7 +146,8 @@ jobs:
           -configuration Debug \
           -destination generic/platform=iOS \
           -archivePath $RUNNER_TEMP/casha.xcarchive \
-          archive
+          archive \
+          DEVELOPMENT_TEAM=${{ secrets.DEVELOPMENT_TEAM }}
 
       - name: Export IPA
         env:

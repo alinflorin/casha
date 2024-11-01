@@ -168,7 +168,8 @@ jobs:
         -configuration Debug \
         -destination generic/platform=iOS \
         -archivePath $RUNNER_TEMP/casha.xcarchive \
-        archive
+        archive \
+        DEVELOPMENT_TEAM=${{ secrets.DEVELOPMENT_TEAM }}
 
     - name: Perform CodeQL Analysis - Swift
       uses: github/codeql-action/analyze@v3
@@ -311,7 +312,8 @@ jobs:
         -configuration Debug \
         -destination generic/platform=iOS \
         -archivePath $RUNNER_TEMP/casha.xcarchive \
-        archive
+        archive \
+        DEVELOPMENT_TEAM=${{ secrets.DEVELOPMENT_TEAM }}
 
     - name: Perform CodeQL Analysis - C
       uses: github/codeql-action/analyze@v3
