@@ -6,12 +6,12 @@ import { ThemedSafeAreaView } from "./ThemedSafeAreaView";
 
 export default function Header() {
   return (
-    <ThemedSafeAreaView style={styles.root}>
-      <ThemedView style={styles.content}>
+    <ThemedView style={styles.root}>
+      <ThemedSafeAreaView style={styles.content}>
         <ThemedText>header</ThemedText>
-      </ThemedView>
+      </ThemedSafeAreaView>
       <HairLine />
-    </ThemedSafeAreaView>
+    </ThemedView>
   );
 }
 
