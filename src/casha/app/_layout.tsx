@@ -4,7 +4,7 @@ import {
   ThemeProvider
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
 import "react-native-reanimated";
@@ -16,7 +16,10 @@ import {
   askNotificationsPermission,
   initNotifications
 } from "@/hooks/useNotifications";
-import { useColorScheme } from "react-native";
+import { StyleSheet, useColorScheme } from "react-native";
+import Header from "@/components/Header";
+import { ThemedView } from "@/components/ThemedView";
+import { ThemedSafeAreaView } from "@/components/ThemedSafeAreaView";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -76,12 +79,34 @@ export default function RootLayout() {
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
+          <ThemedView style={styles.container}>
+            <ThemedView style={styles.header}>
+              <Header />
+            </ThemedView>
+            <ThemedView style={styles.slot}>
+              <ThemedSafeAreaView style={styles.contentSafeArea}>
+                <Slot />
+              </ThemedSafeAreaView>
+            </ThemedView>
+          </ThemedView>
         </ThemeProvider>
       )}
     </SQLiteProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  contentSafeArea: {
+    flex: 1
+  },
+  header: {
+    flex: 1
+  },
+  slot: {
+    flex: 5,
+    padding: 10
+  }
+});
