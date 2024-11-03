@@ -20,6 +20,7 @@ import { StyleSheet, useColorScheme } from "react-native";
 import Header from "@/components/Header";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedSafeAreaView } from "@/components/ThemedSafeAreaView";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -79,16 +80,21 @@ export default function RootLayout() {
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-          <ThemedView style={styles.container}>
-            <ThemedView style={styles.header}>
-              <Header />
+          <SafeAreaProvider>
+            <ThemedView style={styles.container}>
+              <ThemedView style={styles.header}>
+                <Header />
+              </ThemedView>
+              <ThemedView style={styles.slot}>
+                <ThemedSafeAreaView
+                  edges={["bottom", "left", "right"]}
+                  style={styles.contentSafeArea}
+                >
+                  <Slot />
+                </ThemedSafeAreaView>
+              </ThemedView>
             </ThemedView>
-            <ThemedView style={styles.slot}>
-              <ThemedSafeAreaView style={styles.contentSafeArea}>
-                <Slot />
-              </ThemedSafeAreaView>
-            </ThemedView>
-          </ThemedView>
+          </SafeAreaProvider>
         </ThemeProvider>
       )}
     </SQLiteProvider>
