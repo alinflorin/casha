@@ -7,7 +7,10 @@ import { ThemedSafeAreaView } from "./ThemedSafeAreaView";
 export default function Header() {
   return (
     <ThemedView style={styles.root}>
-      <ThemedSafeAreaView edges={['top', 'left', 'right']} style={styles.content}>
+      <ThemedSafeAreaView
+        edges={["top", "left", "right"]}
+        style={styles.content}
+      >
         <ThemedText>header</ThemedText>
       </ThemedSafeAreaView>
       <HairLine />
