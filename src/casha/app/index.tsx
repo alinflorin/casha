@@ -1,5 +1,12 @@
-import { ThemedText } from "@/components/ThemedText";
+import { ThemedLink } from "@/components/ThemedLink";
+import { View } from "react-native";
 
 export default function Home() {
-  return <ThemedText>homeeee</ThemedText>;
+  return (
+    <View>
+      <ThemedLink push href="/about">
+        About
+      </ThemedLink>
+    </View>
+  );
 }

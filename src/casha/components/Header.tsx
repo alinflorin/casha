@@ -20,8 +20,7 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1,
-    backgroundColor: "red"
+    flex: 1
   },
   content: {
     flex: 1,
