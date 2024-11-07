@@ -25,10 +25,6 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-export const unstable_settings = {
-  initialRouteName: "index"
-};
-
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
@@ -37,7 +33,7 @@ export default function RootLayout() {
 
   // load fonts
   const [fontsLoaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf")
+    // SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf")
   });
 
   // DB and i18n
