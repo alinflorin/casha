@@ -26,10 +26,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       bundleIdentifier: "com.huna2.casha"
     },
     android: {
-      adaptiveIcon: {
-        foregroundImage: "./assets/images/adaptive-icon.png",
-        backgroundColor: "#ffffff"
-      },
       package: "com.huna2.casha"
     },
     platforms: ["android", "ios"],
