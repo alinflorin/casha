@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { ThemedView } from "./ThemedView";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import HairLine from "./HairLine";
@@ -18,6 +18,7 @@ export default function Header() {
   }, [navigation]);
 
   const linkColor = useThemeColor({}, "link");
+  const accentColor = useThemeColor({}, "tint");
 
   const { t } = useTranslate();
 
@@ -27,6 +28,25 @@ export default function Header() {
         edges={["top", "left", "right"]}
         style={styles.content}
       >
+        <ThemedView style={styles.logoContainer}>
+          <Image
+            source={{
+              uri: Image.resolveAssetSource(
+                require("../assets/images/icon.png")
+              ).uri
+            }}
+            width={44}
+            height={44}
+          />
+          <ThemedView style={{ flex: 1 }} />
+          <Ionicons.Button
+            style={styles.backButton}
+            name="ellipsis-vertical"
+            size={24}
+            backgroundColor="transparent"
+            color={accentColor}
+          />
+        </ThemedView>
         {pathName !== "/" && (
           <TouchableOpacity onPress={navigateBack}>
             <ThemedView style={styles.navBar}>
@@ -34,6 +54,7 @@ export default function Header() {
                 style={styles.backButton}
                 name="chevron-back"
                 size={24}
+                onPress={navigateBack}
                 backgroundColor="transparent"
                 color={linkColor}
               />
@@ -55,7 +76,15 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
+    display: "flex",
+    flexDirection: "column"
+  },
+  logoContainer: {
+    display: "flex",
+    flexDirection: "row",
+    paddingLeft: 10,
+    paddingRight: 10
   },
   backButton: {
     padding: 0,

@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   slot: {
-    flex: 5,
+    flex: 4,
     padding: 10
   }
 });
