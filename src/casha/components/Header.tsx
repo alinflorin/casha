@@ -5,12 +5,13 @@ import HairLine from "./HairLine";
 import { ThemedSafeAreaView } from "./ThemedSafeAreaView";
 import { ThemedText } from "./ThemedText";
 import { useCallback } from "react";
-import { useNavigation } from "expo-router";
+import { useNavigation, usePathname } from "expo-router";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import useTranslate from "@/hooks/useTranslate";
 
 export default function Header() {
   const navigation = useNavigation();
+  const pathName = usePathname();
 
   const navigateBack = useCallback(() => {
     navigation.goBack();
@@ -26,7 +27,7 @@ export default function Header() {
         edges={["top", "left", "right"]}
         style={styles.content}
       >
-        {true && (
+        {pathName !== "/" && (
           <TouchableOpacity onPress={navigateBack}>
             <ThemedView style={styles.navBar}>
               <Ionicons.Button
