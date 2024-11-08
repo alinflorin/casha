@@ -4,26 +4,17 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import HairLine from "./HairLine";
 import { ThemedSafeAreaView } from "./ThemedSafeAreaView";
 import { ThemedText } from "./ThemedText";
-import { useCallback, useMemo } from "react";
-import { useNavigation, useRootNavigationState } from "expo-router";
+import { useCallback } from "react";
+import { useNavigation } from "expo-router";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import useTranslate from "@/hooks/useTranslate";
 
 export default function Header() {
   const navigation = useNavigation();
-  const rootNavigationState = useRootNavigationState();
 
   const navigateBack = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
-
-  const canNavigateBack = useMemo(() => {
-    return (
-      rootNavigationState.routes[
-        rootNavigationState.index!
-      ].name.toLowerCase() !== "index"
-    );
-  }, [rootNavigationState]);
 
   const linkColor = useThemeColor({}, "link");
 
@@ -35,7 +26,7 @@ export default function Header() {
         edges={["top", "left", "right"]}
         style={styles.content}
       >
-        {canNavigateBack && (
+        {true && (
           <TouchableOpacity onPress={navigateBack}>
             <ThemedView style={styles.navBar}>
               <Ionicons.Button
@@ -72,7 +63,8 @@ const styles = StyleSheet.create({
   backText: {
     padding: 0,
     margin: 0,
-    textDecorationLine: "underline"
+    textDecorationLine: "underline",
+    fontWeight: "bold"
   },
   navBar: {
     display: "flex",
