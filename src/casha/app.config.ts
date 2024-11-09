@@ -29,7 +29,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       package: "com.huna2.casha"
     },
     platforms: ["android", "ios"],
-    plugins: ["expo-router", "expo-localization"],
+    plugins: ["expo-router", "expo-localization", "expo-asset"],
     experiments: {
       typedRoutes: true
     },

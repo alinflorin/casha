@@ -49,33 +49,33 @@ const styles = StyleSheet.create({
   default: {
     fontSize: 16,
     lineHeight: 24,
-    fontFamily: "OpenSans_400Regular"
+    fontFamily: "OpenSans-Regular"
   },
   defaultSemiBold: {
     fontSize: 16,
     lineHeight: 24,
     fontWeight: "600",
-    fontFamily: "OpenSans_600SemiBold"
+    fontFamily: "OpenSans-SemiBold"
   },
   title: {
     fontSize: 32,
     fontWeight: "bold",
     lineHeight: 32,
-    fontFamily: "OpenSans_700Bold"
+    fontFamily: "OpenSans-Bold"
   },
   subtitle: {
     fontSize: 20,
     fontWeight: "bold",
-    fontFamily: "OpenSans_700Bold"
+    fontFamily: "OpenSans-Bold"
   },
   link: {
     lineHeight: 30,
     fontSize: 16,
-    fontFamily: "OpenSans_400Regular"
+    fontFamily: "OpenSans-Regular"
   },
   boldLink: {
     lineHeight: 30,
     fontSize: 16,
-    fontFamily: "OpenSans_700Bold"
+    fontFamily: "OpenSans-Bold"
   }
 });

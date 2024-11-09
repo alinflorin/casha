@@ -34,12 +34,11 @@ export default function Header() {
     <ImageBackground
       source={{ uri: pageInfo.backgroundUrl }}
       style={styles.root}
+      resizeMethod="auto"
+      resizeMode="cover"
+      blurRadius={5}
       imageStyle={{
-        height: "80%",
-        resizeMode: "contain",
-        position: "absolute",
-        right: "-40%",
-        top: "20%"
+        opacity: 0.5
       }}
     >
       <SafeAreaView edges={["top", "left", "right"]} style={styles.content}>

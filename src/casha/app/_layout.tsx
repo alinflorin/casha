@@ -20,20 +20,7 @@ import { StyleSheet, useColorScheme, View } from "react-native";
 import Header from "@/components/Header";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import {
-  OpenSans_300Light,
-  OpenSans_400Regular,
-  OpenSans_500Medium,
-  OpenSans_600SemiBold,
-  OpenSans_700Bold,
-  OpenSans_800ExtraBold,
-  OpenSans_300Light_Italic,
-  OpenSans_400Regular_Italic,
-  OpenSans_500Medium_Italic,
-  OpenSans_600SemiBold_Italic,
-  OpenSans_700Bold_Italic,
-  OpenSans_800ExtraBold_Italic
-} from "@expo-google-fonts/open-sans";
+import useAssetPreload from "@/hooks/useAssetPreload";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -45,19 +32,17 @@ export default function RootLayout() {
 
   // load fonts
   const [fontsLoaded] = useFonts({
-    OpenSans_300Light,
-    OpenSans_400Regular,
-    OpenSans_500Medium,
-    OpenSans_600SemiBold,
-    OpenSans_700Bold,
-    OpenSans_800ExtraBold,
-    OpenSans_300Light_Italic,
-    OpenSans_400Regular_Italic,
-    OpenSans_500Medium_Italic,
-    OpenSans_600SemiBold_Italic,
-    OpenSans_700Bold_Italic,
-    OpenSans_800ExtraBold_Italic
+    "OpenSans-Light": "../assets/fonts/OpenSans-Light.ttf",
+    "OpenSans-Regular": "../assets/fonts/OpenSans-Regular.ttf",
+    "OpenSans-SemiBold": "../assets/fonts/OpenSans-SemiBold.ttf",
+    "OpenSans-Bold": "../assets/fonts/OpenSans-Bold.ttf"
   });
+
+  const [assetsLoaded] = useAssetPreload([
+    require("../assets/images/pages/about.png"),
+    require("../assets/images/pages/home.png"),
+    require("../assets/images/pages/unknown.png")
+  ]);
 
   // DB and i18n
   const [dbInit, setDbInit] = useState(false);
@@ -82,10 +67,23 @@ export default function RootLayout() {
 
   // is everything loaded?
   useEffect(() => {
-    if (fontsLoaded && notificationsInit && i18nInit && dbInit) {
+    if (
+      fontsLoaded &&
+      assetsLoaded &&
+      notificationsInit &&
+      i18nInit &&
+      dbInit
+    ) {
       setLoaded(true);
     }
-  }, [fontsLoaded, notificationsInit, i18nInit, dbInit, setLoaded]);
+  }, [
+    fontsLoaded,
+    notificationsInit,
+    i18nInit,
+    dbInit,
+    setLoaded,
+    assetsLoaded
+  ]);
 
   useEffect(() => {
     if (loaded) {
