@@ -1,26 +1,27 @@
-import { Image, StyleSheet, TouchableOpacity } from "react-native";
-import { ThemedView } from "./ThemedView";
+import {
+  Image,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  View
+} from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import HairLine from "./HairLine";
-import { ThemedSafeAreaView } from "./ThemedSafeAreaView";
 import { ThemedText } from "./ThemedText";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { useNavigation, usePathname } from "expo-router";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import useTranslate from "@/hooks/useTranslate";
 import ContextMenu from "react-native-context-menu-view";
+import usePageInfo from "@/hooks/usePageInfo";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Header() {
   const navigation = useNavigation();
   const pathName = usePathname();
   const { t } = useTranslate();
 
-  const pageTitle = useMemo(() => {
-    if (pathName === "/") {
-      return t("Home");
-    }
-    return t(pathName[1].toUpperCase() + pathName.substring(2));
-  }, [pathName, t]);
+  const pageInfo = usePageInfo(pathName);
 
   const navigateBack = useCallback(() => {
     navigation.goBack();
@@ -30,12 +31,19 @@ export default function Header() {
   const accentColor = useThemeColor({}, "tint");
 
   return (
-    <ThemedView style={styles.root}>
-      <ThemedSafeAreaView
-        edges={["top", "left", "right"]}
-        style={styles.content}
-      >
-        <ThemedView style={styles.logoContainer}>
+    <ImageBackground
+      source={{ uri: pageInfo.backgroundUrl }}
+      style={styles.root}
+      imageStyle={{
+        height: "80%",
+        resizeMode: "contain",
+        position: "absolute",
+        right: "-40%",
+        top: "20%"
+      }}
+    >
+      <SafeAreaView edges={["top", "left", "right"]} style={styles.content}>
+        <View style={styles.logoContainer}>
           <Image
             source={{
               uri: Image.resolveAssetSource(
@@ -46,7 +54,7 @@ export default function Header() {
             height={44}
             style={styles.logo}
           />
-          <ThemedView style={{ flex: 1 }} />
+          <View style={{ flex: 1 }} />
           {pathName === "/" && (
             <ContextMenu
               actions={[{ title: "Title 1" }, { title: "Title 2" }]}
@@ -65,10 +73,10 @@ export default function Header() {
               />
             </ContextMenu>
           )}
-        </ThemedView>
+        </View>
         {pathName !== "/" && (
           <TouchableOpacity onPress={navigateBack}>
-            <ThemedView style={styles.navBar}>
+            <View style={styles.navBar}>
               <Ionicons.Button
                 style={styles.backButton}
                 name="chevron-back"
@@ -80,16 +88,16 @@ export default function Header() {
               <ThemedText style={styles.backText} type="boldLink">
                 {t("Back")}
               </ThemedText>
-            </ThemedView>
+            </View>
           </TouchableOpacity>
         )}
-        <ThemedView style={styles.titleSpacer}></ThemedView>
-        <ThemedView style={styles.titleContainer}>
-          <ThemedText type="subtitle">{pageTitle}</ThemedText>
-        </ThemedView>
-      </ThemedSafeAreaView>
+        <View style={styles.titleSpacer}></View>
+        <View style={styles.titleContainer}>
+          <ThemedText type="subtitle">{pageInfo.name}</ThemedText>
+        </View>
+      </SafeAreaView>
       <HairLine />
-    </ThemedView>
+    </ImageBackground>
   );
 }
 
@@ -130,6 +138,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   titleContainer: {
-    padding: 10
+    marginLeft: 10
   }
 });

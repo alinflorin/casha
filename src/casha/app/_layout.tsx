@@ -16,11 +16,10 @@ import {
   askNotificationsPermission,
   initNotifications
 } from "@/hooks/useNotifications";
-import { StyleSheet, useColorScheme } from "react-native";
+import { StyleSheet, useColorScheme, View } from "react-native";
 import Header from "@/components/Header";
 import { ThemedView } from "@/components/ThemedView";
-import { ThemedSafeAreaView } from "@/components/ThemedSafeAreaView";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import {
   OpenSans_300Light,
   OpenSans_400Regular,
@@ -106,17 +105,17 @@ export default function RootLayout() {
         >
           <SafeAreaProvider>
             <ThemedView style={styles.container}>
-              <ThemedView style={styles.header}>
+              <View style={styles.header}>
                 <Header />
-              </ThemedView>
-              <ThemedView style={styles.slot}>
-                <ThemedSafeAreaView
+              </View>
+              <View style={styles.slot}>
+                <SafeAreaView
                   edges={["bottom", "left", "right"]}
                   style={styles.contentSafeArea}
                 >
                   <Slot />
-                </ThemedSafeAreaView>
-              </ThemedView>
+                </SafeAreaView>
+              </View>
             </ThemedView>
           </SafeAreaProvider>
         </ThemeProvider>
