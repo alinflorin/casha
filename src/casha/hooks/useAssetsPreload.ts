@@ -1,7 +1,7 @@
 import { Asset } from "expo-asset";
 import { useEffect, useState } from "react";
 
-export default function usePreloadAssets(assetList: any[]) {
+export default function useAssetsPreload(assetList: any[]) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState<any>(undefined);
 

@@ -20,7 +20,7 @@ import { StyleSheet, useColorScheme, View } from "react-native";
 import Header from "@/components/Header";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import usePreloadAssets from "@/hooks/usePreloadAssets";
+import useAssetsPreload from "@/hooks/useAssetsPreload";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -30,6 +30,19 @@ export default function RootLayout() {
   // all loading state
   const [loaded, setLoaded] = useState(false);
 
+  // preload assets
+  const [assetsLoaded] = useAssetsPreload([
+    require("../assets/images/icon.png"),
+    require("../assets/images/pages/home.png"),
+    require("../assets/images/pages/about.png"),
+    require("../assets/images/pages/unknown.png"),
+
+    require("../assets/fonts/OpenSans-Light.ttf"),
+    require("../assets/fonts/OpenSans-Regular.ttf"),
+    require("../assets/fonts/OpenSans-SemiBold.ttf"),
+    require("../assets/fonts/OpenSans-Bold.ttf")
+  ]);
+
   // load fonts
   const [fontsLoaded] = useFonts({
     "OpenSans-Light": require("../assets/fonts/OpenSans-Light.ttf"),
@@ -37,14 +50,6 @@ export default function RootLayout() {
     "OpenSans-SemiBold": require("../assets/fonts/OpenSans-SemiBold.ttf"),
     "OpenSans-Bold": require("../assets/fonts/OpenSans-Bold.ttf")
   });
-
-  // preload assets
-  const [assetsLoaded] = usePreloadAssets([
-    require("../assets/images/icon.png"),
-    require("../assets/images/pages/home.png"),
-    require("../assets/images/pages/about.png"),
-    require("../assets/images/pages/unknown.png")
-  ]);
 
   // DB and i18n
   const [dbInit, setDbInit] = useState(false);

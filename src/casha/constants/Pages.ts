@@ -1,21 +1,19 @@
-import { ImageSourcePropType } from "react-native";
+import { PageInfo } from "@/models/PageInfo";
 
-export interface PageDetails {
-  name: string;
-  backgroundResource: ImageSourcePropType;
-}
-
-export const Pages: { [key: string]: PageDetails } = {
+export const Pages: { [key: string]: PageInfo } = {
   "/": {
-    name: "Home",
-    backgroundResource: require("../assets/images/pages/home.png")
+    nameTranslateKey: "Home",
+    name: "home",
+    backgroundImageResource: require("../assets/images/pages/home.png")
   },
   "/about": {
-    name: "About",
-    backgroundResource: require("../assets/images/pages/about.png")
+    nameTranslateKey: "About",
+    name: "about",
+    backgroundImageResource: require("../assets/images/pages/about.png")
   },
   "?": {
-    backgroundResource: require("../assets/images/pages/unknown.png"),
-    name: "Unknown"
+    nameTranslateKey: "Unknown",
+    name: "unknown",
+    backgroundImageResource: require("../assets/images/pages/unknown.png")
   }
 };

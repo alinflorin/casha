@@ -14,22 +14,16 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import useTranslate from "@/hooks/useTranslate";
 import ContextMenu from "react-native-context-menu-view";
 import { SafeAreaView } from "react-native-safe-area-context";
+import usePageInfo from "@/hooks/usePageInfo";
 import { useAssets } from "expo-asset";
-import { Pages } from "@/constants/Pages";
 
 export default function Header() {
   const navigation = useNavigation();
   const pathName = usePathname();
   const { t } = useTranslate();
 
-  const pageInfo = Pages[pathName];
-
-  const [assets] = useAssets([
-    require("../assets/images/icon.png"),
-    require("../assets/images/pages/home.png"),
-    require("../assets/images/pages/about.png"),
-    require("../assets/images/pages/unknown.png")
-  ]);
+  const { pageInfo, bgAssetUri } = usePageInfo(pathName);
+  const [logoAssets] = useAssets([require("../assets/images/icon.png")]);
 
   const navigateBack = useCallback(() => {
     navigation.goBack();
@@ -40,77 +34,74 @@ export default function Header() {
 
   return (
     <>
-      {assets && (
-        <ImageBackground
-          source={{
-            uri: assets.find((x) => x.name === pageInfo.name.toLowerCase())!
-              .localUri!
-          }}
-          style={styles.root}
-          resizeMethod="auto"
-          resizeMode="cover"
-          blurRadius={5}
-          imageStyle={{
-            opacity: 0.5
-          }}
-        >
-          <SafeAreaView edges={["top", "left", "right"]} style={styles.content}>
-            <View style={styles.logoContainer}>
-              {assets && (
-                <Image
-                  source={{
-                    uri: assets[0]!.localUri!
-                  }}
-                  width={44}
-                  height={44}
-                  style={styles.logo}
+      <ImageBackground
+        style={styles.root}
+        source={{
+          uri: bgAssetUri
+        }}
+        resizeMethod="auto"
+        resizeMode="cover"
+        blurRadius={0}
+        imageStyle={{
+          opacity: 0.2
+        }}
+      >
+        <SafeAreaView edges={["top", "left", "right"]} style={styles.content}>
+          <View style={styles.logoContainer}>
+            <Image
+              source={{
+                uri: logoAssets ? logoAssets[0].localUri! : undefined
+              }}
+              width={44}
+              height={44}
+              style={styles.logo}
+            />
+            <View style={{ flex: 1 }} />
+            {pathName === "/" && (
+              <ContextMenu
+                actions={[{ title: "Title 1" }, { title: "Title 2" }]}
+                dropdownMenuMode
+                onPress={(e) => {
+                  console.warn(
+                    `Pressed ${e.nativeEvent.name} at index ${e.nativeEvent.index}`
+                  );
+                }}
+              >
+                <Ionicons.Button
+                  name="ellipsis-vertical"
+                  size={24}
+                  backgroundColor="transparent"
+                  color={accentColor}
                 />
-              )}
-              <View style={{ flex: 1 }} />
-              {pathName === "/" && (
-                <ContextMenu
-                  actions={[{ title: "Title 1" }, { title: "Title 2" }]}
-                  dropdownMenuMode
-                  onPress={(e) => {
-                    console.warn(
-                      `Pressed ${e.nativeEvent.name} at index ${e.nativeEvent.index}`
-                    );
-                  }}
-                >
-                  <Ionicons.Button
-                    name="ellipsis-vertical"
-                    size={24}
-                    backgroundColor="transparent"
-                    color={accentColor}
-                  />
-                </ContextMenu>
-              )}
-            </View>
-            {pathName !== "/" && (
-              <TouchableOpacity onPress={navigateBack}>
-                <View style={styles.navBar}>
-                  <Ionicons.Button
-                    style={styles.backButton}
-                    name="chevron-back"
-                    size={24}
-                    onPress={navigateBack}
-                    backgroundColor="transparent"
-                    color={linkColor}
-                  />
-                  <ThemedText style={styles.backText} type="boldLink">
-                    {t("Back")}
-                  </ThemedText>
-                </View>
-              </TouchableOpacity>
+              </ContextMenu>
             )}
-            <View style={styles.titleSpacer}></View>
-            <View style={styles.titleContainer}>
-              <ThemedText type="subtitle">{t(pageInfo.name)}</ThemedText>
-            </View>
-          </SafeAreaView>
-          <HairLine />
-        </ImageBackground>
-      )}
+          </View>
+          {pathName !== "/" && (
+            <TouchableOpacity onPress={navigateBack}>
+              <View style={styles.navBar}>
+                <Ionicons.Button
+                  style={styles.backButton}
+                  name="chevron-back"
+                  size={24}
+                  onPress={navigateBack}
+                  backgroundColor="transparent"
+                  color={linkColor}
+                />
+                <ThemedText style={styles.backText} type="boldLink">
+                  {t("Back")}
+                </ThemedText>
+              </View>
+            </TouchableOpacity>
+          )}
+          <View style={styles.titleSpacer}></View>
+          <View style={styles.titleContainer}>
+            <ThemedText type="subtitle">
+              {t(pageInfo.nameTranslateKey)}
+            </ThemedText>
+          </View>
+        </SafeAreaView>
+        <HairLine />
+      </ImageBackground>
     </>
   );
 }
