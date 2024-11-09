@@ -40,7 +40,7 @@ export default function Header() {
           />
           <ThemedView style={{ flex: 1 }} />
           <Ionicons.Button
-            style={styles.backButton}
+            style={styles.moreButton}
             name="ellipsis-vertical"
             size={24}
             backgroundColor="transparent"
@@ -85,6 +85,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingLeft: 10,
     paddingRight: 10
+  },
+  moreButton: {
+    padding: 0,
+    margin: 0
   },
   backButton: {
     padding: 0,
