@@ -10,7 +10,7 @@ exports[`renders correctly 1`] = `
       {
         "fontFamily": "OpenSans-Regular",
         "fontSize": 16,
-        "lineHeight": 24
+        "lineHeight": 24,
       },
       undefined,
       undefined,
