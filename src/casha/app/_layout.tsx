@@ -4,7 +4,6 @@ import {
   ThemeProvider
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
 import "react-native-reanimated";
@@ -16,11 +15,10 @@ import {
   askNotificationsPermission,
   initNotifications
 } from "@/hooks/useNotifications";
-import { StyleSheet, useColorScheme, View } from "react-native";
-import Header from "@/components/Header";
-import { ThemedView } from "@/components/ThemedView";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { useColorScheme } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import useAssetsPreload from "@/hooks/useAssetsPreload";
+import { Stack } from "expo-router";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -109,38 +107,14 @@ export default function RootLayout() {
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
           <SafeAreaProvider>
-            <ThemedView style={styles.container}>
-              <View style={styles.header}>
-                <Header />
-              </View>
-              <View style={styles.slot}>
-                <SafeAreaView
-                  edges={["bottom", "left", "right"]}
-                  style={styles.contentSafeArea}
-                >
-                  <Slot />
-                </SafeAreaView>
-              </View>
-            </ThemedView>
+            <Stack
+              screenOptions={{
+                headerShown: false
+              }}
+            ></Stack>
           </SafeAreaProvider>
         </ThemeProvider>
       )}
     </SQLiteProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  contentSafeArea: {
-    flex: 1
-  },
-  header: {
-    flex: 1
-  },
-  slot: {
-    flex: 4,
-    padding: 10
-  }
-});
