@@ -5,7 +5,13 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
-  type?: "default" | "title" | "defaultSemiBold" | "subtitle" | "link";
+  type?:
+    | "default"
+    | "title"
+    | "defaultSemiBold"
+    | "subtitle"
+    | "link"
+    | "boldLink";
 };
 
 export function ThemedText({
@@ -16,7 +22,10 @@ export function ThemedText({
   ...rest
 }: ThemedTextProps) {
   const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
-
+  const linkColor = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "link"
+  );
   return (
     <Text
       style={[
@@ -25,7 +34,10 @@ export function ThemedText({
         type === "title" ? styles.title : undefined,
         type === "defaultSemiBold" ? styles.defaultSemiBold : undefined,
         type === "subtitle" ? styles.subtitle : undefined,
-        type === "link" ? styles.link : undefined,
+        type === "link" ? { ...styles.link, color: linkColor } : undefined,
+        type === "boldLink"
+          ? { ...styles.boldLink, color: linkColor }
+          : undefined,
         style
       ]}
       {...rest}
@@ -36,25 +48,34 @@ export function ThemedText({
 const styles = StyleSheet.create({
   default: {
     fontSize: 16,
-    lineHeight: 24
+    lineHeight: 24,
+    fontFamily: "OpenSans_400Regular"
   },
   defaultSemiBold: {
     fontSize: 16,
     lineHeight: 24,
-    fontWeight: "600"
+    fontWeight: "600",
+    fontFamily: "OpenSans_600SemiBold"
   },
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    lineHeight: 32
+    lineHeight: 32,
+    fontFamily: "OpenSans_700Bold"
   },
   subtitle: {
     fontSize: 20,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    fontFamily: "OpenSans_700Bold"
   },
   link: {
     lineHeight: 30,
     fontSize: 16,
-    color: "#0a7ea4"
+    fontFamily: "OpenSans_400Regular"
+  },
+  boldLink: {
+    lineHeight: 30,
+    fontSize: 16,
+    fontFamily: "OpenSans_700Bold"
   }
 });

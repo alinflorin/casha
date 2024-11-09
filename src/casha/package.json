@@ -29,6 +29,7 @@
     ]
   },
   "dependencies": {
+    "@expo-google-fonts/open-sans": "^0.2.3",
     "@expo/vector-icons": "^14.0.4",
     "@react-navigation/native": "^6.1.18",
     "expo": "^51.0.35",

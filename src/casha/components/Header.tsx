@@ -4,14 +4,23 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import HairLine from "./HairLine";
 import { ThemedSafeAreaView } from "./ThemedSafeAreaView";
 import { ThemedText } from "./ThemedText";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useNavigation, usePathname } from "expo-router";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import useTranslate from "@/hooks/useTranslate";
+import ContextMenu from "react-native-context-menu-view";
 
 export default function Header() {
   const navigation = useNavigation();
   const pathName = usePathname();
+  const { t } = useTranslate();
+
+  const pageTitle = useMemo(() => {
+    if (pathName === "/") {
+      return t("Home");
+    }
+    return t(pathName[1].toUpperCase() + pathName.substring(2));
+  }, [pathName, t]);
 
   const navigateBack = useCallback(() => {
     navigation.goBack();
@@ -19,8 +28,6 @@ export default function Header() {
 
   const linkColor = useThemeColor({}, "link");
   const accentColor = useThemeColor({}, "tint");
-
-  const { t } = useTranslate();
 
   return (
     <ThemedView style={styles.root}>
@@ -37,15 +44,27 @@ export default function Header() {
             }}
             width={44}
             height={44}
+            style={styles.logo}
           />
           <ThemedView style={{ flex: 1 }} />
-          <Ionicons.Button
-            style={styles.moreButton}
-            name="ellipsis-vertical"
-            size={24}
-            backgroundColor="transparent"
-            color={accentColor}
-          />
+          {pathName === "/" && (
+            <ContextMenu
+              actions={[{ title: "Title 1" }, { title: "Title 2" }]}
+              dropdownMenuMode
+              onPress={(e) => {
+                console.warn(
+                  `Pressed ${e.nativeEvent.name} at index ${e.nativeEvent.index}`
+                );
+              }}
+            >
+              <Ionicons.Button
+                name="ellipsis-vertical"
+                size={24}
+                backgroundColor="transparent"
+                color={accentColor}
+              />
+            </ContextMenu>
+          )}
         </ThemedView>
         {pathName !== "/" && (
           <TouchableOpacity onPress={navigateBack}>
@@ -58,12 +77,16 @@ export default function Header() {
                 backgroundColor="transparent"
                 color={linkColor}
               />
-              <ThemedText style={[styles.backText, { color: linkColor }]}>
-                {t("Home")}
+              <ThemedText style={styles.backText} type="boldLink">
+                {t("Back")}
               </ThemedText>
             </ThemedView>
           </TouchableOpacity>
         )}
+        <ThemedView style={styles.titleSpacer}></ThemedView>
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="subtitle">{pageTitle}</ThemedText>
+        </ThemedView>
       </ThemedSafeAreaView>
       <HairLine />
     </ThemedView>
@@ -83,12 +106,10 @@ const styles = StyleSheet.create({
   logoContainer: {
     display: "flex",
     flexDirection: "row",
-    paddingLeft: 10,
-    paddingRight: 10
+    alignItems: "center"
   },
-  moreButton: {
-    padding: 0,
-    margin: 0
+  logo: {
+    marginLeft: 10
   },
   backButton: {
     padding: 0,
@@ -104,5 +125,11 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center"
+  },
+  titleSpacer: {
+    flex: 1
+  },
+  titleContainer: {
+    padding: 10
   }
 });
