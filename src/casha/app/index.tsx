@@ -4,7 +4,14 @@ import { View } from "react-native";
 
 export default function Home() {
   return (
-    <PageContainer>
+    <PageContainer
+      headerOptions={{
+        bgResource: require("../assets/images/pages/home.png"),
+        title: "home",
+        nameTranslateKey: "Home",
+        contextMenuVisible: true
+      }}
+    >
       <View>
         <ThemedLink push href="/about">
           About

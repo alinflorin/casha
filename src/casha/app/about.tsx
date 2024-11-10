@@ -5,7 +5,18 @@ import { View } from "react-native";
 
 export default function About() {
   return (
-    <PageContainer>
+    <PageContainer
+      headerOptions={{
+        bgResource: require("../assets/images/pages/about.png"),
+        title: "about",
+        canGoBack: true,
+        nameTranslateKey: "About",
+        backButtonOptions: {
+          href: "/",
+          buttonTextTranslateKey: "Home"
+        }
+      }}
+    >
       <View>
         <ThemedText>About here</ThemedText>
         <ThemedLink push href="/">

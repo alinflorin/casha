@@ -1,10 +1,12 @@
 import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
-import Header from "@/components/Header";
+import Header, { HeaderProps } from "@/components/Header";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export interface PageContainerProps {}
+export interface PageContainerProps {
+  headerOptions: HeaderProps;
+}
 
 export default function PageContainer(
   props: PropsWithChildren<PageContainerProps>
@@ -12,7 +14,7 @@ export default function PageContainer(
   return (
     <ThemedView style={styles.container}>
       <View style={styles.header}>
-        <Header />
+        <Header {...props.headerOptions} />
       </View>
       <View style={styles.slot}>
         <SafeAreaView

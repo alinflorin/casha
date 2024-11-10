@@ -16,17 +16,32 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     icon: "./assets/images/icon.png",
     scheme: "casha",
     userInterfaceStyle: "automatic",
-    splash: {
-      image: "./assets/images/splash.png",
-      resizeMode: "contain",
-      backgroundColor: "#ffffff"
-    },
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "com.huna2.casha"
+      bundleIdentifier: "com.huna2.casha",
+      splash: {
+        image: "./assets/images/splash.png",
+        resizeMode: "contain",
+        backgroundColor: "#F9FAFB",
+        dark: {
+          image: "./assets/images/splash.png",
+          resizeMode: "contain",
+          backgroundColor: "#1A202C"
+        }
+      }
     },
     android: {
-      package: "com.huna2.casha"
+      package: "com.huna2.casha",
+      splash: {
+        image: "./assets/images/splash.png",
+        resizeMode: "contain",
+        backgroundColor: "#F9FAFB",
+        dark: {
+          image: "./assets/images/splash.png",
+          resizeMode: "contain",
+          backgroundColor: "#1A202C"
+        }
+      }
     },
     platforms: ["android", "ios"],
     plugins: ["expo-router", "expo-localization", "expo-asset"],
@@ -36,5 +51,5 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     extra: {
       databaseName: "casha_db"
     }
-  };
+  } as ExpoConfig;
 };
