@@ -1,10 +1,17 @@
-import { Image, ImageBackground, StyleSheet, View } from "react-native";
+import {
+  Image,
+  ImageBackground,
+  StyleSheet,
+  useColorScheme,
+  View
+} from "react-native";
 import HairLine from "./HairLine";
 import { ThemedText } from "./ThemedText";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAssets } from "expo-asset";
 import BackButton, { BackButtonProps } from "./BackButton";
 import TopMenu from "./TopMenu";
+import { useMemo } from "react";
 
 export interface HeaderProps {
   title: string;
@@ -17,6 +24,13 @@ export interface HeaderProps {
 export default function Header(props: HeaderProps) {
   const [logoAssets] = useAssets([require("../assets/images/icon.png")]);
   const [bgAssets] = useAssets([props.bgResource]);
+  const colorScheme = useColorScheme();
+
+  const headerOverlayBgColor = useMemo(() => {
+    return colorScheme === "dark"
+      ? "rgba(0, 0, 0, 0.2)"
+      : "rgba(255, 255, 255, 0.2)";
+  }, [colorScheme]);
 
   return (
     <ImageBackground
@@ -30,12 +44,19 @@ export default function Header(props: HeaderProps) {
       }
       resizeMethod="auto"
       resizeMode="cover"
-      blurRadius={0}
       imageStyle={{
         opacity: 0.2
       }}
     >
-      <SafeAreaView edges={["top", "left", "right"]} style={styles.content}>
+      <SafeAreaView
+        edges={["top", "left", "right"]}
+        style={[
+          {
+            backgroundColor: headerOverlayBgColor
+          },
+          styles.content
+        ]}
+      >
         <View style={styles.logoContainer}>
           <Image
             source={logoAssets ? { uri: logoAssets[0].uri! } : undefined}
@@ -63,7 +84,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor: "transparent",
     display: "flex",
     flexDirection: "column"
   },

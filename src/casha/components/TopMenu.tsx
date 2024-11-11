@@ -1,9 +1,9 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
 import useTranslate from "@/hooks/useTranslate";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { Href, useRouter } from "expo-router";
 import { useCallback, useMemo } from "react";
 import ContextMenu, { ContextMenuAction } from "react-native-context-menu-view";
+import ThemedIonButton from "./ThemedIonButton";
 
 export default function TopMenu() {
   const accentColor = useThemeColor({}, "tint");
@@ -30,7 +30,7 @@ export default function TopMenu() {
       dropdownMenuMode
       onPress={(e) => onMenuItemPressed(e.nativeEvent.index)}
     >
-      <Ionicons.Button
+      <ThemedIonButton
         name="ellipsis-vertical"
         size={24}
         backgroundColor="transparent"

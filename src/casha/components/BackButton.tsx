@@ -1,10 +1,9 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
 import useTranslate from "@/hooks/useTranslate";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { Href, useRouter } from "expo-router";
 import { useCallback } from "react";
-import { TouchableOpacity, View, StyleSheet } from "react-native";
-import { ThemedText } from "./ThemedText";
+import { View, StyleSheet } from "react-native";
+import ThemedIonButton from "./ThemedIonButton";
 
 export interface BackButtonProps {
   buttonText?: string;
@@ -26,21 +25,18 @@ export default function BackButton(props: BackButtonProps) {
   }, [router, props.href]);
 
   return (
-    <TouchableOpacity onPress={navigateBack}>
-      <View style={styles.navBar}>
-        <Ionicons.Button
-          style={styles.backButton}
-          name="chevron-back"
-          size={24}
-          onPress={navigateBack}
-          backgroundColor="transparent"
-          color={linkColor}
-        />
-        <ThemedText style={styles.backText} type="boldLink">
-          {t(props.buttonText ?? "ui.header.back")}
-        </ThemedText>
-      </View>
-    </TouchableOpacity>
+    <View style={styles.navBar}>
+      <ThemedIonButton
+        style={styles.backButton}
+        name="chevron-back"
+        size={24}
+        onPress={navigateBack}
+        backgroundColor="transparent"
+        color={linkColor}
+      >
+        {t(props.buttonText ?? "ui.header.back")}
+      </ThemedIonButton>
+    </View>
   );
 }
 
@@ -52,7 +48,6 @@ const styles = StyleSheet.create({
   backText: {
     padding: 0,
     margin: 0,
-    textDecorationLine: "underline",
     fontWeight: "bold"
   },
   navBar: {
