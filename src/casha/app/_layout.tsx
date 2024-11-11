@@ -10,7 +10,6 @@ import {
   askNotificationsPermission,
   initNotifications
 } from "@/hooks/useNotifications";
-import useAssetsPreload from "@/hooks/useAssetsPreload";
 import { Stack } from "expo-router";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -18,30 +17,6 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   // all loading state
   const [loaded, setLoaded] = useState(false);
-
-  // preload assets
-  const [assetsLoaded] = useAssetsPreload([
-    require("../assets/images/icon.png"),
-    require("../assets/images/pages/home.png"),
-    require("../assets/images/pages/about.png"),
-    require("../assets/images/pages/unknown.png"),
-    require("../assets/images/pages/account_and_sync.png"),
-    require("../assets/images/pages/add_edit_car.png"),
-    require("../assets/images/pages/intro.png"),
-    require("../assets/images/pages/language_and_currency.png"),
-    require("../assets/images/pages/notifications.png"),
-    require("../assets/images/pages/reset.png"),
-    require("../assets/images/pages/service_visits.png"),
-    require("../assets/images/pages/settings.png"),
-    require("../assets/images/pages/stats.png"),
-    require("../assets/images/pages/tracked_items.png"),
-    require("../assets/images/pages/welcome.png"),
-
-    require("../assets/fonts/OpenSans-Light.ttf"),
-    require("../assets/fonts/OpenSans-Regular.ttf"),
-    require("../assets/fonts/OpenSans-SemiBold.ttf"),
-    require("../assets/fonts/OpenSans-Bold.ttf")
-  ]);
 
   // load fonts
   const [fontsLoaded] = useFonts({
@@ -74,23 +49,10 @@ export default function RootLayout() {
 
   // is everything loaded?
   useEffect(() => {
-    if (
-      fontsLoaded &&
-      notificationsInit &&
-      i18nInit &&
-      dbInit &&
-      assetsLoaded
-    ) {
+    if (fontsLoaded && notificationsInit && i18nInit && dbInit) {
       setLoaded(true);
     }
-  }, [
-    fontsLoaded,
-    notificationsInit,
-    i18nInit,
-    dbInit,
-    assetsLoaded,
-    setLoaded
-  ]);
+  }, [fontsLoaded, notificationsInit, i18nInit, dbInit, setLoaded]);
 
   useEffect(() => {
     if (loaded) {
