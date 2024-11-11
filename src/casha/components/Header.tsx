@@ -19,45 +19,41 @@ export default function Header(props: HeaderProps) {
   const [bgAssets] = useAssets([props.bgResource]);
 
   return (
-    <>
-      {bgAssets && (
-        <ImageBackground
-          style={styles.root}
-          source={{
-            uri: bgAssets[0].uri!
-          }}
-          resizeMethod="auto"
-          resizeMode="cover"
-          blurRadius={0}
-          imageStyle={{
-            opacity: 0.2
-          }}
-        >
-          <SafeAreaView edges={["top", "left", "right"]} style={styles.content}>
-            <View style={styles.logoContainer}>
-              {logoAssets && (
-                <Image
-                  source={{
-                    uri: logoAssets[0].uri!
-                  }}
-                  width={44}
-                  height={44}
-                  style={styles.logo}
-                />
-              )}
-              <View style={{ flex: 1 }} />
-              {props.contextMenuVisible && <TopMenu />}
-            </View>
-            {props.canGoBack && <BackButton {...props.backButtonOptions} />}
-            <View style={styles.titleSpacer}></View>
-            <View style={styles.titleContainer}>
-              <ThemedText type="subtitle">{props.title}</ThemedText>
-            </View>
-          </SafeAreaView>
-          <HairLine />
-        </ImageBackground>
-      )}
-    </>
+    <ImageBackground
+      style={styles.root}
+      source={
+        bgAssets
+          ? {
+              uri: bgAssets[0].uri
+            }
+          : undefined
+      }
+      resizeMethod="auto"
+      resizeMode="cover"
+      blurRadius={0}
+      imageStyle={{
+        opacity: 0.2
+      }}
+    >
+      <SafeAreaView edges={["top", "left", "right"]} style={styles.content}>
+        <View style={styles.logoContainer}>
+          <Image
+            source={logoAssets ? { uri: logoAssets[0].uri! } : undefined}
+            width={44}
+            height={44}
+            style={styles.logo}
+          />
+          <View style={{ flex: 1 }} />
+          {props.contextMenuVisible && <TopMenu />}
+        </View>
+        {props.canGoBack && <BackButton {...props.backButtonOptions} />}
+        <View style={styles.titleSpacer}></View>
+        <View style={styles.titleContainer}>
+          <ThemedText type="subtitle">{props.title}</ThemedText>
+        </View>
+      </SafeAreaView>
+      <HairLine />
+    </ImageBackground>
   );
 }
 
