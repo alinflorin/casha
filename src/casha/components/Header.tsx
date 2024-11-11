@@ -1,10 +1,4 @@
-import {
-  Image,
-  ImageBackground,
-  StyleSheet,
-  useColorScheme,
-  View
-} from "react-native";
+import { Image, ImageBackground, StyleSheet, View } from "react-native";
 import HairLine from "./HairLine";
 import { ThemedText } from "./ThemedText";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,6 +6,7 @@ import { useAssets } from "expo-asset";
 import BackButton, { BackButtonProps } from "./BackButton";
 import TopMenu from "./TopMenu";
 import { useMemo } from "react";
+import useColorMode from "@/hooks/useColorMode";
 
 export interface HeaderProps {
   title: string;
@@ -24,13 +19,13 @@ export interface HeaderProps {
 export default function Header(props: HeaderProps) {
   const [logoAssets] = useAssets([require("../assets/images/icon.png")]);
   const [bgAssets] = useAssets([props.bgResource]);
-  const colorScheme = useColorScheme();
+  const { colorMode } = useColorMode();
 
   const headerOverlayBgColor = useMemo(() => {
-    return colorScheme === "dark"
+    return colorMode === "dark"
       ? "rgba(0, 0, 0, 0.2)"
       : "rgba(255, 255, 255, 0.2)";
-  }, [colorScheme]);
+  }, [colorMode]);
 
   return (
     <ImageBackground

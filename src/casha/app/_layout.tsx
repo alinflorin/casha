@@ -11,6 +11,8 @@ import {
   initNotifications
 } from "@/hooks/useNotifications";
 import { Stack } from "expo-router";
+import ColorModeProvider from "@/providers/color-mode.provider";
+import ColorMode from "@/constants/ColorMode";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -29,6 +31,9 @@ export default function RootLayout() {
   // DB and i18n
   const [dbInit, setDbInit] = useState(false);
   const [i18nInit, setI18nInit] = useState(false);
+  const [colorModeInit, setColorModeInit] = useState(false);
+  const [preferredColorMode, setPreferredColorMode] =
+    useState<ColorMode>("auto");
 
   const onInitDb = useCallback(async (db: SQLiteDatabase) => {
     const dbSvc = dbInternal(db);
@@ -38,6 +43,10 @@ export default function RootLayout() {
     const preferredLanguage = await dbSvc.getSetting("language");
     initI18N(preferredLanguage);
     setI18nInit(true);
+
+    const preferredColorModeValue = await dbSvc.getSetting("colorMode");
+    setPreferredColorMode((preferredColorModeValue as ColorMode) || "auto");
+    setColorModeInit(true);
   }, []);
 
   // notifications init
@@ -49,10 +58,23 @@ export default function RootLayout() {
 
   // is everything loaded?
   useEffect(() => {
-    if (fontsLoaded && notificationsInit && i18nInit && dbInit) {
+    if (
+      fontsLoaded &&
+      notificationsInit &&
+      i18nInit &&
+      dbInit &&
+      colorModeInit
+    ) {
       setLoaded(true);
     }
-  }, [fontsLoaded, notificationsInit, i18nInit, dbInit, setLoaded]);
+  }, [
+    fontsLoaded,
+    notificationsInit,
+    i18nInit,
+    dbInit,
+    setLoaded,
+    colorModeInit
+  ]);
 
   useEffect(() => {
     if (loaded) {
@@ -66,13 +88,15 @@ export default function RootLayout() {
       databaseName={Constants.expoConfig!.extra!.databaseName}
       onInit={onInitDb}
     >
-      {loaded && (
-        <Stack
-          screenOptions={{
-            headerShown: false
-          }}
-        ></Stack>
-      )}
+      <ColorModeProvider initialValue={preferredColorMode}>
+        {loaded && (
+          <Stack
+            screenOptions={{
+              headerShown: false
+            }}
+          ></Stack>
+        )}
+      </ColorModeProvider>
     </SQLiteProvider>
   );
 }

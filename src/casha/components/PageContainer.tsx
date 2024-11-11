@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { StyleSheet, useColorScheme, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Header, { HeaderProps } from "@/components/Header";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -8,6 +8,7 @@ import {
   DefaultTheme,
   ThemeProvider
 } from "@react-navigation/native";
+import useColorMode from "@/hooks/useColorMode";
 
 export interface PageContainerProps {
   headerOptions: HeaderProps;
@@ -16,10 +17,10 @@ export interface PageContainerProps {
 export default function PageContainer(
   props: PropsWithChildren<PageContainerProps>
 ) {
-  const colorScheme = useColorScheme();
+  const { colorMode } = useColorMode();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorMode === "dark" ? DarkTheme : DefaultTheme}>
       <SafeAreaProvider>
         <ThemedView style={styles.container}>
           <View style={styles.header}>
