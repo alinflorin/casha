@@ -49,7 +49,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       typedRoutes: true
     },
     extra: {
-      databaseName: "casha_db"
+      databaseName: "casha"
     }
   } as ExpoConfig;
 };

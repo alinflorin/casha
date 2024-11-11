@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS cars (
 CREATE TABLE IF NOT EXISTS service_items (
 	id integer primary key NOT NULL UNIQUE,
 	car_id INTEGER NOT NULL,
-	name INTEGER NOT NULL UNIQUE,
+	name TEXT NOT NULL UNIQUE,
 	service_interval_months INTEGER,
 	service_interval_km INTEGER,
 FOREIGN KEY(car_id) REFERENCES cars(id)
