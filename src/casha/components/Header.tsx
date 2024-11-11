@@ -65,7 +65,7 @@ export default function Header(props: HeaderProps) {
         {props.canGoBack && <BackButton {...props.backButtonOptions} />}
         <View style={styles.titleSpacer}></View>
         <View style={styles.titleContainer}>
-          <ThemedText type="subtitle">{props.title}</ThemedText>
+          <ThemedText type="title">{props.title}</ThemedText>
         </View>
       </SafeAreaView>
       <HairLine />

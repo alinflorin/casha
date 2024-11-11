@@ -1,9 +1,10 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
 import useTranslate from "@/hooks/useTranslate";
+import { Ionicons } from "@expo/vector-icons";
 import { Href, useRouter } from "expo-router";
 import { useCallback } from "react";
 import { View, StyleSheet } from "react-native";
-import ThemedIonButton from "./ThemedIonButton";
+import { ThemedText } from "./ThemedText";
 
 export interface BackButtonProps {
   buttonText?: string;
@@ -26,7 +27,7 @@ export default function BackButton(props: BackButtonProps) {
 
   return (
     <View style={styles.navBar}>
-      <ThemedIonButton
+      <Ionicons.Button
         style={styles.backButton}
         name="chevron-back"
         size={24}
@@ -34,8 +35,10 @@ export default function BackButton(props: BackButtonProps) {
         backgroundColor="transparent"
         color={linkColor}
       >
-        {t(props.buttonText ?? "ui.header.back")}
-      </ThemedIonButton>
+        <ThemedText type="boldLink">
+          {t(props.buttonText ?? "ui.header.back")}
+        </ThemedText>
+      </Ionicons.Button>
     </View>
   );
 }
