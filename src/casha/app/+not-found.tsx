@@ -8,8 +8,8 @@ export default function About() {
   return (
     <PageContainer
       headerOptions={{
-        bgResource: require("../assets/images/pages/about.png"),
-        title: t("ui.about.about"),
+        bgResource: require("../assets/images/pages/unknown.png"),
+        title: t("ui.notFound.notFound"),
         canGoBack: true,
         backButtonOptions: {
           href: "/",
@@ -18,7 +18,7 @@ export default function About() {
       }}
     >
       <View>
-        <ThemedText>About here</ThemedText>
+        <ThemedText>{t("ui.notFound.pageDoesntExist")}</ThemedText>
       </View>
     </PageContainer>
   );

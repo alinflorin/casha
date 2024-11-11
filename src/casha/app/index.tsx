@@ -1,21 +1,21 @@
 import PageContainer from "@/components/PageContainer";
-import { ThemedLink } from "@/components/ThemedLink";
+import { ThemedText } from "@/components/ThemedText";
+import useTranslate from "@/hooks/useTranslate";
 import { View } from "react-native";
 
 export default function Home() {
+  const { t } = useTranslate();
+
   return (
     <PageContainer
       headerOptions={{
         bgResource: require("../assets/images/pages/home.png"),
-        title: "home",
-        nameTranslateKey: "Home",
+        title: t("ui.home.home"),
         contextMenuVisible: true
       }}
     >
       <View>
-        <ThemedLink push href="/about">
-          About
-        </ThemedLink>
+        <ThemedText>Home here</ThemedText>
       </View>
     </PageContainer>
   );

@@ -1,7 +1,6 @@
 import { Image, ImageBackground, StyleSheet, View } from "react-native";
 import HairLine from "./HairLine";
 import { ThemedText } from "./ThemedText";
-import useTranslate from "@/hooks/useTranslate";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAssets } from "expo-asset";
 import BackButton, { BackButtonProps } from "./BackButton";
@@ -9,7 +8,6 @@ import TopMenu from "./TopMenu";
 
 export interface HeaderProps {
   title: string;
-  nameTranslateKey: string;
   canGoBack?: boolean;
   backButtonOptions?: BackButtonProps;
   bgResource: number;
@@ -17,8 +15,6 @@ export interface HeaderProps {
 }
 
 export default function Header(props: HeaderProps) {
-  const { t } = useTranslate();
-
   const [logoAssets] = useAssets([require("../assets/images/icon.png")]);
   const [bgAssets] = useAssets([props.bgResource]);
 
@@ -51,7 +47,7 @@ export default function Header(props: HeaderProps) {
         {props.canGoBack && <BackButton {...props.backButtonOptions} />}
         <View style={styles.titleSpacer}></View>
         <View style={styles.titleContainer}>
-          <ThemedText type="subtitle">{t(props.nameTranslateKey)}</ThemedText>
+          <ThemedText type="subtitle">{props.title}</ThemedText>
         </View>
       </SafeAreaView>
       <HairLine />

@@ -7,7 +7,7 @@ import { TouchableOpacity, View, StyleSheet } from "react-native";
 import { ThemedText } from "./ThemedText";
 
 export interface BackButtonProps {
-  buttonTextTranslateKey?: string;
+  buttonText?: string;
   href?: Href<string | object>;
 }
 
@@ -37,7 +37,7 @@ export default function BackButton(props: BackButtonProps) {
           color={linkColor}
         />
         <ThemedText style={styles.backText} type="boldLink">
-          {t(props.buttonTextTranslateKey ?? "Back")}
+          {t(props.buttonText ?? "ui.header.back")}
         </ThemedText>
       </View>
     </TouchableOpacity>

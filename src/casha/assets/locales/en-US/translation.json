@@ -1,4 +1,21 @@
 {
-  "Home": "Home",
-  "Back": "Back"
+  "ui": {
+    "header": {
+      "back": "Back",
+      "menu": {
+        "settings": "Settings",
+        "about": "About"
+      }
+    },
+    "home": {
+      "home": "Home"
+    },
+    "about": {
+      "about": "About"
+    },
+    "notFound": {
+      "notFound": "Not Found",
+      "pageDoesntExist": "This page doesn't exist"
+    }
+  }
 }

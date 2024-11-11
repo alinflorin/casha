@@ -1,4 +1,21 @@
 {
-  "Home": "Acasă",
-  "Back": "Înapoi"
+  "ui": {
+    "header": {
+      "back": "Înapoi",
+      "menu": {
+        "settings": "Setări",
+        "about": "Despre"
+      }
+    },
+    "home": {
+      "home": "Acasă"
+    },
+    "about": {
+      "about": "Despre"
+    },
+    "notFound": {
+      "notFound": "Inexistent",
+      "pageDoesntExist": "Această pagină nu există"
+    }
+  }
 }
