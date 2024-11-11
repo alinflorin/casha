@@ -24,7 +24,7 @@ export default function Header(props: HeaderProps) {
         <ImageBackground
           style={styles.root}
           source={{
-            uri: bgAssets[0].localUri!
+            uri: bgAssets[0].uri!
           }}
           resizeMethod="auto"
           resizeMode="cover"
@@ -38,7 +38,7 @@ export default function Header(props: HeaderProps) {
               {logoAssets && (
                 <Image
                   source={{
-                    uri: logoAssets[0].localUri!
+                    uri: logoAssets[0].uri!
                   }}
                   width={44}
                   height={44}
