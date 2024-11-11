@@ -11,8 +11,8 @@ import {
   initNotifications
 } from "@/hooks/useNotifications";
 import { Stack } from "expo-router";
-import ColorModeProvider from "@/providers/color-mode.provider";
 import ColorMode from "@/constants/ColorMode";
+import ColorModeProvider from "@/components/ColorModeProvider";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
