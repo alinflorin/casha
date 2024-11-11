@@ -1,8 +1,13 @@
 import { PropsWithChildren } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, useColorScheme, View } from "react-native";
 import Header, { HeaderProps } from "@/components/Header";
 import { ThemedView } from "@/components/ThemedView";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider
+} from "@react-navigation/native";
 
 export interface PageContainerProps {
   headerOptions: HeaderProps;
@@ -11,20 +16,26 @@ export interface PageContainerProps {
 export default function PageContainer(
   props: PropsWithChildren<PageContainerProps>
 ) {
+  const colorScheme = useColorScheme();
+
   return (
-    <ThemedView style={styles.container}>
-      <View style={styles.header}>
-        <Header {...props.headerOptions} />
-      </View>
-      <View style={styles.slot}>
-        <SafeAreaView
-          edges={["bottom", "left", "right"]}
-          style={styles.contentSafeArea}
-        >
-          {props.children}
-        </SafeAreaView>
-      </View>
-    </ThemedView>
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <SafeAreaProvider>
+        <ThemedView style={styles.container}>
+          <View style={styles.header}>
+            <Header {...props.headerOptions} />
+          </View>
+          <View style={styles.slot}>
+            <SafeAreaView
+              edges={["bottom", "left", "right"]}
+              style={styles.contentSafeArea}
+            >
+              {props.children}
+            </SafeAreaView>
+          </View>
+        </ThemedView>
+      </SafeAreaProvider>
+    </ThemeProvider>
   );
 }
 

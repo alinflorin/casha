@@ -1,8 +1,3 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider
-} from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
@@ -15,16 +10,12 @@ import {
   askNotificationsPermission,
   initNotifications
 } from "@/hooks/useNotifications";
-import { useColorScheme } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import useAssetsPreload from "@/hooks/useAssetsPreload";
 import { Stack } from "expo-router";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   // all loading state
   const [loaded, setLoaded] = useState(false);
 
@@ -103,17 +94,11 @@ export default function RootLayout() {
       onInit={onInitDb}
     >
       {loaded && (
-        <ThemeProvider
-          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-        >
-          <SafeAreaProvider>
-            <Stack
-              screenOptions={{
-                headerShown: false
-              }}
-            ></Stack>
-          </SafeAreaProvider>
-        </ThemeProvider>
+        <Stack
+          screenOptions={{
+            headerShown: false
+          }}
+        ></Stack>
       )}
     </SQLiteProvider>
   );
