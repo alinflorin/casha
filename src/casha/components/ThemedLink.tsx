@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Link, LinkProps } from "expo-router";
 
-export type ThemedLinkProps = LinkProps<any> & {
+export type ThemedLinkProps<T extends string | object> = LinkProps<T> & {
   lightColor?: string;
   darkColor?: string;
   type?:
@@ -15,13 +15,13 @@ export type ThemedLinkProps = LinkProps<any> & {
     | "boldLink";
 };
 
-export function ThemedLink({
+export function ThemedLink<T extends string | object>({
   style,
   lightColor,
   darkColor,
   type = "default",
   ...rest
-}: ThemedLinkProps) {
+}: ThemedLinkProps<T>) {
   const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
   const linkColor = useThemeColor(
     { light: lightColor, dark: darkColor },
