@@ -31,6 +31,7 @@ export default function BackButton(props: BackButtonProps) {
         style={styles.backButton}
         name="chevron-back"
         size={24}
+        underlayColor={"transparent"}
         onPress={navigateBack}
         backgroundColor="transparent"
         color={linkColor}

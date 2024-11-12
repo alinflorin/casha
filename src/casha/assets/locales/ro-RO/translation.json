@@ -8,7 +8,10 @@
       }
     },
     "home": {
-      "home": "Acasă"
+      "home": "Acasă",
+      "alerts": "Alerte",
+      "myCars": "Mașinile mele",
+      "noAlerts": "Nicio alertă momentan"
     },
     "about": {
       "about": "Despre"

@@ -33,6 +33,7 @@ export default function TopMenu() {
       <Ionicons.Button
         name="ellipsis-vertical"
         size={24}
+        underlayColor={"transparent"}
         backgroundColor="transparent"
         color={accentColor}
       />

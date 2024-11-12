@@ -8,7 +8,10 @@
       }
     },
     "home": {
-      "home": "Home"
+      "home": "Home",
+      "alerts": "Alerts",
+      "myCars": "My Cars",
+      "noAlerts": "No alerts as of right now"
     },
     "about": {
       "about": "About"
