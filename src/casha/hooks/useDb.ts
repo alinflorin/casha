@@ -1,3 +1,4 @@
+import { CarEntity } from "@/entities/car.entity";
 import { SettingEntity } from "@/entities/setting.entity";
 import { SQLiteDatabase, useSQLiteContext } from "expo-sqlite";
 import { useMemo } from "react";
@@ -89,7 +90,22 @@ export const dbInternal = (db: SQLiteDatabase) => {
     }
   };
 
-  return { initDb, setSetting, getSetting };
+  const getAllCars = async () => {
+    return await db.getAllAsync<CarEntity>(`SELECT * FROM cars`);
+  };
+
+  const deleteCar = async (id: number) => {
+    return await db.runAsync(`DELETE FROM cars WHERE id=?`, id);
+  };
+
+  const getCar = async (id: number) => {
+    return await db.getFirstAsync<CarEntity>(
+      `SELECT * FROM cars WHERE id=? LIMIT 1`,
+      id
+    );
+  };
+
+  return { initDb, setSetting, getSetting, getAllCars, deleteCar, getCar };
 };
 
 export const useDb = () => {

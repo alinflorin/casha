@@ -29,6 +29,10 @@
       "areYouSure": "Are you sure?",
       "cancel": "Cancel",
       "ok": "OK"
+    },
+    "addEditCar": {
+      "addCar": "Add Car",
+      "editCar": "Edit Car"
     }
   }
 }

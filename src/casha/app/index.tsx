@@ -3,69 +3,39 @@ import PageContainer from "@/components/PageContainer";
 import { ThemedMessageBar } from "@/components/ThemedMessageBar";
 import { ThemedText } from "@/components/ThemedText";
 import { CarEntity } from "@/entities/car.entity";
+import useDb from "@/hooks/useDb";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import useTranslate from "@/hooks/useTranslate";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Alert, ScrollView, StyleSheet, View } from "react-native";
 
 export default function Home() {
   const { t } = useTranslate();
   const [alerts, setAlerts] = useState<string[]>([]);
-  const [cars, setCars] = useState<CarEntity[]>([
-    {
-      display_name: "MB Benz",
-      make: "Mercedes",
-      model: "C250",
-      vin: "asdasd",
-      year: 2011,
-      id: 1
-    },
-    {
-      display_name: "MB Benz",
-      make: "Mercedes",
-      model: "C250",
-      vin: "asdasd",
-      year: 2011,
-      id: 1
-    },
-    {
-      display_name: "MB Benz",
-      make: "Mercedes",
-      model: "C250",
-      vin: "asdasd",
-      year: 2011,
-      id: 1
-    },
-    {
-      display_name: "MB Benz",
-      make: "Mercedes",
-      model: "C250",
-      vin: "asdasd",
-      year: 2011,
-      id: 1
-    },
-    {
-      display_name: "MB Benz",
-      make: "Mercedes",
-      model: "C250",
-      vin: "asdasd",
-      year: 2011,
-      id: 1
-    }
-  ]);
+  const [cars, setCars] = useState<CarEntity[]>([]);
 
   const accentColor = useThemeColor({}, "tint");
   const warningColor = useThemeColor({}, "warn");
   const router = useRouter();
 
+  const db = useDb();
+
+  useEffect(() => {
+    (async () => {
+      const allCars = await db.getAllCars();
+      setCars(allCars);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const addCarClicked = useCallback(() => {
-    router.navigate("/about");
+    router.navigate("/car/add");
   }, [router]);
 
   const deleteCarClicked = useCallback(
-    (id: number) => {
+    (id: number, index: number) => {
       Alert.alert(t("ui.general.confirmation"), t("ui.general.areYouSure"), [
         {
           text: t("ui.general.cancel"),
@@ -74,12 +44,17 @@ export default function Home() {
         {
           text: t("ui.general.ok"),
           onPress: () => {
-            console.warn("TO DELETE: " + id);
+            (async () => {
+              await db.deleteCar(id);
+              const carsCopy = [...cars];
+              carsCopy.splice(index, 1);
+              setCars(carsCopy);
+            })();
           }
         }
       ]);
     },
-    [t]
+    [t, cars, setCars, db]
   );
 
   return (
@@ -137,7 +112,7 @@ export default function Home() {
                     {
                       title: t("ui.home.delete"),
                       destructive: true,
-                      action: () => deleteCarClicked(c.id!)
+                      action: () => deleteCarClicked(c.id!, i)
                     }
                   ]}
                 >
@@ -190,6 +165,7 @@ const styles = StyleSheet.create({
   },
   carCard: {
     flexBasis: "48%",
+    maxWidth: "48%",
     margin: 2
   },
   addCarCardContent: {

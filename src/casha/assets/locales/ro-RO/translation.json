@@ -29,6 +29,10 @@
       "areYouSure": "Sunteți sigur?",
       "cancel": "Anulare",
       "ok": "OK"
+    },
+    "addEditCar": {
+      "addCar": "Adăugare mașină",
+      "editCar": "Editare mașină"
     }
   }
 }
