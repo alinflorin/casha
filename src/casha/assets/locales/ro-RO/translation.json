@@ -11,7 +11,11 @@
       "home": "Acasă",
       "alerts": "Alerte",
       "myCars": "Mașinile mele",
-      "noAlerts": "Nicio alertă momentan"
+      "noAlerts": "Nicio alertă momentan",
+      "addCar": "Adăugare mașină",
+      "view": "Vizualizare",
+      "edit": "Editare",
+      "delete": "Ștergere"
     },
     "about": {
       "about": "Despre"
@@ -19,6 +23,12 @@
     "notFound": {
       "notFound": "Inexistent",
       "pageDoesntExist": "Această pagină nu există"
+    },
+    "general": {
+      "confirmation": "Confirmare",
+      "areYouSure": "Sunteți sigur?",
+      "cancel": "Anulare",
+      "ok": "OK"
     }
   }
 }

@@ -8,7 +8,8 @@ export const Colors = {
     warn: "#e0b908",
     error: "#d32f2f",
     info: "#59aed5",
-    success: "#42bf28"
+    success: "#42bf28",
+    shadow: "#282828"
   },
   dark: {
     text: "#E4E7EB", // Light grey for readability on dark backgrounds
@@ -19,6 +20,7 @@ export const Colors = {
     warn: "#ad8e07",
     error: "#981a1a",
     info: "#3f7b97",
-    success: "#2b821a"
+    success: "#2b821a",
+    shadow: "#191919"
   }
 };

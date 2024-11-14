@@ -11,7 +11,11 @@
       "home": "Home",
       "alerts": "Alerts",
       "myCars": "My Cars",
-      "noAlerts": "No alerts as of right now"
+      "noAlerts": "No alerts as of right now",
+      "addCar": "Add Car",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete"
     },
     "about": {
       "about": "About"
@@ -19,6 +23,12 @@
     "notFound": {
       "notFound": "Not Found",
       "pageDoesntExist": "This page doesn't exist"
+    },
+    "general": {
+      "confirmation": "Confirmation",
+      "areYouSure": "Are you sure?",
+      "cancel": "Cancel",
+      "ok": "OK"
     }
   }
 }
