@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CarEntity } from "@/entities/car.entity";
 import useDb from "@/hooks/useDb";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import ThemedButton from "../ThemedButton";
 import ThemedTextInput from "../ThemedTextInput";
 
