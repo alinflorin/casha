@@ -9,7 +9,13 @@ import useTranslate from "@/hooks/useTranslate";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
-import { Alert, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View
+} from "react-native";
 
 export default function Home() {
   const { t } = useTranslate();
@@ -25,7 +31,15 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       const allCars = await db.getAllCars();
-      setCars(allCars);
+      setCars([
+        {
+          display_name: "asdasda",
+          make: "asda",
+          model: "asda",
+          vin: "asdasd",
+          year: 2011
+        }
+      ]);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -125,18 +139,19 @@ export default function Home() {
                 </Card>
               ))}
 
-            <Card title={t("ui.home.addCar")} style={styles.carCard}>
-              <View style={styles.addCarCardContent}>
-                <Ionicons
-                  name="add"
-                  size={32}
-                  color={accentColor}
-                  underlayColor="transparent"
-                  onPress={addCarClicked}
-                  style={styles.addCarButton}
-                />
-              </View>
-            </Card>
+            <TouchableOpacity onPress={addCarClicked} style={styles.carCard}>
+              <Card onPress={addCarClicked} title={t("ui.home.addCar")}>
+                <View style={styles.addCarCardContent}>
+                  <Ionicons
+                    name="add"
+                    size={32}
+                    color={accentColor}
+                    underlayColor="transparent"
+                    style={styles.addCarButton}
+                  />
+                </View>
+              </Card>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
