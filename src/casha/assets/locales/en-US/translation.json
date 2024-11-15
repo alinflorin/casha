@@ -32,7 +32,13 @@
     },
     "addEditCar": {
       "addCar": "Add Car",
-      "editCar": "Edit Car"
+      "editCar": "Edit Car",
+      "obd": "OBD",
+      "device": "Device",
+      "none": "none",
+      "scan": "Scan",
+      "data": "Data",
+      "vin": "VIN"
     },
     "viewCar": {
       "viewCar": "View Car"

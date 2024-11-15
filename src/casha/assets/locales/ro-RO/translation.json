@@ -32,7 +32,13 @@
     },
     "addEditCar": {
       "addCar": "Adăugare mașină",
-      "editCar": "Editare mașină"
+      "editCar": "Editare mașină",
+      "obd": "OBD",
+      "device": "Dispozitiv",
+      "none": "niciunul",
+      "scan": "Scanare",
+      "data": "Date",
+      "vin": "VIN"
     },
     "viewCar": {
       "viewCar": "Vizualizare mașină"
