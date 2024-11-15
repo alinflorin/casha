@@ -10,8 +10,7 @@ export default function About() {
       headerOptions={{
         bgResource: require("../assets/images/pages/about.png"),
         title: t("ui.about.about"),
-        canGoBack: true,
-        backButtonOptions: {
+        backButton: {
           href: "/",
           buttonText: t("ui.home.home")
         }

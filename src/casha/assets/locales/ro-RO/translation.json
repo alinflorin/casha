@@ -33,6 +33,12 @@
     "addEditCar": {
       "addCar": "Adăugare mașină",
       "editCar": "Editare mașină"
+    },
+    "viewCar": {
+      "viewCar": "Vizualizare mașină"
+    },
+    "settings": {
+      "settings": "Setări"
     }
   }
 }

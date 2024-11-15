@@ -33,6 +33,12 @@
     "addEditCar": {
       "addCar": "Add Car",
       "editCar": "Edit Car"
+    },
+    "viewCar": {
+      "viewCar": "View Car"
+    },
+    "settings": {
+      "settings": "Settings"
     }
   }
 }

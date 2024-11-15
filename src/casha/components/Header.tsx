@@ -10,8 +10,7 @@ import useColorMode from "@/hooks/useColorMode";
 
 export interface HeaderProps {
   title: string;
-  canGoBack?: boolean;
-  backButtonOptions?: BackButtonProps;
+  backButton?: BackButtonProps;
   bgResource: number;
   contextMenuVisible?: boolean;
 }
@@ -62,7 +61,7 @@ export default function Header(props: HeaderProps) {
           <View style={{ flex: 1 }} />
           {props.contextMenuVisible && <TopMenu />}
         </View>
-        {props.canGoBack && <BackButton {...props.backButtonOptions} />}
+        {props.backButton && <BackButton {...props.backButton} />}
         <View style={styles.titleSpacer}></View>
         <View style={styles.titleContainer}>
           <ThemedText type="title">{props.title}</ThemedText>

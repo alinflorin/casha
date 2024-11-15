@@ -109,11 +109,23 @@ export default function Home() {
                   contextMenu={[
                     {
                       title: t("ui.home.view"),
-                      action: () => router.navigate("/about")
+                      action: () =>
+                        router.navigate({
+                          pathname: "/car/[id]",
+                          params: {
+                            id: c.id!
+                          }
+                        })
                     },
                     {
                       title: t("ui.home.edit"),
-                      action: () => router.navigate("/about")
+                      action: () =>
+                        router.navigate({
+                          pathname: "/car/edit/[id]",
+                          params: {
+                            id: c.id!
+                          }
+                        })
                     },
                     {
                       title: t("ui.home.delete"),

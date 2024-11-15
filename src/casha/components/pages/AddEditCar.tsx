@@ -46,8 +46,7 @@ export default function AddEditCar() {
         title: t(
           editedCarId ? "ui.addEditCar.editCar" : "ui.addEditCar.addCar"
         ),
-        canGoBack: true,
-        backButtonOptions: {
+        backButton: {
           buttonText: t("ui.home.home"),
           href: "/"
         }
