@@ -31,7 +31,7 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       const allCars = await db.getAllCars();
-      setCars([]);
+      setCars(allCars);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
