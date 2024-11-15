@@ -11,7 +11,6 @@ export type CardProps = PropsWithChildren<
     title?: string;
     icon?: string;
     iconColor?: string;
-    onPress?: () => void;
     contextMenu?: {
       title: string;
       disabled?: boolean;
@@ -26,7 +25,6 @@ export default function Card({
   icon,
   iconColor,
   style,
-  onPress,
   children,
   contextMenu,
   ...restOfProps

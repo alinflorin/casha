@@ -31,15 +31,7 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       const allCars = await db.getAllCars();
-      setCars([
-        {
-          display_name: "asdasda",
-          make: "asda",
-          model: "asda",
-          vin: "asdasd",
-          year: 2011
-        }
-      ]);
+      setCars([]);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -140,7 +132,7 @@ export default function Home() {
               ))}
 
             <TouchableOpacity onPress={addCarClicked} style={styles.carCard}>
-              <Card onPress={addCarClicked} title={t("ui.home.addCar")}>
+              <Card title={t("ui.home.addCar")}>
                 <View style={styles.addCarCardContent}>
                   <Ionicons
                     name="add"
