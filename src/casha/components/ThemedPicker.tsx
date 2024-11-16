@@ -1,40 +1,45 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Picker, PickerProps } from "@react-native-picker/picker";
-import { StyleSheet } from "react-native";
 
 export type ThemedPickerProps = PickerProps & {
-  lightColorBorder?: string;
-  darkColorBorder?: string;
+  lightColorSelection?: string;
+  darkColorSelection?: string;
   lightColorText?: string;
   darkColorText?: string;
 };
 
 export default function ThemedPicker({
-  lightColorBorder,
-  darkColorBorder,
+  lightColorSelection,
+  darkColorSelection,
   lightColorText,
   darkColorText,
-  style,
+  mode,
+  itemStyle,
   children,
   ...rest
 }: ThemedPickerProps) {
-  const borderColor = useThemeColor(
-    { light: lightColorBorder, dark: darkColorBorder },
-    "tint"
-  );
   const textColor = useThemeColor(
     { light: lightColorText, dark: darkColorText },
     "text"
   );
+  const selectionColor = useThemeColor(
+    { light: lightColorSelection, dark: darkColorSelection },
+    "tint"
+  );
   return (
     <Picker
-      style={[
+      mode={mode ? mode : "dropdown"}
+      numberOfLines={1}
+      selectionColor={selectionColor}
+      dropdownIconColor={selectionColor}
+      dropdownIconRippleColor={selectionColor}
+      itemStyle={[
         {
-          borderColor: borderColor,
-          color: textColor
+          color: textColor,
+          borderWidth: 1,
+          borderColor: selectionColor
         },
-        style,
-        styles.dropdown
+        itemStyle
       ]}
       {...rest}
     >
@@ -42,7 +47,3 @@ export default function ThemedPicker({
     </Picker>
   );
 }
-
-const styles = StyleSheet.create({
-  dropdown: {}
-});

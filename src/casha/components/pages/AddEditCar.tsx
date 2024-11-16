@@ -10,6 +10,8 @@ import ThemedButton from "../ThemedButton";
 import ThemedTextInput from "../ThemedTextInput";
 import ThemedSwitch from "../ThemedSwitch";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import ThemedPicker from "../ThemedPicker";
+import ThemedPickerItem from "../ThemedPickerItem";
 
 export default function AddEditCar() {
   const db = useDb();
@@ -83,6 +85,12 @@ export default function AddEditCar() {
               }
             />
           </View>
+          <ThemedText>{t("ui.addEditCar.make")}</ThemedText>
+          <ThemedPicker mode="dropdown">
+            <ThemedPickerItem value={"asd"} label="asdasda" />
+            <ThemedPickerItem value={"aasdsd"} label="asdasasdda" />
+            <ThemedPickerItem value={"as3d"} label="as3dasda" />
+          </ThemedPicker>
         </View>
       </KeyboardAwareScrollView>
     </PageContainer>
