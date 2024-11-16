@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
     padding: 5
   },
   inputSearch: {
-    padding: 5
+    padding: 2,
+    height: 30
   }
 });
