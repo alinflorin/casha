@@ -13,6 +13,8 @@ import {
 import { Stack } from "expo-router";
 import ColorMode from "@/constants/ColorMode";
 import ColorModeProvider from "@/components/ColorModeProvider";
+import { KeyboardProvider } from "react-native-keyboard-controller";
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -88,15 +90,17 @@ export default function RootLayout() {
       databaseName={Constants.expoConfig!.extra!.databaseName}
       onInit={onInitDb}
     >
-      <ColorModeProvider initialValue={preferredColorMode}>
-        {loaded && (
-          <Stack
-            screenOptions={{
-              headerShown: false
-            }}
-          ></Stack>
-        )}
-      </ColorModeProvider>
+      <KeyboardProvider>
+        <ColorModeProvider initialValue={preferredColorMode}>
+          {loaded && (
+            <Stack
+              screenOptions={{
+                headerShown: false
+              }}
+            ></Stack>
+          )}
+        </ColorModeProvider>
+      </KeyboardProvider>
     </SQLiteProvider>
   );
 }

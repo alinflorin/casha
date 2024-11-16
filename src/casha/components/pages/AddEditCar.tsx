@@ -5,12 +5,11 @@ import { useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { CarEntity } from "@/entities/car.entity";
 import useDb from "@/hooks/useDb";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { StyleSheet, View } from "react-native";
 import ThemedButton from "../ThemedButton";
 import ThemedTextInput from "../ThemedTextInput";
 import ThemedSwitch from "../ThemedSwitch";
-import ThemedDropdown from "../ThemedDropdown";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 export default function AddEditCar() {
   const db = useDb();
@@ -84,18 +83,6 @@ export default function AddEditCar() {
               }
             />
           </View>
-          <ThemedDropdown
-            data={[
-              { id: 1, display_name: "asdasdas" },
-              { id: 2, display_name: "asdasdasdd asd as" }
-            ]}
-            valueField="id"
-            labelField="display_name"
-            searchField="display_name"
-            placeholder={t("ui.addEditCar.make")}
-            search
-            onChange={() => {}}
-          ></ThemedDropdown>
         </View>
       </KeyboardAwareScrollView>
     </PageContainer>
