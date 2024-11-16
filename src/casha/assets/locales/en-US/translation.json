@@ -41,7 +41,11 @@
       "vin": "VIN",
       "odometer": "Odometer",
       "useImperial": "Use Imperial System",
-      "make": "Make"
+      "make": "Make",
+      "model": "Model",
+      "year": "Year",
+      "displayName": "Display Name",
+      "save": "Save"
     },
     "viewCar": {
       "viewCar": "View Car"

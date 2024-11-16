@@ -41,7 +41,11 @@
       "vin": "VIN",
       "odometer": "Odometru",
       "useImperial": "Folosiți sistemul imperial",
-      "make": "Marcă"
+      "make": "Marcă",
+      "model": "Model",
+      "year": "An",
+      "displayName": "Nume afișare",
+      "save": "Salvare"
     },
     "viewCar": {
       "viewCar": "Vizualizare mașină"
