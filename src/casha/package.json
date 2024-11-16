@@ -50,6 +50,7 @@
     "react-i18next": "^15.0.2",
     "react-native": "0.74.5",
     "react-native-context-menu-view": "^1.16.0",
+    "react-native-element-dropdown": "^2.12.2",
     "react-native-gesture-handler": "~2.20.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-reanimated": "~3.15.4",

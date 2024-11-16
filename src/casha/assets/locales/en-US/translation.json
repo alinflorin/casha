@@ -38,7 +38,10 @@
       "none": "none",
       "scan": "Scan",
       "data": "Data",
-      "vin": "VIN"
+      "vin": "VIN",
+      "odometer": "Odometer",
+      "useImperial": "Use Imperial System",
+      "make": "Make"
     },
     "viewCar": {
       "viewCar": "View Car"

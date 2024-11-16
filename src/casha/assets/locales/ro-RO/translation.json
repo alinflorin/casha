@@ -38,7 +38,10 @@
       "none": "niciunul",
       "scan": "Scanare",
       "data": "Date",
-      "vin": "VIN"
+      "vin": "VIN",
+      "odometer": "Odometru",
+      "useImperial": "Folosiți sistemul imperial",
+      "make": "Marcă"
     },
     "viewCar": {
       "viewCar": "Vizualizare mașină"

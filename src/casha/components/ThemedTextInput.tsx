@@ -2,21 +2,31 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { StyleSheet, TextInput, TextInputProps } from "react-native";
 
 export type ThemedTextInputProps = TextInputProps & {
-  lightColor?: string;
-  darkColor?: string;
+  lightColorBorder?: string;
+  darkColorBorder?: string;
+  lightColorText?: string;
+  darkColorText?: string;
 };
 
 export default function ThemedTextInput({
-  lightColor,
-  darkColor,
+  lightColorBorder,
+  darkColorBorder,
+  lightColorText,
+  darkColorText,
   style,
   ...rest
 }: ThemedTextInputProps) {
   const accentColor = useThemeColor(
-    { light: lightColor, dark: darkColor },
+    { light: lightColorBorder, dark: darkColorBorder },
     "tint"
   );
-  const textColor = useThemeColor({}, "text");
+  const textColor = useThemeColor(
+    {
+      light: lightColorText,
+      dark: darkColorText
+    },
+    "text"
+  );
   return (
     <TextInput
       style={[

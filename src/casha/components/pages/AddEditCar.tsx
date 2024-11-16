@@ -9,6 +9,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { StyleSheet, View } from "react-native";
 import ThemedButton from "../ThemedButton";
 import ThemedTextInput from "../ThemedTextInput";
+import ThemedSwitch from "../ThemedSwitch";
+import ThemedDropdown from "../ThemedDropdown";
 
 export default function AddEditCar() {
   const db = useDb();
@@ -67,37 +69,33 @@ export default function AddEditCar() {
         <ThemedText type="subtitle">{t("ui.addEditCar.data")}</ThemedText>
         <View style={styles.form}>
           <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
-          <ThemedTextInput placeholder={t("ui.addEditCar.vin")} />
+          <ThemedTextInput
+            keyboardType="numeric"
+            placeholder={t("ui.addEditCar.odometer")}
+          />
+          <View style={styles.useImperialWrapper}>
+            <ThemedText>{t("ui.addEditCar.useImperial")}</ThemedText>
+            <ThemedSwitch
+              onChange={(e) =>
+                setCar({ ...car, uses_imperial: e.nativeEvent.value ? 1 : 0 })
+              }
+              value={
+                car.uses_imperial && car.uses_imperial === 1 ? true : false
+              }
+            />
+          </View>
+          <ThemedDropdown
+            data={[
+              { id: 1, display_name: "asdasdas" },
+              { id: 2, display_name: "asdasdasdd asd as" }
+            ]}
+            valueField="id"
+            labelField="display_name"
+            searchField="display_name"
+            placeholder={t("ui.addEditCar.make")}
+            search
+            onChange={() => {}}
+          ></ThemedDropdown>
         </View>
       </KeyboardAwareScrollView>
     </PageContainer>
@@ -120,5 +118,11 @@ const styles = StyleSheet.create({
     display: "flex",
     gap: 5,
     flexDirection: "column"
+  },
+  useImperialWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   }
 });

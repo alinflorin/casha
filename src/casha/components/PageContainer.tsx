@@ -1,5 +1,5 @@
-import { PropsWithChildren } from "react";
-import { StyleSheet, View } from "react-native";
+import { PropsWithChildren, useCallback } from "react";
+import { Keyboard, Pressable, StyleSheet, View } from "react-native";
 import Header, { HeaderProps } from "@/components/Header";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -19,28 +19,39 @@ export default function PageContainer(
 ) {
   const { colorMode } = useColorMode();
 
+  const hideKeyboard = useCallback(() => {
+    if (Keyboard.isVisible()) {
+      Keyboard.dismiss();
+    }
+  }, []);
+
   return (
     <ThemeProvider value={colorMode === "dark" ? DarkTheme : DefaultTheme}>
       <SafeAreaProvider>
-        <ThemedView style={styles.container}>
-          <View style={styles.header}>
-            <Header {...props.headerOptions} />
-          </View>
-          <View style={styles.slot}>
-            <SafeAreaView
-              edges={["bottom", "left", "right"]}
-              style={styles.contentSafeArea}
-            >
-              {props.children}
-            </SafeAreaView>
-          </View>
-        </ThemedView>
+        <Pressable style={styles.pressable} onPress={hideKeyboard}>
+          <ThemedView style={styles.container}>
+            <View style={styles.header}>
+              <Header {...props.headerOptions} />
+            </View>
+            <View style={styles.slot}>
+              <SafeAreaView
+                edges={["bottom", "left", "right"]}
+                style={styles.contentSafeArea}
+              >
+                {props.children}
+              </SafeAreaView>
+            </View>
+          </ThemedView>
+        </Pressable>
       </SafeAreaProvider>
     </ThemeProvider>
   );
 }
 
 const styles = StyleSheet.create({
+  pressable: {
+    flex: 1
+  },
   container: {
     flex: 1
   },
