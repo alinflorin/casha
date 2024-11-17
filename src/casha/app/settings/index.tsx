@@ -8,7 +8,7 @@ export default function Settings() {
   return (
     <PageContainer
       headerOptions={{
-        bgResource: require("../assets/images/pages/settings.png"),
+        bgResource: require("../../assets/images/pages/settings.png"),
         title: t("ui.settings.settings"),
         backButton: {
           href: "/",
@@ -21,21 +21,25 @@ export default function Settings() {
           <ThemedLink
             style={styles.link}
             type="subtitle"
-            href="/language-and-currency"
+            href="./language-and-currency"
           >
             {t("ui.settings.languageAndCurrency")}
           </ThemedLink>
           <ThemedLink
             style={styles.link}
             type="subtitle"
-            href="/account-and-sync"
+            href="./account-and-sync"
           >
             {t("ui.settings.accountAndSync")}
           </ThemedLink>
-          <ThemedLink style={styles.link} type="subtitle" href="/notifications">
+          <ThemedLink
+            style={styles.link}
+            type="subtitle"
+            href="./notifications"
+          >
             {t("ui.settings.notifications")}
           </ThemedLink>
-          <ThemedLink style={styles.link} type="subtitle" href="/reset">
+          <ThemedLink style={styles.link} type="subtitle" href="./reset">
             {t("ui.settings.reset")}
           </ThemedLink>
         </View>

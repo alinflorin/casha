@@ -6,7 +6,7 @@ export default function Reset() {
   return (
     <PageContainer
       headerOptions={{
-        bgResource: require("../assets/images/pages/reset.png"),
+        bgResource: require("../../assets/images/pages/reset.png"),
         title: t("ui.reset.reset"),
         backButton: {
           buttonText: t("ui.settings.settings"),

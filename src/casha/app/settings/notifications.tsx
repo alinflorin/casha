@@ -6,7 +6,7 @@ export default function Notifications() {
   return (
     <PageContainer
       headerOptions={{
-        bgResource: require("../assets/images/pages/notifications.png"),
+        bgResource: require("../../assets/images/pages/notifications.png"),
         title: t("ui.notifications.notifications"),
         backButton: {
           buttonText: t("ui.settings.settings"),
