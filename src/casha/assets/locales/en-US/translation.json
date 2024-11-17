@@ -51,7 +51,23 @@
       "viewCar": "View Car"
     },
     "settings": {
-      "settings": "Settings"
+      "settings": "Settings",
+      "languageAndCurrency": "Language & Currency",
+      "accountAndSync": "Account & Sync",
+      "notifications": "Notifications",
+      "reset": "Reset"
+    },
+    "languageAndCurrency": {
+      "languageAndCurrency": "Language & Currency"
+    },
+    "accountAndSync": {
+      "accountAndSync": "Account & Sync"
+    },
+    "notifications": {
+      "notifications": "Notifications"
+    },
+    "reset": {
+      "reset": "Reset"
     }
   }
 }

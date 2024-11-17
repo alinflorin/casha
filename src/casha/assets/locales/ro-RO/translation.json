@@ -51,7 +51,23 @@
       "viewCar": "Vizualizare mașină"
     },
     "settings": {
-      "settings": "Setări"
+      "settings": "Setări",
+      "languageAndCurrency": "Limbă și monedă",
+      "accountAndSync": "Cont și sincronizare",
+      "notifications": "Notificări",
+      "reset": "Resetare"
+    },
+    "languageAndCurrency": {
+      "languageAndCurrency": "Limbă și monedă"
+    },
+    "accountAndSync": {
+      "accountAndSync": "Cont și sincronizare"
+    },
+    "notifications": {
+      "notifications": "Notificări"
+    },
+    "reset": {
+      "reset": "Resetare"
     }
   }
 }

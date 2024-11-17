@@ -1,5 +1,7 @@
 import PageContainer from "@/components/PageContainer";
+import { ThemedLink } from "@/components/ThemedLink";
 import useTranslate from "@/hooks/useTranslate";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 export default function Settings() {
   const { t } = useTranslate();
@@ -13,6 +15,47 @@ export default function Settings() {
           buttonText: t("ui.home.home")
         }
       }}
-    ></PageContainer>
+    >
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.wrapper}>
+          <ThemedLink
+            style={styles.link}
+            type="subtitle"
+            href="/language-and-currency"
+          >
+            {t("ui.settings.languageAndCurrency")}
+          </ThemedLink>
+          <ThemedLink
+            style={styles.link}
+            type="subtitle"
+            href="/account-and-sync"
+          >
+            {t("ui.settings.accountAndSync")}
+          </ThemedLink>
+          <ThemedLink style={styles.link} type="subtitle" href="/notifications">
+            {t("ui.settings.notifications")}
+          </ThemedLink>
+          <ThemedLink style={styles.link} type="subtitle" href="/reset">
+            {t("ui.settings.reset")}
+          </ThemedLink>
+        </View>
+      </ScrollView>
+    </PageContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1
+  },
+  wrapper: {
+    display: "flex",
+    flex: 1,
+    flexDirection: "column",
+    gap: 10,
+    padding: 10
+  },
+  link: {
+    padding: 20
+  }
+});
