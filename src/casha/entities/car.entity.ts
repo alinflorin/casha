@@ -7,5 +7,5 @@ export interface CarEntity {
   year: number;
   km?: number;
   obd_adapter_data?: string;
-  uses_imperial?: number;
+  uses_imperial: boolean;
 }

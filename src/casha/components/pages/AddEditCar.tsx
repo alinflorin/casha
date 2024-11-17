@@ -20,7 +20,8 @@ export default function AddEditCar() {
     make: "",
     model: "",
     vin: "",
-    year: new Date().getFullYear()
+    year: new Date().getFullYear(),
+    uses_imperial: false
   });
 
   const editedCarId = useMemo(() => {
@@ -77,11 +78,9 @@ export default function AddEditCar() {
               <ThemedText>{t("ui.addEditCar.useImperial")}</ThemedText>
               <ThemedSwitch
                 onChange={(e) =>
-                  setCar({ ...car, uses_imperial: e.nativeEvent.value ? 1 : 0 })
+                  setCar({ ...car, uses_imperial: e.nativeEvent.value })
                 }
-                value={
-                  car.uses_imperial && car.uses_imperial === 1 ? true : false
-                }
+                value={car.uses_imperial}
               />
             </View>
             <ThemedTextInput placeholder={t("ui.addEditCar.make")} />
