@@ -102,47 +102,58 @@ export default function Home() {
           <View style={styles.carsWrapper}>
             {cars &&
               cars.map((c, i) => (
-                <Card
-                  key={i + ""}
+                <TouchableOpacity
                   style={styles.carCard}
-                  icon="warning"
-                  iconColor={warningColor}
-                  title={c.display_name}
-                  contextMenu={[
-                    {
-                      title: t("ui.home.view"),
-                      action: () =>
-                        router.navigate({
-                          pathname: "/car/[id]",
-                          params: {
-                            id: c.id!
-                          }
-                        })
-                    },
-                    {
-                      title: t("ui.home.edit"),
-                      action: () =>
-                        router.navigate({
-                          pathname: "/car/edit/[id]",
-                          params: {
-                            id: c.id!
-                          }
-                        })
-                    },
-                    {
-                      title: t("ui.home.delete"),
-                      destructive: true,
-                      action: () => deleteCarClicked(c.id!, i)
-                    }
-                  ]}
+                  key={i + ""}
+                  onPress={() =>
+                    router.navigate({
+                      pathname: "/car/[id]",
+                      params: {
+                        id: c.id!
+                      }
+                    })
+                  }
                 >
-                  {c.km && (
-                    <ThemedText>
-                      {c.km} {c.uses_imperial ? "mi." : "km."}
-                    </ThemedText>
-                  )}
-                  <ThemedText>{c.year}</ThemedText>
-                </Card>
+                  <Card
+                    icon="warning"
+                    iconColor={warningColor}
+                    title={c.display_name}
+                    contextMenu={[
+                      {
+                        title: t("ui.home.view"),
+                        action: () =>
+                          router.navigate({
+                            pathname: "/car/[id]",
+                            params: {
+                              id: c.id!
+                            }
+                          })
+                      },
+                      {
+                        title: t("ui.home.edit"),
+                        action: () =>
+                          router.navigate({
+                            pathname: "/car/edit/[id]",
+                            params: {
+                              id: c.id!
+                            }
+                          })
+                      },
+                      {
+                        title: t("ui.home.delete"),
+                        destructive: true,
+                        action: () => deleteCarClicked(c.id!, i)
+                      }
+                    ]}
+                  >
+                    {c.km && (
+                      <ThemedText>
+                        {c.km} {c.uses_imperial ? "mi." : "km."}
+                      </ThemedText>
+                    )}
+                    <ThemedText>{c.year}</ThemedText>
+                  </Card>
+                </TouchableOpacity>
               ))}
 
             <TouchableOpacity onPress={addCarClicked} style={styles.carCard}>
@@ -190,8 +201,9 @@ const styles = StyleSheet.create({
     margin: 2
   },
   addCarCardContent: {
+    flex: 1,
     flexDirection: "row",
-    alignItems: "stretch",
+    alignItems: "center",
     justifyContent: "center"
   },
   addCarButton: {
