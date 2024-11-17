@@ -7,8 +7,8 @@ import useDb from "@/hooks/useDb";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import useTranslate from "@/hooks/useTranslate";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { useFocusEffect, useRouter } from "expo-router";
+import { useCallback, useState } from "react";
 import {
   Alert,
   ScrollView,
@@ -28,13 +28,15 @@ export default function Home() {
 
   const db = useDb();
 
-  useEffect(() => {
-    (async () => {
-      const allCars = await db.getAllCars();
-      setCars(allCars);
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        const allCars = await db.getAllCars();
+        setCars(allCars);
+      })();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+  );
 
   const addCarClicked = useCallback(() => {
     router.navigate("/car/add");

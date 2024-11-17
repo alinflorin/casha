@@ -105,7 +105,47 @@ export const dbInternal = (db: SQLiteDatabase) => {
     );
   };
 
-  return { initDb, setSetting, getSetting, getAllCars, deleteCar, getCar };
+  const addCar = async (car: CarEntity) => {
+    return await db.runAsync(
+      `INSERT INTO cars(vin, display_name, make, model, year, km, obd_adapter_data, uses_imperial)
+    VALUES (?,?,?,?,?,?,?,?)`,
+      car.vin,
+      car.display_name,
+      car.make,
+      car.model,
+      car.year,
+      car.km ? car.km : null,
+      car.obd_adapter_data ? car.obd_adapter_data : null,
+      car.uses_imperial
+    );
+  };
+
+  const editCar = async (id: number, car: CarEntity) => {
+    return await db.runAsync(
+      `UPDATE cars SET vin=?, display_name=?, make=?, model=?, year=?, km=?, obd_adapter_data=?, uses_imperial=?
+      WHERE id=?`,
+      car.vin,
+      car.display_name,
+      car.make,
+      car.model,
+      car.year,
+      car.km ? car.km : null,
+      car.obd_adapter_data ? car.obd_adapter_data : null,
+      car.uses_imperial,
+      id
+    );
+  };
+
+  return {
+    initDb,
+    setSetting,
+    getSetting,
+    getAllCars,
+    deleteCar,
+    getCar,
+    addCar,
+    editCar
+  };
 };
 
 export const useDb = () => {
