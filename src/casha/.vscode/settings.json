@@ -2,5 +2,9 @@
   "i18n-ally.localesPaths": [
     "assets/locales"
   ],
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.displayLanguage": "en",
+  "i18n-ally.showFlags": true,
+  "i18n-ally.languageTagSystem": "legacy",
+  "i18n-ally.sourceLanguage": "en"
 }

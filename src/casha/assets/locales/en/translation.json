@@ -58,7 +58,9 @@
       "reset": "Reset"
     },
     "languageAndCurrency": {
-      "languageAndCurrency": "Language & Currency"
+      "languageAndCurrency": "Language & Currency",
+      "language": "Language",
+      "currency": "Currency"
     },
     "accountAndSync": {
       "accountAndSync": "Account & Sync"

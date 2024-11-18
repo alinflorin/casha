@@ -58,7 +58,9 @@
       "reset": "Resetare"
     },
     "languageAndCurrency": {
-      "languageAndCurrency": "Limbă și monedă"
+      "languageAndCurrency": "Limbă și monedă",
+      "language": "Limbă",
+      "currency": "Monedă"
     },
     "accountAndSync": {
       "accountAndSync": "Cont și sincronizare"
