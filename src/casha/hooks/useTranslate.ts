@@ -10,7 +10,9 @@ export const supportedLanguages = {
   en: { translation: translationEn, name: "English" }
 };
 
-export const initI18N = async (savedLanguage: string | undefined) => {
+export const initI18N = async (
+  savedLanguage: string | undefined = undefined
+) => {
   if (!savedLanguage) {
     savedLanguage = Localization.getLocales()[0].languageCode!;
   }

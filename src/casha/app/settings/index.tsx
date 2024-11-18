@@ -25,6 +25,9 @@ export default function Settings() {
           >
             {t("ui.settings.languageAndCurrency")}
           </ThemedLink>
+          <ThemedLink style={styles.link} type="subtitle" href="./theme">
+            {t("ui.settings.theme")}
+          </ThemedLink>
           <ThemedLink
             style={styles.link}
             type="subtitle"

@@ -55,7 +55,8 @@
       "languageAndCurrency": "Limbă și monedă",
       "accountAndSync": "Cont și sincronizare",
       "notifications": "Notificări",
-      "reset": "Resetare"
+      "reset": "Resetare",
+      "theme": "Temă"
     },
     "languageAndCurrency": {
       "languageAndCurrency": "Limbă și monedă",
@@ -69,7 +70,14 @@
       "notifications": "Notificări"
     },
     "reset": {
-      "reset": "Resetare"
+      "reset": "Resetare",
+      "warningThisWillClearAllData": "Avertisment! Acest lucru va șterge toate datele aplicației!"
+    },
+    "theme": {
+      "theme": "Temă",
+      "auto": "Automat",
+      "light": "Luminos",
+      "dark": "Întunecat"
     }
   }
 }

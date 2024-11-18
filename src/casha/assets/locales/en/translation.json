@@ -55,7 +55,8 @@
       "languageAndCurrency": "Language & Currency",
       "accountAndSync": "Account & Sync",
       "notifications": "Notifications",
-      "reset": "Reset"
+      "reset": "Reset",
+      "theme": "Theme"
     },
     "languageAndCurrency": {
       "languageAndCurrency": "Language & Currency",
@@ -69,7 +70,14 @@
       "notifications": "Notifications"
     },
     "reset": {
-      "reset": "Reset"
+      "reset": "Reset",
+      "warningThisWillClearAllData": "Warning! This will clear all the app data!"
+    },
+    "theme": {
+      "theme": "Theme",
+      "auto": "Auto",
+      "light": "Light",
+      "dark": "Dark"
     }
   }
 }
