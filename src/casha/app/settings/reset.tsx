@@ -19,21 +19,15 @@ export default function Reset() {
   const { showConfirmation } = useDialogs();
 
   const reset = useCallback(() => {
-    showConfirmation(
-      t("ui.general.confirmation"),
-      t("ui.general.areYouSure"),
-      t("ui.general.ok"),
-      t("ui.general.cancel"),
-      () => {
-        (async () => {
-          await db.reset();
-          await initI18N();
-          updateColorMode("auto");
-          router.navigate("/");
-        })();
-      }
-    );
-  }, [db, router, t, updateColorMode, showConfirmation]);
+    showConfirmation(() => {
+      (async () => {
+        await db.reset();
+        await initI18N();
+        updateColorMode("auto");
+        router.navigate("/");
+      })();
+    });
+  }, [db, router, updateColorMode, showConfirmation]);
 
   return (
     <PageContainer

@@ -41,22 +41,16 @@ export default function Home() {
 
   const deleteCarClicked = useCallback(
     (id: number, index: number) => {
-      showConfirmation(
-        t("ui.general.confirmation"),
-        t("ui.general.areYouSure"),
-        t("ui.general.ok"),
-        t("ui.general.cancel"),
-        () => {
-          (async () => {
-            await db.deleteCar(id);
-            const carsCopy = [...cars];
-            carsCopy.splice(index, 1);
-            setCars(carsCopy);
-          })();
-        }
-      );
+      showConfirmation(() => {
+        (async () => {
+          await db.deleteCar(id);
+          const carsCopy = [...cars];
+          carsCopy.splice(index, 1);
+          setCars(carsCopy);
+        })();
+      });
     },
-    [t, cars, setCars, db, showConfirmation]
+    [cars, setCars, db, showConfirmation]
   );
 
   return (

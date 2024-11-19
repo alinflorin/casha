@@ -98,11 +98,7 @@ export default function AddEditCar() {
       router.navigate("/");
     } catch (err: any) {
       console.error(err);
-      showAlert(
-        t("ui.general.error"),
-        t("ui.general.anErrorHasOccurred"),
-        t("ui.general.ok")
-      );
+      showAlert(t("ui.general.error"), t("ui.general.anErrorHasOccurred"));
     }
   }, [db, car, editedCarId, t, router, showAlert]);
 
