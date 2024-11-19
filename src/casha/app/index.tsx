@@ -4,18 +4,13 @@ import { ThemedMessageBar } from "@/components/ThemedMessageBar";
 import { ThemedText } from "@/components/ThemedText";
 import { CarEntity } from "@/entities/car.entity";
 import useDb from "@/hooks/useDb";
+import useDialogs from "@/hooks/useDialogs";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import useTranslate from "@/hooks/useTranslate";
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
-import {
-  Alert,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default function Home() {
   const { t } = useTranslate();
@@ -42,27 +37,26 @@ export default function Home() {
     router.navigate("/car/add");
   }, [router]);
 
+  const { showConfirmation } = useDialogs();
+
   const deleteCarClicked = useCallback(
     (id: number, index: number) => {
-      Alert.alert(t("ui.general.confirmation"), t("ui.general.areYouSure"), [
-        {
-          text: t("ui.general.cancel"),
-          style: "cancel"
-        },
-        {
-          text: t("ui.general.ok"),
-          onPress: () => {
-            (async () => {
-              await db.deleteCar(id);
-              const carsCopy = [...cars];
-              carsCopy.splice(index, 1);
-              setCars(carsCopy);
-            })();
-          }
+      showConfirmation(
+        t("ui.general.confirmation"),
+        t("ui.general.areYouSure"),
+        t("ui.general.ok"),
+        t("ui.general.cancel"),
+        () => {
+          (async () => {
+            await db.deleteCar(id);
+            const carsCopy = [...cars];
+            carsCopy.splice(index, 1);
+            setCars(carsCopy);
+          })();
         }
-      ]);
+      );
     },
-    [t, cars, setCars, db]
+    [t, cars, setCars, db, showConfirmation]
   );
 
   return (

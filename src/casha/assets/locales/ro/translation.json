@@ -28,7 +28,9 @@
       "confirmation": "Confirmare",
       "areYouSure": "Sunteți sigur?",
       "cancel": "Anulare",
-      "ok": "OK"
+      "ok": "OK",
+      "error": "Eroare",
+      "anErrorHasOccurred": "A apărut o eroare"
     },
     "addEditCar": {
       "addCar": "Adăugare mașină",

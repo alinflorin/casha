@@ -11,6 +11,7 @@ import ThemedTextInput from "../ThemedTextInput";
 import ThemedSwitch from "../ThemedSwitch";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { decodeVIN, validateVIN, splitVIN } from "universal-vin-decoder";
+import useDialogs from "@/hooks/useDialogs";
 
 export default function AddEditCar() {
   const db = useDb();
@@ -85,6 +86,8 @@ export default function AddEditCar() {
     });
   }, []);
 
+  const { showAlert } = useDialogs();
+
   const save = useCallback(async () => {
     try {
       if (editedCarId) {
@@ -95,8 +98,13 @@ export default function AddEditCar() {
       router.navigate("/");
     } catch (err: any) {
       console.error(err);
+      showAlert(
+        t("ui.general.error"),
+        t("ui.general.anErrorHasOccurred"),
+        t("ui.general.ok")
+      );
     }
-  }, [db, car, editedCarId, router]);
+  }, [db, car, editedCarId, t, router, showAlert]);
 
   return (
     <PageContainer

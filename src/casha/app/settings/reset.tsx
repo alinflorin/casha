@@ -2,11 +2,12 @@ import PageContainer from "@/components/PageContainer";
 import { ThemedText } from "@/components/ThemedText";
 import useColorMode from "@/hooks/useColorMode";
 import useDb from "@/hooks/useDb";
+import useDialogs from "@/hooks/useDialogs";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import useTranslate, { initI18N } from "@/hooks/useTranslate";
 import { useRouter } from "expo-router";
 import { useCallback } from "react";
-import { Alert, Button, StyleSheet, View } from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 
 export default function Reset() {
   const { t } = useTranslate();
@@ -15,26 +16,24 @@ export default function Reset() {
   const db = useDb();
   const router = useRouter();
   const { update: updateColorMode } = useColorMode();
+  const { showConfirmation } = useDialogs();
 
   const reset = useCallback(() => {
-    Alert.alert(t("ui.general.confirmation"), t("ui.general.areYouSure"), [
-      {
-        text: t("ui.general.cancel"),
-        style: "cancel"
-      },
-      {
-        text: t("ui.general.ok"),
-        onPress: () => {
-          (async () => {
-            await db.reset();
-            await initI18N();
-            updateColorMode("auto");
-            router.navigate("/");
-          })();
-        }
+    showConfirmation(
+      t("ui.general.confirmation"),
+      t("ui.general.areYouSure"),
+      t("ui.general.ok"),
+      t("ui.general.cancel"),
+      () => {
+        (async () => {
+          await db.reset();
+          await initI18N();
+          updateColorMode("auto");
+          router.navigate("/");
+        })();
       }
-    ]);
-  }, [db, router, t, updateColorMode]);
+    );
+  }, [db, router, t, updateColorMode, showConfirmation]);
 
   return (
     <PageContainer

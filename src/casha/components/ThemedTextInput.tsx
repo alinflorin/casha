@@ -6,6 +6,8 @@ export type ThemedTextInputProps = TextInputProps & {
   darkColorBorder?: string;
   lightColorText?: string;
   darkColorText?: string;
+  lightColorPlaceholders?: string;
+  darkColorPlaceholders?: string;
 };
 
 export default function ThemedTextInput({
@@ -13,6 +15,8 @@ export default function ThemedTextInput({
   darkColorBorder,
   lightColorText,
   darkColorText,
+  lightColorPlaceholders,
+  darkColorPlaceholders,
   style,
   ...rest
 }: ThemedTextInputProps) {
@@ -27,8 +31,16 @@ export default function ThemedTextInput({
     },
     "text"
   );
+  const placeholderColor = useThemeColor(
+    {
+      light: lightColorPlaceholders,
+      dark: darkColorPlaceholders
+    },
+    "placeholders"
+  );
   return (
     <TextInput
+      placeholderTextColor={placeholderColor}
       style={[
         {
           color: textColor,

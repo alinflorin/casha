@@ -28,7 +28,9 @@
       "confirmation": "Confirmation",
       "areYouSure": "Are you sure?",
       "cancel": "Cancel",
-      "ok": "OK"
+      "ok": "OK",
+      "error": "Error",
+      "anErrorHasOccurred": "An error has occurred"
     },
     "addEditCar": {
       "addCar": "Add Car",
