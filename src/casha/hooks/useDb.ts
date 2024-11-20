@@ -2,7 +2,7 @@ import { CarEntity } from "@/entities/car.entity";
 import { SettingEntity } from "@/entities/setting.entity";
 import { SQLiteDatabase, useSQLiteContext } from "expo-sqlite";
 import { useMemo } from "react";
-import { v1Sql } from "@/migrations/v1.migration.ts";
+import { v1Sql } from "@/migrations/v1.migration";
 
 const migrations = [
   {
@@ -13,7 +13,13 @@ const migrations = [
 
 export const dbInternal = (db: SQLiteDatabase) => {
   const initDb = async () => {
-    const currentVersion = await getSetting("dbversion");
+    let currentVersion: string | undefined = undefined;
+    try {
+      currentVersion = await getSetting("dbversion");
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_: any) {
+      // ignored
+    }
     if (!currentVersion) {
       for (let mig of migrations) {
         await db.execAsync(mig.sql);

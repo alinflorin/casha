@@ -44,7 +44,12 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       }
     },
     platforms: ["android", "ios"],
-    plugins: ["expo-router", "expo-localization", "expo-asset"],
+    plugins: [
+      "expo-router",
+      "expo-localization",
+      "expo-asset",
+      "react-native-ble-plx"
+    ],
     experiments: {
       typedRoutes: true
     },

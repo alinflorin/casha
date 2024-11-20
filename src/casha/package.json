@@ -50,6 +50,7 @@
     "react": "18.2.0",
     "react-i18next": "^15.0.2",
     "react-native": "0.74.5",
+    "react-native-ble-plx": "^3.2.1",
     "react-native-context-menu-view": "^1.16.0",
     "react-native-gesture-handler": "~2.20.0",
     "react-native-keyboard-controller": "^1.14.4",
