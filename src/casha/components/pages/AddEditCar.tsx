@@ -5,7 +5,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { CarEntity } from "@/entities/car.entity";
 import useDb from "@/hooks/useDb";
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import ThemedButton from "../ThemedButton";
 import ThemedTextInput from "../ThemedTextInput";
 import ThemedSwitch from "../ThemedSwitch";
@@ -116,66 +116,62 @@ export default function AddEditCar() {
       }}
     >
       <KeyboardAwareScrollView style={styles.wrapper}>
-        <Pressable style={styles.pressable}>
-          <ThemedText type="subtitle">{t("ui.addEditCar.obd")}</ThemedText>
-          <View style={styles.obdWrapper}>
-            <ThemedText>
-              {t("ui.addEditCar.device")}: {t("ui.addEditCar.none")}
-            </ThemedText>
-            <ThemedButton title={t("ui.addEditCar.scan")} />
-          </View>
-          <ThemedText type="subtitle">{t("ui.addEditCar.data")}</ThemedText>
-          <View style={styles.form}>
-            <ThemedTextInput
-              value={car.vin}
-              onChangeText={vinChanged}
-              placeholder={t("ui.addEditCar.vin") + "*"}
-            />
-            <ThemedTextInput
-              keyboardType="numeric"
-              value={car.km ? car.km.toString() : undefined}
-              onChangeText={(v) =>
-                setCar((c) => ({ ...c, km: v ? +v : undefined }))
-              }
-              placeholder={t("ui.addEditCar.odometer")}
-            />
-            <View style={styles.useImperialWrapper}>
-              <ThemedText>{t("ui.addEditCar.useImperial") + "*"}</ThemedText>
-              <ThemedSwitch
-                onValueChange={(v) =>
-                  setCar((c) => ({ ...c, uses_imperial: v }))
-                }
-                value={car.uses_imperial}
-              />
-            </View>
-            <ThemedTextInput
-              value={car.make}
-              onChangeText={(v) => setCar((c) => ({ ...c, make: v }))}
-              placeholder={t("ui.addEditCar.make") + "*"}
-            />
-            <ThemedTextInput
-              value={car.model}
-              onChangeText={(v) => setCar((c) => ({ ...c, model: v }))}
-              placeholder={t("ui.addEditCar.model") + "*"}
-            />
-            <ThemedTextInput
-              value={car.year + ""}
-              onChangeText={(v) => setCar((c) => ({ ...c, year: v ? +v : 0 }))}
-              keyboardType="numeric"
-              placeholder={t("ui.addEditCar.year") + "*"}
-            />
-            <ThemedTextInput
-              value={car.display_name}
-              onChangeText={(v) => setCar((c) => ({ ...c, display_name: v }))}
-              placeholder={t("ui.addEditCar.displayName") + "*"}
-            />
-            <ThemedButton
-              disabled={!isFormValid}
-              onPress={save}
-              title={t("ui.addEditCar.save")}
+        <ThemedText type="subtitle">{t("ui.addEditCar.obd")}</ThemedText>
+        <View style={styles.obdWrapper}>
+          <ThemedText>
+            {t("ui.addEditCar.device")}: {t("ui.addEditCar.none")}
+          </ThemedText>
+          <ThemedButton title={t("ui.addEditCar.scan")} />
+        </View>
+        <ThemedText type="subtitle">{t("ui.addEditCar.data")}</ThemedText>
+        <View style={styles.form}>
+          <ThemedTextInput
+            value={car.vin}
+            onChangeText={vinChanged}
+            placeholder={t("ui.addEditCar.vin") + "*"}
+          />
+          <ThemedTextInput
+            keyboardType="numeric"
+            value={car.km ? car.km.toString() : undefined}
+            onChangeText={(v) =>
+              setCar((c) => ({ ...c, km: v ? +v : undefined }))
+            }
+            placeholder={t("ui.addEditCar.odometer")}
+          />
+          <View style={styles.useImperialWrapper}>
+            <ThemedText>{t("ui.addEditCar.useImperial") + "*"}</ThemedText>
+            <ThemedSwitch
+              onValueChange={(v) => setCar((c) => ({ ...c, uses_imperial: v }))}
+              value={car.uses_imperial}
             />
           </View>
-        </Pressable>
+          <ThemedTextInput
+            value={car.make}
+            onChangeText={(v) => setCar((c) => ({ ...c, make: v }))}
+            placeholder={t("ui.addEditCar.make") + "*"}
+          />
+          <ThemedTextInput
+            value={car.model}
+            onChangeText={(v) => setCar((c) => ({ ...c, model: v }))}
+            placeholder={t("ui.addEditCar.model") + "*"}
+          />
+          <ThemedTextInput
+            value={car.year + ""}
+            onChangeText={(v) => setCar((c) => ({ ...c, year: v ? +v : 0 }))}
+            keyboardType="numeric"
+            placeholder={t("ui.addEditCar.year") + "*"}
+          />
+          <ThemedTextInput
+            value={car.display_name}
+            onChangeText={(v) => setCar((c) => ({ ...c, display_name: v }))}
+            placeholder={t("ui.addEditCar.displayName") + "*"}
+          />
+          <ThemedButton
+            disabled={!isFormValid}
+            onPress={save}
+            title={t("ui.addEditCar.save")}
+          />
+        </View>
       </KeyboardAwareScrollView>
     </PageContainer>
   );
@@ -183,9 +179,6 @@ export default function AddEditCar() {
 
 const styles = StyleSheet.create({
   wrapper: {
-    flex: 1
-  },
-  pressable: {
     flex: 1,
     flexDirection: "column",
     gap: 10

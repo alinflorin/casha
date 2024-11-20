@@ -8,7 +8,6 @@ import { useAssets } from "expo-asset";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Image,
-  Pressable,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -252,39 +251,39 @@ export default function LanguageAndCurrency() {
       }}
     >
       <ScrollView style={styles.wrapper}>
-        <Pressable style={styles.pressable}>
-          <View style={styles.languageWrapper}>
-            <ThemedText type="subtitle">
-              {t("ui.languageAndCurrency.language")}
-            </ThemedText>
-            {flagsMap && (
-              <View style={styles.languagesList}>
-                {langList.map((l) => (
-                  <TouchableOpacity
-                    onPress={() => changeLanguage(l)}
-                    key={l}
-                    style={styles.languageRow}
-                  >
-                    <View style={styles.languageAndIcon}>
-                      <Image
-                        width={32}
-                        height={32}
-                        source={{ uri: flagsMap[l] }}
-                      />
-                      <ThemedText>{languageNamesMap[l]}</ThemedText>
-                    </View>
-                    {i18n.language === l && (
-                      <Ionicons
-                        size={20}
-                        name="checkmark-circle"
-                        color={accentColor}
-                      />
-                    )}
-                  </TouchableOpacity>
-                ))}
-              </View>
-            )}
+        <View style={styles.languageWrapper}>
+          <ThemedText type="subtitle">
+            {t("ui.languageAndCurrency.language")}
+          </ThemedText>
+          {flagsMap && (
+            <View style={styles.languagesList}>
+              {langList.map((l) => (
+                <TouchableOpacity
+                  onPress={() => changeLanguage(l)}
+                  key={l}
+                  style={styles.languageRow}
+                >
+                  <View style={styles.languageAndIcon}>
+                    <Image
+                      width={32}
+                      height={32}
+                      source={{ uri: flagsMap[l] }}
+                    />
+                    <ThemedText>{languageNamesMap[l]}</ThemedText>
+                  </View>
+                  {i18n.language === l && (
+                    <Ionicons
+                      size={20}
+                      name="checkmark-circle"
+                      color={accentColor}
+                    />
+                  )}
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
 
+          <View style={styles.currencyWrapper}>
             <ThemedText type="subtitle">
               {t("ui.languageAndCurrency.currency")}
             </ThemedText>
@@ -311,17 +310,13 @@ export default function LanguageAndCurrency() {
               ))}
             </View>
           </View>
-          <View style={styles.currencyWrapper}></View>
-        </Pressable>
+        </View>
       </ScrollView>
     </PageContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  pressable: {
-    flex: 1
-  },
   wrapper: {
     flex: 1,
     flexDirection: "column",
