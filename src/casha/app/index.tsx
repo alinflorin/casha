@@ -186,7 +186,8 @@ const styles = StyleSheet.create({
   carCard: {
     flexBasis: "48%",
     maxWidth: "48%",
-    margin: 2
+    margin: 2,
+    minHeight: 110
   },
   addCarCardContent: {
     flex: 1,
