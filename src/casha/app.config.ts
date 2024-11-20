@@ -48,10 +48,12 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       "expo-router",
       "expo-localization",
       "expo-asset",
-      "react-native-ble-plx",
-      {
-        isBackgroundEnabled: true
-      }
+      [
+        "react-native-ble-plx",
+        {
+          isBackgroundEnabled: true
+        }
+      ]
     ],
     experiments: {
       typedRoutes: true
