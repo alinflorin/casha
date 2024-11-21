@@ -30,7 +30,8 @@
       "cancel": "Cancel",
       "ok": "OK",
       "error": "Error",
-      "anErrorHasOccurred": "An error has occurred"
+      "anErrorHasOccurred": "An error has occurred",
+      "close": "Close"
     },
     "addEditCar": {
       "addCar": "Add Car",

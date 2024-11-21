@@ -12,6 +12,7 @@ import ThemedSwitch from "../ThemedSwitch";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { decodeVIN, validateVIN, splitVIN } from "universal-vin-decoder";
 import useDialogs from "@/hooks/useDialogs";
+import Ble from "../modals/Ble";
 
 export default function AddEditCar() {
   const db = useDb();
@@ -86,8 +87,6 @@ export default function AddEditCar() {
     });
   }, []);
 
-  const onScanClicked = useCallback(() => {}, []);
-
   const { showAlert } = useDialogs();
 
   const save = useCallback(async () => {
@@ -103,6 +102,8 @@ export default function AddEditCar() {
       showAlert(t("ui.general.error"), t("ui.general.anErrorHasOccurred"));
     }
   }, [db, car, editedCarId, t, router, showAlert]);
+
+  const [bleVisible, setBleVisible] = useState(false);
 
   return (
     <PageContainer
@@ -124,9 +125,12 @@ export default function AddEditCar() {
             {t("ui.addEditCar.device")}: {t("ui.addEditCar.none")}
           </ThemedText>
           <ThemedButton
-            onPress={onScanClicked}
+            onPress={() => setBleVisible(true)}
             title={t("ui.addEditCar.scan")}
           />
+          {bleVisible && (
+            <Ble onClose={() => setBleVisible(false)} visible={bleVisible} />
+          )}
         </View>
         <ThemedText type="subtitle">{t("ui.addEditCar.data")}</ThemedText>
         <View style={styles.form}>

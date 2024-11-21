@@ -30,7 +30,8 @@
       "cancel": "Anulare",
       "ok": "OK",
       "error": "Eroare",
-      "anErrorHasOccurred": "A apărut o eroare"
+      "anErrorHasOccurred": "A apărut o eroare",
+      "close": "Închidere"
     },
     "addEditCar": {
       "addCar": "Adăugare mașină",
