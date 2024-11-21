@@ -47,7 +47,11 @@
       "model": "Model",
       "year": "Year",
       "displayName": "Display Name",
-      "save": "Save"
+      "save": "Save",
+      "bleError": "BLE Error",
+      "bleNotPermitted": "BLE usage was not allowed",
+      "aBleErrorHasOcurred": "A BLE error has occurred",
+      "stopScan": "Stop Scan"
     },
     "viewCar": {
       "viewCar": "View Car"

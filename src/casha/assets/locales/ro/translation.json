@@ -47,7 +47,11 @@
       "model": "Model",
       "year": "An",
       "displayName": "Nume afișare",
-      "save": "Salvare"
+      "save": "Salvare",
+      "bleError": "Eroare BLE",
+      "bleNotPermitted": "Utilizarea BLE nu a fost permisă",
+      "aBleErrorHasOcurred": "A apărut o eroare BLE",
+      "stopScan": "Oprire scanare"
     },
     "viewCar": {
       "viewCar": "Vizualizare mașină"
