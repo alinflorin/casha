@@ -12,7 +12,6 @@ import ThemedSwitch from "../ThemedSwitch";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { decodeVIN, validateVIN, splitVIN } from "universal-vin-decoder";
 import useDialogs from "@/hooks/useDialogs";
-import useBluetooth from "@/hooks/useBluetooth";
 
 export default function AddEditCar() {
   const db = useDb();
@@ -87,6 +86,8 @@ export default function AddEditCar() {
     });
   }, []);
 
+  const onScanClicked = useCallback(() => {}, []);
+
   const { showAlert } = useDialogs();
 
   const save = useCallback(async () => {
@@ -102,44 +103,6 @@ export default function AddEditCar() {
       showAlert(t("ui.general.error"), t("ui.general.anErrorHasOccurred"));
     }
   }, [db, car, editedCarId, t, router, showAlert]);
-
-  const { requestPermissions, startScan, stopScan } = useBluetooth();
-  const [scanning, setScanning] = useState(false);
-
-  const onStopScanClicked = useCallback(async () => {
-    try {
-      await stopScan();
-    } catch (err: any) {
-      showAlert(
-        t("ui.addEditCar.bleError"),
-        t("ui.addEditCar.aBleErrorHasOcurred")
-      );
-      console.error(err);
-    }
-    setScanning(false);
-  }, [stopScan, setScanning, showAlert, t]);
-
-  const onScanClicked = useCallback(async () => {
-    if (!(await requestPermissions())) {
-      showAlert(
-        t("ui.addEditCar.bleError"),
-        t("ui.addEditCar.bleNotPermitted")
-      );
-      return;
-    }
-    try {
-      await startScan((d) => {
-        console.log(d.name);
-      });
-      setScanning(true);
-    } catch (err: any) {
-      showAlert(
-        t("ui.addEditCar.bleError"),
-        t("ui.addEditCar.aBleErrorHasOcurred")
-      );
-      console.error(err);
-    }
-  }, [t, requestPermissions, startScan, showAlert, setScanning]);
 
   return (
     <PageContainer
@@ -160,18 +123,10 @@ export default function AddEditCar() {
           <ThemedText>
             {t("ui.addEditCar.device")}: {t("ui.addEditCar.none")}
           </ThemedText>
-          {scanning && (
-            <ThemedButton
-              onPress={onStopScanClicked}
-              title={t("ui.addEditCar.stopScan")}
-            />
-          )}
-          {!scanning && (
-            <ThemedButton
-              onPress={onScanClicked}
-              title={t("ui.addEditCar.scan")}
-            />
-          )}
+          <ThemedButton
+            onPress={onScanClicked}
+            title={t("ui.addEditCar.scan")}
+          />
         </View>
         <ThemedText type="subtitle">{t("ui.addEditCar.data")}</ThemedText>
         <View style={styles.form}>

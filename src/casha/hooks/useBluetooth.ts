@@ -5,11 +5,11 @@ import { BleError, BleManager, Device } from "react-native-ble-plx";
 const manager = new BleManager();
 
 export default function useBluetooth() {
-  const [btState, setBtState] = useState<string | undefined>(undefined);
+  const [btState, setBtState] = useState<boolean>(false);
 
   useEffect(() => {
     const subscription = manager.onStateChange((state) => {
-      setBtState(state);
+      setBtState(state === "PoweredOn");
     }, true);
     return () => subscription.remove();
   }, []);
