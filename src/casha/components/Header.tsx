@@ -18,7 +18,6 @@ export interface HeaderProps {
 export default function Header(props: HeaderProps) {
   const [logoAssets] = useAssets([require("../assets/images/icon.png")]);
   const [bgAssets] = useAssets([props.bgResource]);
-  console.log(bgAssets);
   const { colorMode } = useColorMode();
 
   const headerOverlayBgColor = useMemo(() => {
