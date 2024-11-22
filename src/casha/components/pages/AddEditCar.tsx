@@ -110,9 +110,9 @@ export default function AddEditCar() {
   const bleDialogClosed = useCallback(
     (d: Device) => {
       setBleVisible(false);
+      setDevice(d);
       if (d) {
         console.log(d.name);
-        setDevice(d);
       }
     },
     [setBleVisible, setDevice]
