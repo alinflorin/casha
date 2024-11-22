@@ -103,10 +103,14 @@ export default function useBluetooth() {
   );
 
   const stopScan = useCallback(async () => {
-    if (!manager) {
-      throw new Error("BLE Manager not initialized");
+    if (manager) {
+      try {
+        await manager.stopDeviceScan();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (err: any) {
+        // ignored
+      }
     }
-    await manager.stopDeviceScan();
   }, [manager]);
 
   return { btReady, startScan, stopScan };
