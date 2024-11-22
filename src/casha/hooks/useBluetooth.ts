@@ -1,18 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
 import { PermissionsAndroid, Platform } from "react-native";
-import { BleError, BleManager, Device } from "react-native-ble-plx";
-
-const manager = new BleManager();
+import {
+  BleError,
+  BleManager,
+  Device,
+  Subscription
+} from "react-native-ble-plx";
 
 export default function useBluetooth() {
-  const [btState, setBtState] = useState<boolean>(false);
-
-  useEffect(() => {
-    const subscription = manager.onStateChange((state) => {
-      setBtState(state === "PoweredOn");
-    }, true);
-    return () => subscription.remove();
-  }, []);
+  const [manager, setManager] = useState<BleManager | undefined>();
+  const [btReady, setBtReady] = useState(false);
 
   const requestPermissions = useCallback(async () => {
     if (Platform.OS === "ios") {
@@ -51,11 +48,38 @@ export default function useBluetooth() {
     return false;
   }, []);
 
+  useEffect(() => {
+    let subscription: Subscription | undefined;
+    let localManager: BleManager | undefined;
+    (async () => {
+      if (await requestPermissions()) {
+        localManager = new BleManager();
+        setManager(localManager);
+        subscription = localManager.onStateChange((state) => {
+          setBtReady(state === "PoweredOn");
+        }, true);
+      }
+    })();
+    return () => {
+      setManager(undefined);
+      if (subscription) {
+        subscription.remove();
+      }
+      if (localManager) {
+        localManager.destroy();
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const startScan = useCallback(
     async (
       onDeviceFound?: (device: Device) => void,
       onError?: (err: BleError) => void
     ) => {
+      if (!manager) {
+        throw new Error("BLE Manager not initialized");
+      }
       await manager.startDeviceScan(
         null,
         {
@@ -75,12 +99,15 @@ export default function useBluetooth() {
         }
       );
     },
-    []
+    [manager]
   );
 
   const stopScan = useCallback(async () => {
+    if (!manager) {
+      throw new Error("BLE Manager not initialized");
+    }
     await manager.stopDeviceScan();
-  }, []);
+  }, [manager]);
 
-  return { requestPermissions, btState, startScan, stopScan };
+  return { btReady, startScan, stopScan };
 }

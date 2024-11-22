@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import ThemedModal from "../ThemedModal";
 import { ThemedText } from "../ThemedText";
+import useBluetooth from "@/hooks/useBluetooth";
 
 export interface BleProps {
   visible: boolean;
@@ -8,6 +9,8 @@ export interface BleProps {
 }
 
 export default function Ble({ visible, onClose }: BleProps) {
+  const { btReady } = useBluetooth();
+  console.log(btReady);
   useEffect(() => {
     console.log("BLE rendered");
   }, []);
