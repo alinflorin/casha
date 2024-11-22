@@ -1,6 +1,13 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
 import useTranslate from "@/hooks/useTranslate";
-import { Button, Modal, ModalProps, StyleSheet, View } from "react-native";
+import {
+  Button,
+  Modal,
+  ModalProps,
+  Pressable,
+  StyleSheet,
+  View
+} from "react-native";
 
 export type ThemedModalProps = ModalProps & {
   backgroundColorLight?: string;
@@ -10,6 +17,7 @@ export type ThemedModalProps = ModalProps & {
   borderColorLight?: string;
   borderColorDark?: string;
   onClose?: (result?: any) => void;
+  disableCloseOnBackdropPress?: boolean;
 };
 
 export default function ThemedModal({
@@ -20,6 +28,8 @@ export default function ThemedModal({
   borderColorDark,
   borderColorLight,
   children,
+  disableCloseOnBackdropPress,
+  style,
   onClose,
   ...rest
 }: ThemedModalProps) {
@@ -39,18 +49,38 @@ export default function ThemedModal({
 
   return (
     <Modal {...rest}>
-      <View style={styles.centeredView}>
-        <View
+      <Pressable
+        onPress={
+          disableCloseOnBackdropPress
+            ? undefined
+            : () => {
+                if (onClose) {
+                  onClose();
+                }
+              }
+        }
+        style={styles.centeredView}
+      >
+        <Pressable
+          onPress={
+            disableCloseOnBackdropPress
+              ? undefined
+              : (e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+          }
           style={[
             {
               shadowColor: shadowColor,
               backgroundColor: bgColor,
               borderColor: borderColor
             },
+            style,
             styles.modalView
           ]}
         >
-          {children}
+          <View style={styles.flexView}>{children}</View>
           <Button
             onPress={() => {
               if (onClose) {
@@ -59,8 +89,8 @@ export default function ThemedModal({
             }}
             title={t("ui.general.close")}
           ></Button>
-        </View>
-      </View>
+        </Pressable>
+      </Pressable>
     </Modal>
   );
 }
@@ -75,13 +105,16 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     padding: 35,
-    alignItems: "center",
     shadowOffset: {
       width: 0,
       height: 2
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
+    flex: 1
+  },
+  flexView: {
+    flex: 1
   }
 });

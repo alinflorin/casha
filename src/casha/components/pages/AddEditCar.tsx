@@ -13,6 +13,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { decodeVIN, validateVIN, splitVIN } from "universal-vin-decoder";
 import useDialogs from "@/hooks/useDialogs";
 import Ble from "../modals/Ble";
+import { Device } from "react-native-ble-plx";
 
 export default function AddEditCar() {
   const db = useDb();
@@ -104,6 +105,18 @@ export default function AddEditCar() {
   }, [db, car, editedCarId, t, router, showAlert]);
 
   const [bleVisible, setBleVisible] = useState(false);
+  const [device, setDevice] = useState<Device | undefined>();
+
+  const bleDialogClosed = useCallback(
+    (d: Device) => {
+      setBleVisible(false);
+      if (d) {
+        console.log(d.name);
+        setDevice(d);
+      }
+    },
+    [setBleVisible, setDevice]
+  );
 
   return (
     <PageContainer
@@ -122,15 +135,14 @@ export default function AddEditCar() {
         <ThemedText type="subtitle">{t("ui.addEditCar.obd")}</ThemedText>
         <View style={styles.obdWrapper}>
           <ThemedText>
-            {t("ui.addEditCar.device")}: {t("ui.addEditCar.none")}
+            {t("ui.addEditCar.device")}:{" "}
+            {device ? device.name : t("ui.addEditCar.none")}
           </ThemedText>
           <ThemedButton
             onPress={() => setBleVisible(true)}
             title={t("ui.addEditCar.scan")}
           />
-          {bleVisible && (
-            <Ble onClose={() => setBleVisible(false)} visible={bleVisible} />
-          )}
+          {bleVisible && <Ble onClose={bleDialogClosed} visible={bleVisible} />}
         </View>
         <ThemedText type="subtitle">{t("ui.addEditCar.data")}</ThemedText>
         <View style={styles.form}>
