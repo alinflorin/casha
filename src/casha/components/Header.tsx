@@ -18,6 +18,7 @@ export interface HeaderProps {
 export default function Header(props: HeaderProps) {
   const [logoAssets] = useAssets([require("../assets/images/icon.png")]);
   const [bgAssets] = useAssets([props.bgResource]);
+  console.log(bgAssets);
   const { colorMode } = useColorMode();
 
   const headerOverlayBgColor = useMemo(() => {
@@ -27,48 +28,50 @@ export default function Header(props: HeaderProps) {
   }, [colorMode]);
 
   return (
-    <ImageBackground
-      style={styles.root}
-      source={
-        bgAssets
-          ? {
-              uri: bgAssets[0].uri
-            }
-          : undefined
-      }
-      resizeMethod="auto"
-      resizeMode="cover"
-      imageStyle={{
-        opacity: 0.2
-      }}
-    >
-      <SafeAreaView
-        edges={["top", "left", "right"]}
-        style={[
-          {
-            backgroundColor: headerOverlayBgColor
-          },
-          styles.content
-        ]}
-      >
-        <View style={styles.logoContainer}>
-          <Image
-            source={logoAssets ? { uri: logoAssets[0].uri! } : undefined}
-            width={44}
-            height={44}
-            style={styles.logo}
-          />
-          <View style={{ flex: 1 }} />
-          {props.contextMenuVisible && <TopMenu />}
-        </View>
-        {props.backButton && <BackButton {...props.backButton} />}
-        <View style={styles.titleSpacer}></View>
-        <View style={styles.titleContainer}>
-          <ThemedText type="title">{props.title}</ThemedText>
-        </View>
-      </SafeAreaView>
-      <HairLine />
-    </ImageBackground>
+    <>
+      {bgAssets && (
+        <ImageBackground
+          style={styles.root}
+          source={{
+            uri: bgAssets[0].uri
+          }}
+          resizeMethod="auto"
+          resizeMode="cover"
+          imageStyle={{
+            opacity: 0.2
+          }}
+        >
+          <SafeAreaView
+            edges={["top", "left", "right"]}
+            style={[
+              {
+                backgroundColor: headerOverlayBgColor
+              },
+              styles.content
+            ]}
+          >
+            <View style={styles.logoContainer}>
+              {logoAssets && (
+                <Image
+                  source={{ uri: logoAssets[0].uri! }}
+                  width={44}
+                  height={44}
+                  style={styles.logo}
+                />
+              )}
+              <View style={{ flex: 1 }} />
+              {props.contextMenuVisible && <TopMenu />}
+            </View>
+            {props.backButton && <BackButton {...props.backButton} />}
+            <View style={styles.titleSpacer}></View>
+            <View style={styles.titleContainer}>
+              <ThemedText type="title">{props.title}</ThemedText>
+            </View>
+          </SafeAreaView>
+          <HairLine />
+        </ImageBackground>
+      )}
+    </>
   );
 }
 
