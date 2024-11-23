@@ -48,10 +48,10 @@
       "model": "Model",
       "year": "Year",
       "displayName": "Display Name",
-      "save": "Save",
-      "ble": {
-        "devices": "Devices"
-      }
+      "save": "Save"
+    },
+    "ble": {
+      "devices": "Devices"
     },
     "viewCar": {
       "viewCar": "View Car"

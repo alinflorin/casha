@@ -11,7 +11,7 @@ import {
   View
 } from "react-native";
 import useTranslate from "@/hooks/useTranslate";
-import { ThemedMessageBar } from "../ThemedMessageBar";
+import useDialogs from "@/hooks/useDialogs";
 
 export interface BleProps {
   visible: boolean;
@@ -22,7 +22,7 @@ export default function Ble({ visible, onClose }: BleProps) {
   const { btReady, startScan, stopScan } = useBluetooth();
   const [devices, setDevices] = useState<Device[]>([]);
   const { t } = useTranslate();
-  const [error, setError] = useState<string | undefined>();
+  const { showAlert } = useDialogs();
 
   const onDeviceFound = useCallback((device: Device) => {
     if (device.name == null) {
@@ -52,11 +52,26 @@ export default function Ble({ visible, onClose }: BleProps) {
   }, [btReady]);
 
   const selectDevice = useCallback(
-    (d: Device) => {
-      setError(undefined);
-      onClose(d);
+    async (d: Device) => {
+      try {
+        if (!d.isConnectable) {
+          throw new Error("Device unconnectable");
+        }
+        await d.connect();
+        await d.discoverAllServicesAndCharacteristics();
+        const services = await d.services();
+        for (let s of services) {
+          console.log(s.id);
+          const chars = await s.characteristics();
+          console.log(chars.map((c) => c.value));
+        }
+        onClose(d);
+      } catch (e) {
+        console.error(e);
+        showAlert(t("ui.general.error"), t("ui.general.anErrorHasOccurred"));
+      }
     },
-    [onClose, setError]
+    [onClose, t, showAlert]
   );
 
   return (
@@ -69,14 +84,7 @@ export default function Ble({ visible, onClose }: BleProps) {
     >
       <ScrollView style={styles.scrollView}>
         <Pressable style={styles.pressable}>
-          <ThemedText type="subtitle">
-            {t("ui.addEditCar.ble.devices")}
-          </ThemedText>
-          {error && (
-            <ThemedMessageBar type="error">
-              <ThemedText>{error}</ThemedText>
-            </ThemedMessageBar>
-          )}
+          <ThemedText type="subtitle">{t("ui.ble.devices")}</ThemedText>
           <View style={styles.devicesList}>
             {devices.map((d) => (
               <TouchableOpacity onPress={() => selectDevice(d)} key={d.id}>

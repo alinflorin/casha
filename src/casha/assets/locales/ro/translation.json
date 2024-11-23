@@ -48,10 +48,10 @@
       "model": "Model",
       "year": "An",
       "displayName": "Nume afișare",
-      "save": "Salvare",
-      "ble": {
-        "devices": "Dispozitive"
-      }
+      "save": "Salvare"
+    },
+    "ble": {
+      "devices": "Dispozitive"
     },
     "viewCar": {
       "viewCar": "Vizualizare mașină"
