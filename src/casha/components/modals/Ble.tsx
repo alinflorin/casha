@@ -11,6 +11,7 @@ import {
   View
 } from "react-native";
 import useTranslate from "@/hooks/useTranslate";
+import { ThemedMessageBar } from "../ThemedMessageBar";
 
 export interface BleProps {
   visible: boolean;
@@ -21,6 +22,7 @@ export default function Ble({ visible, onClose }: BleProps) {
   const { btReady, startScan, stopScan } = useBluetooth();
   const [devices, setDevices] = useState<Device[]>([]);
   const { t } = useTranslate();
+  const [error, setError] = useState<string | undefined>();
 
   const onDeviceFound = useCallback((device: Device) => {
     if (device.name == null) {
@@ -51,9 +53,10 @@ export default function Ble({ visible, onClose }: BleProps) {
 
   const selectDevice = useCallback(
     (d: Device) => {
+      setError(undefined);
       onClose(d);
     },
-    [onClose]
+    [onClose, setError]
   );
 
   return (
@@ -69,6 +72,11 @@ export default function Ble({ visible, onClose }: BleProps) {
           <ThemedText type="subtitle">
             {t("ui.addEditCar.ble.devices")}
           </ThemedText>
+          {error && (
+            <ThemedMessageBar type="error">
+              <ThemedText>{error}</ThemedText>
+            </ThemedMessageBar>
+          )}
           <View style={styles.devicesList}>
             {devices.map((d) => (
               <TouchableOpacity onPress={() => selectDevice(d)} key={d.id}>
