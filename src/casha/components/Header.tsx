@@ -5,8 +5,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useAssets } from "expo-asset";
 import BackButton, { BackButtonProps } from "./BackButton";
 import TopMenu from "./TopMenu";
-import { useMemo } from "react";
-import useColorMode from "@/hooks/useColorMode";
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { StatusBar } from "expo-status-bar";
 
 export interface HeaderProps {
   title: string;
@@ -18,13 +18,8 @@ export interface HeaderProps {
 export default function Header(props: HeaderProps) {
   const [logoAssets] = useAssets([require("../assets/images/icon.png")]);
   const [bgAssets] = useAssets([props.bgResource]);
-  const { colorMode } = useColorMode();
 
-  const headerOverlayBgColor = useMemo(() => {
-    return colorMode === "dark"
-      ? "rgba(0, 0, 0, 0.2)"
-      : "rgba(255, 255, 255, 0.2)";
-  }, [colorMode]);
+  const bgColor = useThemeColor({}, "background");
 
   return (
     <>
@@ -40,15 +35,7 @@ export default function Header(props: HeaderProps) {
             opacity: 0.2
           }}
         >
-          <SafeAreaView
-            edges={["top", "left", "right"]}
-            style={[
-              {
-                backgroundColor: headerOverlayBgColor
-              },
-              styles.content
-            ]}
-          >
+          <SafeAreaView edges={["top", "left", "right"]} style={styles.content}>
             <View style={styles.logoContainer}>
               {logoAssets && (
                 <Image
@@ -70,6 +57,7 @@ export default function Header(props: HeaderProps) {
           <HairLine />
         </ImageBackground>
       )}
+      <StatusBar backgroundColor={bgColor} />
     </>
   );
 }
