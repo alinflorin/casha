@@ -14,6 +14,7 @@ import { decodeVIN, validateVIN, splitVIN } from "universal-vin-decoder";
 import useDialogs from "@/hooks/useDialogs";
 import Ble from "../modals/Ble";
 import { OdbAdapterData } from "@/models/obd-adapter-data";
+import { ScanDialogData } from "@/models/scan-dialog-data";
 
 export default function AddEditCar() {
   const db = useDb();
@@ -110,11 +111,22 @@ export default function AddEditCar() {
   >();
 
   const bleDialogClosed = useCallback(
-    (d: OdbAdapterData) => {
+    (d: ScanDialogData | undefined) => {
       setBleVisible(false);
-      setObdAdapterData(d);
+      if (d) {
+        setObdAdapterData(d.obd_adapter_data);
+        setCar((c) => ({
+          ...c,
+          km: d?.km,
+          vin: d?.vin,
+          obd_adapter_data: JSON.stringify(d.obd_adapter_data)
+        }));
+        setTimeout(() => {
+          vinChanged(d.vin);
+        }, 1);
+      }
     },
-    [setBleVisible, setObdAdapterData]
+    [setBleVisible, setObdAdapterData, setCar, vinChanged]
   );
 
   return (
