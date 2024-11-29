@@ -59,9 +59,8 @@ export default function Ble({ visible, onClose }: BleProps) {
         if (!d.isConnectable) {
           throw new Error("Device unconnectable");
         }
-        if (!(await d.isConnected())) {
-          await d.connect();
-        }
+        
+        await d.connect();
 
         let serviceUuid: string | undefined;
         let readCharacteristicData: OdbBleCharacteristicData | undefined;
