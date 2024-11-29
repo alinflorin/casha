@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import useTranslate from "@/hooks/useTranslate";
 import useDialogs from "@/hooks/useDialogs";
+import { OdbAdapterData } from "@/models/obd-adapter-data";
+import base64 from "react-native-base64";
 
 export interface BleProps {
   visible: boolean;
@@ -57,15 +59,66 @@ export default function Ble({ visible, onClose }: BleProps) {
         if (!d.isConnectable) {
           throw new Error("Device unconnectable");
         }
-        await d.connect();
+        if (!(await d.isConnected())) {
+          await d.connect();
+        }
+
+        let serviceUuid: string | undefined;
+        let readCharacteristicUuid: string | undefined;
+        let writeCharacteristicUuid: string | undefined;
+
         await d.discoverAllServicesAndCharacteristics();
         const services = await d.services();
-        for (let s of services) {
-          console.log(s.id);
-          const chars = await s.characteristics();
-          console.log(chars.map((c) => c.value));
+
+        for (const service of services) {
+          console.log("Service " + service.uuid);
+          serviceUuid = service.uuid;
+          const characteristics = await service.characteristics();
+          for (const chr of characteristics) {
+            console.log("CHR " + chr.uuid);
+            if (!writeCharacteristicUuid) {
+              try {
+                await chr.writeWithoutResponse(base64.encode("0100"));
+                writeCharacteristicUuid = chr.uuid;
+              } catch (err) {
+                console.warn(err);
+              }
+            }
+
+            if (!readCharacteristicUuid) {
+              try {
+                const reply = await chr.read();
+                if (reply && reply.value) {
+                  readCharacteristicUuid = chr.uuid;
+                }
+              } catch (err) {
+                console.warn(err);
+              }
+            }
+
+            if (readCharacteristicUuid && writeCharacteristicUuid) {
+              break;
+            }
+          }
         }
-        onClose(d);
+
+        if (
+          !serviceUuid ||
+          !readCharacteristicUuid ||
+          !writeCharacteristicUuid
+        ) {
+          throw new Error("No service/characteristic are usable");
+        }
+
+        onClose({
+          ble: {
+            deviceName: d.name,
+            deviceAddress: d.id,
+            serviceUuid: serviceUuid,
+            readCharacteristicUuid: readCharacteristicUuid,
+            writeCharacteristicUuid: writeCharacteristicUuid
+          }
+        } as OdbAdapterData);
       } catch (e) {
         console.error(e);
         showAlert(t("ui.general.error"), t("ui.general.anErrorHasOccurred"));

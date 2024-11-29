@@ -13,7 +13,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { decodeVIN, validateVIN, splitVIN } from "universal-vin-decoder";
 import useDialogs from "@/hooks/useDialogs";
 import Ble from "../modals/Ble";
-import { Device } from "react-native-ble-plx";
+import { OdbAdapterData } from "@/models/obd-adapter-data";
 
 export default function AddEditCar() {
   const db = useDb();
@@ -105,17 +105,16 @@ export default function AddEditCar() {
   }, [db, car, editedCarId, t, router, showAlert]);
 
   const [bleVisible, setBleVisible] = useState(false);
-  const [device, setDevice] = useState<Device | undefined>();
+  const [obdAdapterData, setObdAdapterData] = useState<
+    OdbAdapterData | undefined
+  >();
 
   const bleDialogClosed = useCallback(
-    (d: Device) => {
+    (d: OdbAdapterData) => {
       setBleVisible(false);
-      setDevice(d);
-      if (d) {
-        console.log(d.name);
-      }
+      setObdAdapterData(d);
     },
-    [setBleVisible, setDevice]
+    [setBleVisible, setObdAdapterData]
   );
 
   return (
@@ -136,7 +135,9 @@ export default function AddEditCar() {
         <View style={styles.obdWrapper}>
           <ThemedText>
             {t("ui.addEditCar.device")}:{" "}
-            {device ? device.name : t("ui.addEditCar.none")}
+            {obdAdapterData?.ble
+              ? obdAdapterData.ble.deviceName
+              : t("ui.addEditCar.none")}
           </ThemedText>
           <ThemedButton
             onPress={() => setBleVisible(true)}
