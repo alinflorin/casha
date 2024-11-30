@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { PermissionsAndroid, Platform } from "react-native";
+import base64 from "react-native-base64";
 import {
   BleError,
   BleManager,
@@ -113,5 +114,68 @@ export default function useBluetooth() {
     }
   }, [manager]);
 
-  return { btReady, startScan, stopScan };
+  const writeAndRead = useCallback(
+    async (
+      device: string,
+      service: string,
+      readCharacteristic: string,
+      writeCharacteristic: string,
+      value: string,
+      timeout: number = 5000
+    ) => {
+      if (!manager) {
+        throw new Error("Manager is not initialized");
+      }
+      return new Promise<string | undefined>(async (accept, reject) => {
+        let timeoutHandle: NodeJS.Timeout | undefined;
+
+        const sub = manager.monitorCharacteristicForDevice(
+          device,
+          service,
+          readCharacteristic,
+          (e, c) => {
+            if (e) {
+              sub.remove();
+              if (timeoutHandle) {
+                clearTimeout(timeoutHandle);
+              }
+              reject(e);
+              return;
+            }
+            if (c) {
+              if (!c.value) {
+                sub.remove();
+                if (timeoutHandle) {
+                  clearTimeout(timeoutHandle);
+                }
+                accept(undefined);
+              } else {
+                sub.remove();
+                if (timeoutHandle) {
+                  clearTimeout(timeoutHandle);
+                }
+                accept(base64.decode(c.value));
+              }
+            }
+          }
+        );
+        await manager.writeCharacteristicWithResponseForDevice(
+          device,
+          service,
+          writeCharacteristic,
+          base64.encode(value)
+        );
+
+        timeoutHandle = setTimeout(() => {
+          if (sub) {
+            sub.remove();
+          }
+          reject(new Error("Operation timed out"));
+        }, timeout);
+      });
+    },
+    [manager]
+  );
+
+  return { btReady, startScan, stopScan, writeAndRead };
 }

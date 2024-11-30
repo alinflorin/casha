@@ -22,7 +22,7 @@ export interface BleProps {
 }
 
 export default function Ble({ visible, onClose }: BleProps) {
-  const { btReady, startScan, stopScan } = useBluetooth();
+  const { btReady, startScan, stopScan, writeAndRead } = useBluetooth();
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslate();
@@ -111,6 +111,17 @@ export default function Ble({ visible, onClose }: BleProps) {
           throw new Error("No service/characteristic are usable");
         }
 
+        const vinReply = await writeAndRead(
+          d.id,
+          serviceUuid,
+          readCharacteristicData.uuid,
+          writeCharacteristicData.uuid,
+          "0902",
+          600000
+        );
+
+        console.log(vinReply);
+
         try {
           await d.cancelConnection();
         } catch (err) {
@@ -141,7 +152,7 @@ export default function Ble({ visible, onClose }: BleProps) {
       }
       setLoading(false);
     },
-    [onClose, t, showAlert, setLoading]
+    [onClose, t, showAlert, setLoading, writeAndRead]
   );
 
   return (
