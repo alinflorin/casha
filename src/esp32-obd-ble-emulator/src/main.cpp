@@ -9,7 +9,7 @@ const uint16_t SERVICE_UUID = 0xFFF0;
 const uint16_t RX_UUID = 0xFFF1;
 const uint16_t TX_UUID = 0xFFF2;
 
-#define DEBUG_LEVEL 1
+#define DEBUG_LEVEL 2
 
 class Device final : public BLEServerCallbacks {
 public:
