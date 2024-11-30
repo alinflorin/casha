@@ -15,6 +15,8 @@ import useDialogs from "@/hooks/useDialogs";
 import { OdbBleCharacteristicData } from "@/models/obd-adapter-data";
 import { ScanDialogData } from "@/models/scan-dialog-data";
 import ThemedActivityIndicator from "../ThemedActivityIndicator";
+import useObdDecoder from "@/hooks/useObdDecoder";
+import { ObdPids } from "@/constants/OdbPids";
 
 export interface BleProps {
   visible: boolean;
@@ -22,7 +24,8 @@ export interface BleProps {
 }
 
 export default function Ble({ visible, onClose }: BleProps) {
-  const { btReady, startScan, stopScan, writeAndRead } = useBluetooth();
+  const { btReady, startScan, stopScan, writeAndRead, requestMtu } =
+    useBluetooth();
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslate();
@@ -55,14 +58,23 @@ export default function Ble({ visible, onClose }: BleProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [btReady]);
 
+  const { decodeVinFromBleReply } = useObdDecoder();
+
   const selectDevice = useCallback(
     async (d: Device) => {
       setLoading(true);
       try {
+        await stopScan();
+      } catch (err) {
+        console.warn(err);
+      }
+      try {
         if (!d.isConnectable) {
           throw new Error("Device unconnectable");
         }
-        await d.connect();
+        if (!(await d.isConnected())) {
+          await d.connect();
+        }
 
         let serviceUuid: string | undefined;
         let readCharacteristicData: OdbBleCharacteristicData | undefined;
@@ -111,15 +123,17 @@ export default function Ble({ visible, onClose }: BleProps) {
           throw new Error("No service/characteristic are usable");
         }
 
+        await requestMtu(d.id, 512);
+
         const vinReply = await writeAndRead(
           d.id,
           serviceUuid,
           readCharacteristicData.uuid,
           writeCharacteristicData.uuid,
-          "0902"
+          ObdPids.ReadVin
         );
 
-        console.log(vinReply);
+        const decodedVin = decodeVinFromBleReply(vinReply!);
 
         try {
           await d.cancelConnection();
@@ -138,7 +152,7 @@ export default function Ble({ visible, onClose }: BleProps) {
             }
           },
           km: 100,
-          vin: "WDD23422AAAAAA023"
+          vin: decodedVin
         } as ScanDialogData);
       } catch (e) {
         try {
@@ -151,7 +165,16 @@ export default function Ble({ visible, onClose }: BleProps) {
       }
       setLoading(false);
     },
-    [onClose, t, showAlert, setLoading, writeAndRead]
+    [
+      onClose,
+      t,
+      showAlert,
+      setLoading,
+      writeAndRead,
+      requestMtu,
+      stopScan,
+      decodeVinFromBleReply
+    ]
   );
 
   return (

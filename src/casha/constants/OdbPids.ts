@@ -1,4 +1,4 @@
 export const ObdPids = {
-  ReadVin: "0010",
+  ReadVin: "0902",
   ReadKm: "0100"
 };

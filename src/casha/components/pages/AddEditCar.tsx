@@ -62,6 +62,20 @@ export default function AddEditCar() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const populateDetailsFromVin = useCallback((car: CarEntity) => {
+    const carCopy = { ...car };
+    const decoded = decodeVIN(carCopy.vin);
+    if (decoded.isValid) {
+      const split = splitVIN(carCopy.vin);
+      carCopy.make = decoded.info?.manufacturer || "";
+      carCopy.model = split.vds;
+      carCopy.year = decoded.info?.modelYear
+        ? +decoded.info?.modelYear
+        : new Date().getFullYear();
+    }
+    return carCopy;
+  }, []);
+
   const isFormValid = useMemo(() => {
     return (
       car.display_name &&
@@ -79,25 +93,17 @@ export default function AddEditCar() {
     );
   }, [car]);
 
-  const vinChanged = useCallback((newVin: string) => {
-    setCar((car) => {
-      const carCopy: CarEntity = { ...car };
-      carCopy.vin = newVin;
-      const decoded = decodeVIN(carCopy.vin);
-      if (
-        decoded.isValid &&
-        (!carCopy.make || carCopy.make.length === 0) &&
-        (!carCopy.model || carCopy.model.length === 0) &&
-        (!carCopy.year || carCopy.year !== 0)
-      ) {
-        const split = splitVIN(carCopy.vin);
-        carCopy.make = decoded.info?.manufacturer || "";
-        carCopy.model = split.vds;
-        carCopy.year = decoded.info?.modelYear ? +decoded.info?.modelYear : 0;
-      }
-      return carCopy;
-    });
-  }, []);
+  const vinChanged = useCallback(
+    (newVin: string) => {
+      setCar((car) => {
+        let carCopy: CarEntity = { ...car };
+        carCopy.vin = newVin;
+        carCopy = populateDetailsFromVin(carCopy);
+        return carCopy;
+      });
+    },
+    [populateDetailsFromVin, setCar]
+  );
 
   const { showAlert } = useDialogs();
 
@@ -117,21 +123,20 @@ export default function AddEditCar() {
 
   const bleDialogClosed = useCallback(
     (d: ScanDialogData | undefined) => {
-      setBleVisible(false);
       if (d) {
         setObdAdapterData(d.obd_adapter_data);
-        setCar((c) => ({
-          ...c,
-          km: d?.km,
-          vin: d?.vin,
-          obd_adapter_data: JSON.stringify(d.obd_adapter_data)
-        }));
-        setTimeout(() => {
-          vinChanged(d.vin);
-        }, 1);
+        setCar((c) => {
+          let carCopy = { ...c };
+          carCopy.vin = d.vin;
+          carCopy.km = d.km;
+          carCopy.obd_adapter_data = JSON.stringify(d.obd_adapter_data);
+          carCopy = populateDetailsFromVin(carCopy);
+          return carCopy;
+        });
       }
+      setBleVisible(false);
     },
-    [setBleVisible, setObdAdapterData, setCar, vinChanged]
+    [setBleVisible, setObdAdapterData, setCar, populateDetailsFromVin]
   );
 
   const errorColor = useThemeColor({}, "error");

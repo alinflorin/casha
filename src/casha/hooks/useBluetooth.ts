@@ -128,7 +128,6 @@ export default function useBluetooth() {
       }
       return new Promise<string | undefined>(async (accept, reject) => {
         let timeoutHandle: NodeJS.Timeout | undefined;
-
         const sub = manager.monitorCharacteristicForDevice(
           device,
           service,
@@ -154,7 +153,8 @@ export default function useBluetooth() {
                 if (timeoutHandle) {
                   clearTimeout(timeoutHandle);
                 }
-                accept(base64.decode(c.value));
+                const decoded = base64.decode(c.value);
+                accept(decoded);
               }
             }
           }
@@ -177,5 +177,15 @@ export default function useBluetooth() {
     [manager]
   );
 
-  return { btReady, startScan, stopScan, writeAndRead };
+  const requestMtu = useCallback(
+    async (device: string, mtu: number) => {
+      if (!manager) {
+        throw new Error("Manager is not initialized");
+      }
+      await manager.requestMTUForDevice(device, mtu);
+    },
+    [manager]
+  );
+
+  return { btReady, startScan, stopScan, writeAndRead, requestMtu };
 }
