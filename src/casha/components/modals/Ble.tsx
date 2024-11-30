@@ -59,7 +59,6 @@ export default function Ble({ visible, onClose }: BleProps) {
         if (!d.isConnectable) {
           throw new Error("Device unconnectable");
         }
-        
         await d.connect();
 
         let serviceUuid: string | undefined;
