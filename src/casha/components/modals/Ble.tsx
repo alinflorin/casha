@@ -116,8 +116,7 @@ export default function Ble({ visible, onClose }: BleProps) {
           serviceUuid,
           readCharacteristicData.uuid,
           writeCharacteristicData.uuid,
-          "0902",
-          600000
+          "0902"
         );
 
         console.log(vinReply);
