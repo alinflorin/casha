@@ -237,7 +237,7 @@ private:
     } else if (command == "0166") { // Engine Load (PID 0166)
       response = "41 66 64";  
     } else if (command == "0902") {  // VIN (PID 0902)
-      response = "49 02 00 00 59 41 4D 41 48 41 45 53 50 33 32 4F 44 42"; 
+      response = "49 02 00 59 59 41 4D 41 48 41 45 53 50 33 32 4F 44 42"; 
     } else if (command == "0904") { // Calibration ID (PID 0904)
       response = "49 04 00 00 00 00";
     } else if (command == "090A") { // ECU Name (PID 090A)
