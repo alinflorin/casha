@@ -14,6 +14,7 @@ import useTranslate from "@/hooks/useTranslate";
 import useDialogs from "@/hooks/useDialogs";
 import { OdbBleCharacteristicData } from "@/models/obd-adapter-data";
 import { ScanDialogData } from "@/models/scan-dialog-data";
+import ThemedActivityIndicator from "../ThemedActivityIndicator";
 
 export interface BleProps {
   visible: boolean;
@@ -23,6 +24,7 @@ export interface BleProps {
 export default function Ble({ visible, onClose }: BleProps) {
   const { btReady, startScan, stopScan } = useBluetooth();
   const [devices, setDevices] = useState<Device[]>([]);
+  const [loading, setLoading] = useState(false);
   const { t } = useTranslate();
   const { showAlert } = useDialogs();
 
@@ -55,6 +57,7 @@ export default function Ble({ visible, onClose }: BleProps) {
 
   const selectDevice = useCallback(
     async (d: Device) => {
+      setLoading(true);
       try {
         if (!d.isConnectable) {
           throw new Error("Device unconnectable");
@@ -108,6 +111,12 @@ export default function Ble({ visible, onClose }: BleProps) {
           throw new Error("No service/characteristic are usable");
         }
 
+        try {
+          await d.cancelConnection();
+        } catch (err) {
+          console.warn(err);
+        }
+
         onClose({
           obd_adapter_data: {
             ble: {
@@ -122,11 +131,17 @@ export default function Ble({ visible, onClose }: BleProps) {
           vin: "WDD23422AAAAAA023"
         } as ScanDialogData);
       } catch (e) {
+        try {
+          await d.cancelConnection();
+        } catch (err) {
+          console.warn(err);
+        }
         console.error(e);
         showAlert(t("ui.general.error"), t("ui.general.anErrorHasOccurred"));
       }
+      setLoading(false);
     },
-    [onClose, t, showAlert]
+    [onClose, t, showAlert, setLoading]
   );
 
   return (
@@ -135,11 +150,15 @@ export default function Ble({ visible, onClose }: BleProps) {
       animationType="slide"
       onClose={onClose}
       visible={visible}
+      closeDisabled={loading}
       style={styles.modal}
     >
       <ScrollView style={styles.scrollView}>
         <Pressable style={styles.pressable}>
-          <ThemedText type="subtitle">{t("ui.ble.devices")}</ThemedText>
+          <View style={styles.row}>
+            <ThemedText type="subtitle">{t("ui.ble.devices")}</ThemedText>
+            {loading && <ThemedActivityIndicator />}
+          </View>
           <View style={styles.devicesList}>
             {devices.map((d) => (
               <TouchableOpacity onPress={() => selectDevice(d)} key={d.id}>
@@ -158,6 +177,12 @@ const styles = StyleSheet.create({
     height: "60%",
     maxHeight: "60%",
     width: "90%"
+  },
+  row: {
+    flex: 1,
+    flexDirection: "row",
+    gap: 10,
+    alignItems: "center"
   },
   scrollView: {
     flex: 1,

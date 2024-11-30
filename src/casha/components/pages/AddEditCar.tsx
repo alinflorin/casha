@@ -15,6 +15,8 @@ import useDialogs from "@/hooks/useDialogs";
 import Ble from "../modals/Ble";
 import { OdbAdapterData } from "@/models/obd-adapter-data";
 import { ScanDialogData } from "@/models/scan-dialog-data";
+import { Ionicons } from "@expo/vector-icons";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function AddEditCar() {
   const db = useDb();
@@ -30,6 +32,11 @@ export default function AddEditCar() {
     year: new Date().getFullYear(),
     uses_imperial: false
   });
+
+  const [bleVisible, setBleVisible] = useState(false);
+  const [obdAdapterData, setObdAdapterData] = useState<
+    OdbAdapterData | undefined
+  >();
 
   const editedCarId = useMemo(() => {
     if (!searchParams || !searchParams.id) {
@@ -48,6 +55,9 @@ export default function AddEditCar() {
         throw new Error("Car doesn't exist.");
       }
       setCar(editedCar);
+      if (editedCar.obd_adapter_data) {
+        setObdAdapterData(JSON.parse(editedCar.obd_adapter_data));
+      }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -105,11 +115,6 @@ export default function AddEditCar() {
     }
   }, [db, car, editedCarId, t, router, showAlert]);
 
-  const [bleVisible, setBleVisible] = useState(false);
-  const [obdAdapterData, setObdAdapterData] = useState<
-    OdbAdapterData | undefined
-  >();
-
   const bleDialogClosed = useCallback(
     (d: ScanDialogData | undefined) => {
       setBleVisible(false);
@@ -128,6 +133,13 @@ export default function AddEditCar() {
     },
     [setBleVisible, setObdAdapterData, setCar, vinChanged]
   );
+
+  const errorColor = useThemeColor({}, "error");
+
+  const removeDevice = useCallback(() => {
+    setObdAdapterData(undefined);
+    setCar((c) => ({ ...c, obd_adapter_data: undefined }));
+  }, [setObdAdapterData, setCar]);
 
   return (
     <PageContainer
@@ -151,10 +163,20 @@ export default function AddEditCar() {
               ? obdAdapterData.ble.deviceName
               : t("ui.addEditCar.none")}
           </ThemedText>
-          <ThemedButton
-            onPress={() => setBleVisible(true)}
-            title={t("ui.addEditCar.scan")}
-          />
+          <View style={styles.row}>
+            {obdAdapterData && (
+              <Ionicons.Button
+                name="trash-bin"
+                backgroundColor="transparent"
+                onPress={removeDevice}
+                color={errorColor}
+              />
+            )}
+            <ThemedButton
+              onPress={() => setBleVisible(true)}
+              title={t("ui.addEditCar.scan")}
+            />
+          </View>
           {bleVisible && <Ble onClose={bleDialogClosed} visible={bleVisible} />}
         </View>
         <ThemedText type="subtitle">{t("ui.addEditCar.data")}</ThemedText>
@@ -233,5 +255,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
+  },
+  row: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "row",
+    gap: 5,
+    alignItems: "center",
+    justifyContent: "flex-end"
   }
 });

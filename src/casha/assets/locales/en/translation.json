@@ -48,7 +48,8 @@
       "model": "Model",
       "year": "Year",
       "displayName": "Display Name",
-      "save": "Save"
+      "save": "Save",
+      "removeDevice": "Remove"
     },
     "ble": {
       "devices": "Devices"

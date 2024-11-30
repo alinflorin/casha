@@ -18,6 +18,7 @@ export type ThemedModalProps = ModalProps & {
   borderColorDark?: string;
   onClose?: (result?: any) => void;
   disableCloseOnBackdropPress?: boolean;
+  closeDisabled?: boolean;
 };
 
 export default function ThemedModal({
@@ -31,6 +32,7 @@ export default function ThemedModal({
   disableCloseOnBackdropPress,
   style,
   onClose,
+  closeDisabled,
   ...rest
 }: ThemedModalProps) {
   const bgColor = useThemeColor(
@@ -51,7 +53,7 @@ export default function ThemedModal({
     <Modal {...rest}>
       <Pressable
         onPress={
-          disableCloseOnBackdropPress
+          disableCloseOnBackdropPress || closeDisabled
             ? undefined
             : () => {
                 if (onClose) {
@@ -63,7 +65,7 @@ export default function ThemedModal({
       >
         <Pressable
           onPress={
-            disableCloseOnBackdropPress
+            disableCloseOnBackdropPress || closeDisabled
               ? undefined
               : (e) => {
                   e.preventDefault();
@@ -82,6 +84,7 @@ export default function ThemedModal({
         >
           <View style={styles.flexView}>{children}</View>
           <Button
+            disabled={closeDisabled}
             onPress={() => {
               if (onClose) {
                 onClose();
