@@ -17,6 +17,7 @@ import { OdbAdapterData } from "@/models/obd-adapter-data";
 import { ScanDialogData } from "@/models/scan-dialog-data";
 import { Ionicons } from "@expo/vector-icons";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import WiFi from "../modals/WiFi";
 
 export default function AddEditCar() {
   const db = useDb();
@@ -34,6 +35,7 @@ export default function AddEditCar() {
   });
 
   const [bleVisible, setBleVisible] = useState(false);
+  const [wifiVisible, setWifiVisible] = useState(false);
   const [obdAdapterData, setObdAdapterData] = useState<
     OdbAdapterData | undefined
   >();
@@ -121,6 +123,24 @@ export default function AddEditCar() {
     }
   }, [db, car, editedCarId, t, router, showAlert]);
 
+  const wifiDialogClosed = useCallback(
+    (d: ScanDialogData | undefined) => {
+      if (d) {
+        setObdAdapterData(d.obd_adapter_data);
+        setCar((c) => {
+          let carCopy = { ...c };
+          carCopy.vin = d.vin;
+          carCopy.km = d.km;
+          carCopy.obd_adapter_data = JSON.stringify(d.obd_adapter_data);
+          carCopy = populateDetailsFromVin(carCopy);
+          return carCopy;
+        });
+      }
+      setWifiVisible(false);
+    },
+    [setWifiVisible, setObdAdapterData, setCar, populateDetailsFromVin]
+  );
+
   const bleDialogClosed = useCallback(
     (d: ScanDialogData | undefined) => {
       if (d) {
@@ -160,7 +180,9 @@ export default function AddEditCar() {
       }}
     >
       <KeyboardAwareScrollView style={styles.wrapper}>
-        <ThemedText type="subtitle">{t("ui.addEditCar.obd")}</ThemedText>
+        <ThemedText type="subtitle">
+          {t("ui.addEditCar.obd")} ({t("ui.addEditCar.ble")})
+        </ThemedText>
         <View style={styles.obdWrapper}>
           <ThemedText>
             {t("ui.addEditCar.device")}:{" "}
@@ -169,7 +191,7 @@ export default function AddEditCar() {
               : t("ui.addEditCar.none")}
           </ThemedText>
           <View style={styles.row}>
-            {obdAdapterData && (
+            {obdAdapterData && obdAdapterData.ble && (
               <Ionicons.Button
                 name="trash-bin"
                 backgroundColor="transparent"
@@ -183,6 +205,34 @@ export default function AddEditCar() {
             />
           </View>
           {bleVisible && <Ble onClose={bleDialogClosed} visible={bleVisible} />}
+        </View>
+        <ThemedText type="subtitle">
+          {t("ui.addEditCar.obd")} ({t("ui.addEditCar.wifi")})
+        </ThemedText>
+        <View style={styles.obdWrapper}>
+          <ThemedText>
+            {t("ui.addEditCar.device")}:{" "}
+            {obdAdapterData?.wifi
+              ? obdAdapterData.wifi.ip
+              : t("ui.addEditCar.none")}
+          </ThemedText>
+          <View style={styles.row}>
+            {obdAdapterData && obdAdapterData.wifi && (
+              <Ionicons.Button
+                name="trash-bin"
+                backgroundColor="transparent"
+                onPress={removeDevice}
+                color={errorColor}
+              />
+            )}
+            <ThemedButton
+              onPress={() => setWifiVisible(true)}
+              title={t("ui.addEditCar.connect")}
+            />
+          </View>
+          {wifiVisible && (
+            <WiFi onClose={wifiDialogClosed} visible={wifiVisible} />
+          )}
         </View>
         <ThemedText type="subtitle">{t("ui.addEditCar.data")}</ThemedText>
         <View style={styles.form}>

@@ -49,7 +49,10 @@
       "year": "Year",
       "displayName": "Display Name",
       "save": "Save",
-      "removeDevice": "Remove"
+      "removeDevice": "Remove",
+      "ble": "BLE",
+      "wifi": "Wi-Fi",
+      "connect": "Connect"
     },
     "ble": {
       "devices": "Devices"
@@ -85,6 +88,11 @@
       "auto": "Auto",
       "light": "Light",
       "dark": "Dark"
+    },
+    "wifi": {
+      "connect": "Connect",
+      "address": "Address",
+      "port": "Port"
     }
   }
 }

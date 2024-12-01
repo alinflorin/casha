@@ -49,7 +49,10 @@
       "year": "An",
       "displayName": "Nume afișare",
       "save": "Salvare",
-      "removeDevice": "Ștergere"
+      "removeDevice": "Ștergere",
+      "ble": "BLE",
+      "wifi": "Wi-Fi",
+      "connect": "Conectare"
     },
     "ble": {
       "devices": "Dispozitive"
@@ -85,6 +88,11 @@
       "auto": "Automat",
       "light": "Luminos",
       "dark": "Întunecat"
+    },
+    "wifi": {
+      "connect": "Conectare",
+      "address": "Adresa",
+      "port": "Port"
     }
   }
 }
