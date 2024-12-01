@@ -46,5 +46,42 @@ export default function useObdDecoder() {
     return vin;
   };
 
-  return { decodeVinFromBleReply };
+  const decodeMileageFromBleReply = (reply: string) => {
+    if (!reply) {
+      throw new Error("Mileage reply is undefined");
+    }
+    if (reply.indexOf("\r") > -1) {
+      reply = reply.substring(0, reply.indexOf("\r"));
+    } else {
+      if (reply.indexOf("\n") > -1) {
+        reply = reply.substring(0, reply.indexOf("\n"));
+      }
+    }
+    const processedReply = reply
+      .replaceAll(" ", "")
+      .replaceAll("\r", "")
+      .replaceAll("\n", "")
+      .replaceAll("\t", "")
+      .toUpperCase();
+
+    if (processedReply.length <= 6) {
+      throw new Error("Invalid mileage reply length");
+    }
+
+    const header = processedReply.substring(0, 6);
+    const serviceIdentifier = header.substring(0, 2);
+    const pidValue = header.substring(2, 4);
+    const serviceIdentifierDecoded = decodeServiceIdentifier(serviceIdentifier);
+    if (serviceIdentifierDecoded + pidValue !== ObdPids.ReadKm) {
+      throw new Error("The response is not for mileage PID");
+    }
+    const bytes = processedReply.match(/.{1,2}/g);
+    const vin = bytes!
+      .slice(3)
+      .map((byte) => String.fromCharCode(parseInt(byte, 16)))
+      .join("");
+    return vin;
+  };
+
+  return { decodeVinFromBleReply, decodeMileageFromBleReply };
 }

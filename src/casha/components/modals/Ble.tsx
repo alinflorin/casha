@@ -58,7 +58,7 @@ export default function Ble({ visible, onClose }: BleProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [btReady]);
 
-  const { decodeVinFromBleReply } = useObdDecoder();
+  const { decodeVinFromBleReply, decodeMileageFromBleReply } = useObdDecoder();
 
   const selectDevice = useCallback(
     async (d: Device) => {
@@ -135,6 +135,20 @@ export default function Ble({ visible, onClose }: BleProps) {
 
         const decodedVin = decodeVinFromBleReply(vinReply!);
 
+        let decodedKm: number | undefined;
+
+        try {
+          const kmReply = await writeAndRead(
+            d.id,
+            serviceUuid,
+            readCharacteristicData.uuid,
+            writeCharacteristicData.uuid,
+            ObdPids.ReadKm
+          );
+          decodedKm = +decodeMileageFromBleReply(kmReply!);
+        } catch (err) {
+          console.warn(err);
+        }
         try {
           await d.cancelConnection();
         } catch (err) {
@@ -151,7 +165,7 @@ export default function Ble({ visible, onClose }: BleProps) {
               writeCharacteristic: writeCharacteristicData
             }
           },
-          km: 100,
+          km: decodedKm,
           vin: decodedVin
         } as ScanDialogData);
       } catch (e) {
@@ -173,7 +187,8 @@ export default function Ble({ visible, onClose }: BleProps) {
       writeAndRead,
       requestMtu,
       stopScan,
-      decodeVinFromBleReply
+      decodeVinFromBleReply,
+      decodeMileageFromBleReply
     ]
   );
 
