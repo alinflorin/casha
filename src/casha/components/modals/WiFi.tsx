@@ -8,6 +8,7 @@ import ThemedTextInput from "../ThemedTextInput";
 import ThemedButton from "../ThemedButton";
 import { ScanDialogData } from "@/models/scan-dialog-data";
 import useDialogs from "@/hooks/useDialogs";
+import useTcpClient from "@/hooks/useTcpClient";
 
 export interface WiFiProps {
   visible: boolean;
@@ -21,6 +22,8 @@ export default function WiFi({ visible, onClose }: WiFiProps) {
   const [port, setPort] = useState(35000);
   const { showAlert } = useDialogs();
 
+  const { connect: connectSocket, writeAndRead } = useTcpClient();
+
   const isFormValid = useMemo(() => {
     return address && address.length > 0 && port && port > 0;
   }, [address, port]);
@@ -28,6 +31,12 @@ export default function WiFi({ visible, onClose }: WiFiProps) {
   const connect = useCallback(async () => {
     setLoading(true);
     try {
+      await connectSocket(address, port);
+      console.log(1);
+      const test = await writeAndRead("aolo");
+      console.log(2);
+      console.log(test);
+
       onClose({
         obd_adapter_data: {
           wifi: {
@@ -38,12 +47,22 @@ export default function WiFi({ visible, onClose }: WiFiProps) {
         km: 100,
         vin: "asd"
       } as ScanDialogData);
+      setLoading(false);
     } catch (err) {
       console.error(err);
       showAlert(t("ui.general.error"), t("ui.general.anErrorHasOccurred"));
+      setLoading(false);
     }
-    setLoading(false);
-  }, [address, onClose, port, setLoading, showAlert, t]);
+  }, [
+    address,
+    onClose,
+    port,
+    setLoading,
+    showAlert,
+    t,
+    connectSocket,
+    writeAndRead
+  ]);
 
   return (
     <ThemedModal
@@ -63,6 +82,7 @@ export default function WiFi({ visible, onClose }: WiFiProps) {
           <ThemedTextInput
             value={address}
             onChangeText={(v) => setAddress(v)}
+            keyboardType="numbers-and-punctuation"
             placeholder={t("ui.wifi.address") + "*"}
           />
           <ThemedTextInput
