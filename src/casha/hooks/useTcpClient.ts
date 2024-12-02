@@ -12,9 +12,7 @@ export default function useTcpClient() {
             port: port,
             host: address
           },
-          () => {
-            console.log("COnnected");
-          }
+          () => {}
         );
         setClient(c);
 
