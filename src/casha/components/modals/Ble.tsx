@@ -24,7 +24,7 @@ export interface BleProps {
 }
 
 export default function Ble({ visible, onClose }: BleProps) {
-  const { btReady, startScan, stopScan, writeAndRead, requestMtu } =
+  const { btReady, startScan, stopScan, writeAndRead, requestMtu, write } =
     useBluetooth();
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(false);
@@ -125,6 +125,13 @@ export default function Ble({ visible, onClose }: BleProps) {
 
         await requestMtu(d.id, 512);
 
+        await write(
+          d.id,
+          serviceUuid,
+          writeCharacteristicData.uuid,
+          ObdPids.DisableEcho
+        );
+
         const vinReply = await writeAndRead(
           d.id,
           serviceUuid,
@@ -185,6 +192,7 @@ export default function Ble({ visible, onClose }: BleProps) {
       showAlert,
       setLoading,
       writeAndRead,
+      write,
       requestMtu,
       stopScan,
       decodeVinFromBleReply,

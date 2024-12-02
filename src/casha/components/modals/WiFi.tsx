@@ -9,6 +9,7 @@ import ThemedButton from "../ThemedButton";
 import { ScanDialogData } from "@/models/scan-dialog-data";
 import useDialogs from "@/hooks/useDialogs";
 import useTcpClient from "@/hooks/useTcpClient";
+import { ObdPids } from "@/constants/OdbPids";
 
 export interface WiFiProps {
   visible: boolean;
@@ -22,7 +23,7 @@ export default function WiFi({ visible, onClose }: WiFiProps) {
   const [port, setPort] = useState(35000);
   const { showAlert } = useDialogs();
 
-  const { connect: connectSocket, writeAndRead } = useTcpClient();
+  const { connect: connectSocket, writeAndRead, kill } = useTcpClient();
 
   const isFormValid = useMemo(() => {
     return address && address.length > 0 && port && port > 0;
@@ -31,11 +32,11 @@ export default function WiFi({ visible, onClose }: WiFiProps) {
   const connect = useCallback(async () => {
     setLoading(true);
     try {
-      await connectSocket(address, port);
-      console.log(1);
-      const test = await writeAndRead("aolo");
-      console.log(2);
+      const client = await connectSocket(address, port);
+      await writeAndRead(client, ObdPids.DisableEcho);
+      const test = await writeAndRead(client, ObdPids.ReadVin);
       console.log(test);
+      kill(client);
 
       onClose({
         obd_adapter_data: {
@@ -58,6 +59,7 @@ export default function WiFi({ visible, onClose }: WiFiProps) {
     onClose,
     port,
     setLoading,
+    kill,
     showAlert,
     t,
     connectSocket,
@@ -104,8 +106,7 @@ export default function WiFi({ visible, onClose }: WiFiProps) {
 
 const styles = StyleSheet.create({
   modal: {
-    height: "60%",
-    maxHeight: "60%",
+    maxHeight: "50%",
     width: "90%"
   },
   row: {

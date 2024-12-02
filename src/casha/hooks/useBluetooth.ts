@@ -177,6 +177,26 @@ export default function useBluetooth() {
     [manager]
   );
 
+  const write = useCallback(
+    async (
+      device: string,
+      service: string,
+      writeCharacteristic: string,
+      value: string
+    ) => {
+      if (!manager) {
+        throw new Error("Manager is not initialized");
+      }
+      await manager.writeCharacteristicWithResponseForDevice(
+        device,
+        service,
+        writeCharacteristic,
+        base64.encode(value)
+      );
+    },
+    [manager]
+  );
+
   const requestMtu = useCallback(
     async (device: string, mtu: number) => {
       if (!manager) {
@@ -187,5 +207,5 @@ export default function useBluetooth() {
     [manager]
   );
 
-  return { btReady, startScan, stopScan, writeAndRead, requestMtu };
+  return { btReady, startScan, stopScan, writeAndRead, requestMtu, write };
 }
