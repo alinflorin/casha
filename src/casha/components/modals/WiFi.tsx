@@ -23,7 +23,11 @@ export default function WiFi({ visible, onClose }: WiFiProps) {
   const [port, setPort] = useState(35000);
   const { showAlert } = useDialogs();
 
-  const { connect: connectSocket, writeAndRead, kill } = useTcpClient();
+  const {
+    connect: connectSocket,
+    writeAndRead,
+    disconnect
+  } = useTcpClient(address, port);
 
   const isFormValid = useMemo(() => {
     return address && address.length > 0 && port && port > 0;
@@ -32,11 +36,11 @@ export default function WiFi({ visible, onClose }: WiFiProps) {
   const connect = useCallback(async () => {
     setLoading(true);
     try {
-      const client = await connectSocket(address, port);
-      await writeAndRead(client, ObdPids.DisableEcho);
-      const test = await writeAndRead(client, ObdPids.ReadVin);
+      await connectSocket();
+      await writeAndRead(ObdPids.DisableEcho);
+      const test = await writeAndRead(ObdPids.ReadVin);
       console.log(test);
-      kill(client);
+      disconnect();
 
       onClose({
         obd_adapter_data: {
@@ -59,7 +63,7 @@ export default function WiFi({ visible, onClose }: WiFiProps) {
     onClose,
     port,
     setLoading,
-    kill,
+    disconnect,
     showAlert,
     t,
     connectSocket,
