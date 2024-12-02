@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { PermissionsAndroid, Platform } from "react-native";
 import base64 from "react-native-base64";
 import {
@@ -9,7 +9,7 @@ import {
 } from "react-native-ble-plx";
 
 export default function useBluetooth() {
-  const [manager, setManager] = useState<BleManager | undefined>();
+  const manager = useRef<BleManager>();
   const [btReady, setBtReady] = useState(false);
 
   const requestPermissions = useCallback(async () => {
@@ -55,14 +55,14 @@ export default function useBluetooth() {
     (async () => {
       if (await requestPermissions()) {
         localManager = new BleManager();
-        setManager(localManager);
+        manager.current = localManager;
         subscription = localManager.onStateChange((state) => {
           setBtReady(state === "PoweredOn");
         }, true);
       }
     })();
     return () => {
-      setManager(undefined);
+      manager.current = undefined;
       if (subscription) {
         subscription.remove();
       }
@@ -78,10 +78,10 @@ export default function useBluetooth() {
       onDeviceFound?: (device: Device) => void,
       onError?: (err: BleError) => void
     ) => {
-      if (!manager) {
+      if (!manager.current) {
         throw new Error("BLE Manager not initialized");
       }
-      await manager.startDeviceScan(
+      await manager.current!.startDeviceScan(
         null,
         {
           allowDuplicates: false
@@ -104,9 +104,9 @@ export default function useBluetooth() {
   );
 
   const stopScan = useCallback(async () => {
-    if (manager) {
+    if (manager.current) {
       try {
-        await manager.stopDeviceScan();
+        await manager.current.stopDeviceScan();
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err: any) {
         // ignored
@@ -123,12 +123,12 @@ export default function useBluetooth() {
       value: string,
       timeout: number = 5000
     ) => {
-      if (!manager) {
+      if (!manager.current) {
         throw new Error("Manager is not initialized");
       }
       return new Promise<string | undefined>(async (accept, reject) => {
         let timeoutHandle: NodeJS.Timeout | undefined;
-        const sub = manager.monitorCharacteristicForDevice(
+        const sub = manager.current!.monitorCharacteristicForDevice(
           device,
           service,
           readCharacteristic,
@@ -159,7 +159,7 @@ export default function useBluetooth() {
             }
           }
         );
-        await manager.writeCharacteristicWithResponseForDevice(
+        await manager.current!.writeCharacteristicWithResponseForDevice(
           device,
           service,
           writeCharacteristic,
@@ -184,10 +184,10 @@ export default function useBluetooth() {
       writeCharacteristic: string,
       value: string
     ) => {
-      if (!manager) {
+      if (!manager.current) {
         throw new Error("Manager is not initialized");
       }
-      await manager.writeCharacteristicWithResponseForDevice(
+      await manager.current.writeCharacteristicWithResponseForDevice(
         device,
         service,
         writeCharacteristic,
@@ -199,10 +199,10 @@ export default function useBluetooth() {
 
   const requestMtu = useCallback(
     async (device: string, mtu: number) => {
-      if (!manager) {
+      if (!manager.current) {
         throw new Error("Manager is not initialized");
       }
-      await manager.requestMTUForDevice(device, mtu);
+      await manager.current.requestMTUForDevice(device, mtu);
     },
     [manager]
   );

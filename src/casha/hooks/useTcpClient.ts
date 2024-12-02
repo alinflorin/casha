@@ -71,8 +71,8 @@ export default function useTcpClient(
       }
       return new Promise<string | undefined>((accept, reject) => {
         let timeoutHandle: NodeJS.Timeout | undefined;
-
         client.current!.on("data", (d) => {
+          console.log(d.toString());
           accept((d as Buffer).toString());
           client.current!.off("data");
           client.current!.off("error");
