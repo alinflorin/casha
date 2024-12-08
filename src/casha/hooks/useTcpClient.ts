@@ -52,7 +52,7 @@ export default function useTcpClient(
         throw new Error("Not connected - connect before calling write");
       }
       return new Promise<void>((accept, reject) => {
-        client.current!.write(value + "\r", "ascii", (e) => {
+        client.current!.write(value + "\r", "utf-8", (e) => {
           if (e) {
             reject(e);
             return;
