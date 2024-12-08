@@ -26,7 +26,8 @@ export default function WiFi({ visible, onClose }: WiFiProps) {
   const {
     connect: connectSocket,
     writeAndRead,
-    disconnect
+    disconnect,
+    write
   } = useTcpClient(address, port);
 
   const isFormValid = useMemo(() => {
@@ -37,8 +38,9 @@ export default function WiFi({ visible, onClose }: WiFiProps) {
     setLoading(true);
     try {
       await connectSocket();
-      await writeAndRead(ObdPids.Reset);
-      await writeAndRead(ObdPids.DisableEcho);
+      await write(ObdPids.Reset);
+      await write(ObdPids.DisableEcho);
+      await write(ObdPids.Reset);
       const test = await writeAndRead(ObdPids.ReadVin);
       console.log(test);
       disconnect();
@@ -68,7 +70,8 @@ export default function WiFi({ visible, onClose }: WiFiProps) {
     showAlert,
     t,
     connectSocket,
-    writeAndRead
+    writeAndRead,
+    write
   ]);
 
   return (

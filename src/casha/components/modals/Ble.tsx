@@ -139,6 +139,13 @@ export default function Ble({ visible, onClose }: BleProps) {
           ObdPids.DisableEcho
         );
 
+        await write(
+          d.id,
+          serviceUuid,
+          writeCharacteristicData.uuid,
+          ObdPids.Reset
+        );
+
         const vinReply = await writeAndRead(
           d.id,
           serviceUuid,
@@ -148,6 +155,13 @@ export default function Ble({ visible, onClose }: BleProps) {
         );
 
         const decodedVin = decodeVinFromBleReply(vinReply!);
+
+        await write(
+          d.id,
+          serviceUuid,
+          writeCharacteristicData.uuid,
+          ObdPids.Reset
+        );
 
         let decodedKm: number | undefined;
 
