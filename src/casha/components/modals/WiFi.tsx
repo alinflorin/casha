@@ -19,7 +19,7 @@ export interface WiFiProps {
 export default function WiFi({ visible, onClose }: WiFiProps) {
   const [loading, setLoading] = useState(false);
   const { t } = useTranslate();
-  const [address, setAddress] = useState("192.168.0.2");
+  const [address, setAddress] = useState("192.168.1.159");
   const [port, setPort] = useState(35000);
   const { showAlert } = useDialogs();
 
@@ -37,6 +37,7 @@ export default function WiFi({ visible, onClose }: WiFiProps) {
     setLoading(true);
     try {
       await connectSocket();
+      await writeAndRead(ObdPids.Reset);
       await writeAndRead(ObdPids.DisableEcho);
       const test = await writeAndRead(ObdPids.ReadVin);
       console.log(test);

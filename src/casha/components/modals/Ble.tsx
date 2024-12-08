@@ -129,6 +129,13 @@ export default function Ble({ visible, onClose }: BleProps) {
           d.id,
           serviceUuid,
           writeCharacteristicData.uuid,
+          ObdPids.Reset
+        );
+
+        await write(
+          d.id,
+          serviceUuid,
+          writeCharacteristicData.uuid,
           ObdPids.DisableEcho
         );
 
