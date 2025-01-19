@@ -16,6 +16,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     icon: "./assets/images/icon.png",
     scheme: "casha",
     userInterfaceStyle: "automatic",
+    newArchEnabled: true,
     ios: {
       supportsTablet: true,
       bundleIdentifier: "com.huna2.casha",
