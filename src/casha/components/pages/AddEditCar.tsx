@@ -250,7 +250,7 @@ export default function AddEditCar() {
             placeholder={t("ui.addEditCar.odometer")}
           />
           <View style={styles.useImperialWrapper}>
-            <ThemedText>{t("ui.addEditCar.useImperial") + "*"}</ThemedText>
+            <ThemedText>{t("ui.addEditCar.useImperial")}</ThemedText>
             <ThemedSwitch
               onValueChange={(v) => setCar((c) => ({ ...c, uses_imperial: v }))}
               value={car.uses_imperial}
